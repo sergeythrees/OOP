@@ -4,99 +4,103 @@
 
 using namespace std;
 
-bool AreArgumentsTrue(int argc, char *argv[])
+bool AreFilesOpened(const ifstream &input, const ofstream &output)
 {
-	if (argc != 5)
-	{
-		cout << "Wrong arguments amount\n"
-		<< "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
-		return false;
-	}
-	if (!(argv[1] && argv[2]))
-	{
-		cout << "Same file\n";
-		return false;
-	}
-	if (strlen(argv[3]) == 0)
-	{
-		cout << "Search string length = 0\n";
-		return false;
-	}
-
-	return true;
-}
-bool AreFilesOpen(fstream &inputFile, ofstream &outputFile)
-{
-	if (!inputFile.is_open())
+	if (!input.is_open())
 	{
 		cout << "Error with opening input file \n";
 		return false;
 	}
 
-	if (!outputFile.is_open())
+	if (!output.is_open())
 	{
 		cout << "Error with opening output file \n";
 		return false;
 	}
 	return true;
 }
-string ReplaceSubString(const string &inputLine, const string &searchString, const string &replaceString)
+bool IsValidArgumentsCount(int argumensCount)
 {
-	size_t readPosition = 0, foundPosition = 0;
-	string resultString;
-	bool isFound = false;
-	while ((foundPosition = inputLine.find(searchString, readPosition)) != inputLine.npos)
+	if (argumensCount != 5)
 	{
-		resultString.append(inputLine, readPosition, foundPosition - readPosition);
-		resultString.append(replaceString);
-		readPosition = foundPosition + searchString.length();
-		isFound = true;
+		cout << "Wrong arguments count\n"
+			<< "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
+		return false;
 	}
-	if (!isFound)
-		return inputLine;
 
-	if (readPosition < inputLine.length())
-	{
-		resultString.append(inputLine, readPosition, inputLine.length() - readPosition);
-	}
-	return resultString;
+	return true;
 }
-bool IsSearchStringReplace(fstream &inputFile, ofstream &outputFile, const string &searchString, const string &replaceString)
+bool IsSearchStringNotEmpty(const string &searchString)
 {
-	string currentLine, resultLine;
-	bool areSearchStringFound = false;
-	while (getline(inputFile, currentLine))
+	if (searchString.empty())
 	{
-		if (currentLine != (resultLine = ReplaceSubString(currentLine, searchString, replaceString)))
-		{
-			outputFile << resultLine;
-			if (!inputFile.eof())
-				outputFile << endl;
-			areSearchStringFound = true;
-		}
-			
+		cout << "Search string should not be empty\n";
+		return false;
 	}
-	return areSearchStringFound;
+
+	return true;
+}
+size_t ReplaceSubString(const string &inputLine, const string &searchString, const string &replaceString, ofstream &output)
+{
+	size_t foundPosition = inputLine.find(searchString, 0);
+	if (foundPosition == inputLine.npos)
+	{
+		output << inputLine;
+		return 0;
+	}
+		
+	size_t currentPosition = 0, numberOfReplacements = 0;
+	string result;
+	while (foundPosition != inputLine.npos)
+	{
+		result.append(inputLine, currentPosition, foundPosition - currentPosition);
+		result += replaceString;
+		currentPosition = foundPosition + searchString.length();
+		foundPosition = inputLine.find(searchString, currentPosition);
+		++numberOfReplacements;
+	}
+	output << result.append(inputLine, currentPosition, inputLine.length() - currentPosition);
+
+	return numberOfReplacements;
+}
+void Replace(ifstream &input, ofstream &output, const string &searchString, const string &replaceString)
+{
+	size_t numberOfReplacements = 0;
+	string currentLine;
+	while (getline(input, currentLine))
+	{
+		numberOfReplacements += ReplaceSubString(currentLine, searchString, replaceString, output);
+		if (!input.eof())
+			output << endl;
+	}
+	cout << "Number of replacements: " << numberOfReplacements << "\n";
+}
+bool IsFileSaved(ofstream &outputFile)
+{
+	if (!outputFile.flush())
+	{
+		cout << "Failed to save data on disk\n";
+		return false;
+	}
+	return true;
 }
 int main(int argc, char *argv[])
 {
-	if (!AreArgumentsTrue(argc, argv))
+	if (!IsValidArgumentsCount(argc))
 		return 1;
-	fstream input(argv[1]);
+
+	if (!IsSearchStringNotEmpty(argv[3]))
+		return 1;
+
+	ifstream input(argv[1]);
 	ofstream output(argv[2]);
-	if (!AreFilesOpen(input, output))
+	if (!AreFilesOpened(input, output))
 		return 1;
 
-	string searchString = argv[3], replaceString = argv[4];
+	Replace(input, output, argv[3], argv[4]);
 
-	if (!IsSearchStringReplace(input, output, searchString, replaceString))
-		cout << "String '" << searchString << "' hasn't been found.\n";
-	
-	if (!output.flush())
-	{
-		cout << "Failed to save data on disk\n";
+	if (!IsFileSaved(output))
 		return 1;
-	}
 
 	return 0;
 }

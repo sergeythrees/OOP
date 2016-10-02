@@ -18,14 +18,8 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="replace.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Debug\test.bat" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{ABAF29D7-BE09-4BA4-BD6F-5922486A6007}</ProjectGuid>
+    <ProjectGuid>{803DF777-E5D3-41A7-9B00-0961F12E7586}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>replace</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -103,7 +97,7 @@
       <Command>test.bat "$(TargetPath)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Message>RunningTests</Message>
+      <Message>Running Tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,7 +114,9 @@
     </Link>
     <PostBuildEvent>
       <Command>test.bat "$(TargetPath)"</Command>
-      <Message>RunningTests</Message>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Running Tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,7 +137,9 @@
     </Link>
     <PostBuildEvent>
       <Command>test.bat "$(TargetPath)"</Command>
-      <Message>RunningTests</Message>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Running Tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -162,9 +160,25 @@
     </Link>
     <PostBuildEvent>
       <Command>test.bat "$(TargetPath)"</Command>
-      <Message>RunningTests</Message>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Running Tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="replace.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.bat" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
