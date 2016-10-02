@@ -49,7 +49,8 @@ size_t ReplaceSubString(const string &inputLine, const string &searchString, con
 		return 0;
 	}
 		
-	size_t currentPosition = 0, numberOfReplacements = 0;
+	size_t currentPosition = 0;
+	size_t numberOfReplacements = 0;
 	string result;
 	while (foundPosition != inputLine.npos)
 	{
