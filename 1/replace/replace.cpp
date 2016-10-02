@@ -3,6 +3,7 @@
 #include <string>
 
 using namespace std;
+static const int MAX_NUM_OF_ARGUMENTS = 5;
 
 bool AreFilesOpened(const ifstream &input, const ofstream &output)
 {
@@ -21,7 +22,7 @@ bool AreFilesOpened(const ifstream &input, const ofstream &output)
 }
 bool IsValidArgumentsCount(int argumensCount)
 {
-	if (argumensCount != 5)
+	if (argumensCount != MAX_NUM_OF_ARGUMENTS)
 	{
 		cout << "Wrong arguments count\n"
 			<< "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
@@ -42,7 +43,12 @@ bool IsSearchStringNotEmpty(const string &searchString)
 }
 size_t ReplaceSubString(const string &inputLine, const string &searchString, const string &replaceString, ofstream &output)
 {
-	size_t foundPosition = inputLine.find(searchString, 0);
+	if (searchString == replaceString)
+	{
+		output << inputLine;
+		return 0;
+	}
+	size_t foundPosition = inputLine.find(searchString);
 	if (foundPosition == inputLine.npos)
 	{
 		output << inputLine;
@@ -52,6 +58,8 @@ size_t ReplaceSubString(const string &inputLine, const string &searchString, con
 	size_t currentPosition = 0;
 	size_t numberOfReplacements = 0;
 	string result;
+	result.reserve(inputLine.length());
+
 	while (foundPosition != inputLine.npos)
 	{
 		result.append(inputLine, currentPosition, foundPosition - currentPosition);
