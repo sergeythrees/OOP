@@ -16,25 +16,25 @@ IF NOT ERRORLEVEL 1 GOTO err
 rem multiline text
 %PROGRAM% multiline_text.txt %TEMP%\output.txt Hel HEL
 IF ERRORLEVEL 1 GOTO err
-FC /B %TEMP%\output.txt multiline_text_out.txt
+FC %TEMP%\output.txt multiline_text_out.txt
 IF ERRORLEVEL 1 GOTO err
 
 rem recursive text
 %PROGRAM% recursive.txt %TEMP%\output.txt 1231234 abcabcde
 IF ERRORLEVEL 1 GOTO err
-FC /B %TEMP%\output.txt recursive_out.txt
+FC %TEMP%\output.txt recursive_out.txt
 IF ERRORLEVEL 1 GOTO err
 
 rem recursive with delete out
 %PROGRAM% recursive.txt %TEMP%\output.txt 1 ""
 IF ERRORLEVEL 1 GOTO err
-FC /B %TEMP%\output.txt recursive_with_delete_out.txt
+FC %TEMP%\output.txt recursive_with_delete_out.txt
 IF ERRORLEVEL 1 GOTO err
 
 rem repeated text
 %PROGRAM% repeated_text.txt %TEMP%\output.txt aa a
 IF ERRORLEVEL 1 GOTO err
-FC /B %TEMP%\output.txt repeated_text_out.txt
+FC %TEMP%\output.txt repeated_text_out.txt
 IF ERRORLEVEL 1 GOTO err
 
 ECHO Testing succeeded
