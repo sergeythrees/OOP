@@ -1,6 +1,8 @@
 #include "stdafx.h"
+#include <functional>
 #include <iostream>
 #include <vector>
+#include <boost/range/algorithm/min_element.hpp>
 #include "VectorProcessor.h"
 
 using namespace std;
@@ -19,9 +21,8 @@ int main()
 		else
 			break;
 	}
-	
 
-	ProcessVector(numbers);
+	ProcessVector(numbers, isless<double,double>, boost::min_element(), multiplies<double>());
 
 	for (auto number : numbers)
 	{
