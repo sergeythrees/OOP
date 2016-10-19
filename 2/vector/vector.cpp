@@ -9,18 +9,9 @@ using namespace std;
 
 int main()
 {
-	//vector<double> numbers(istream_iterator<double>(cin), (istream_iterator<double>()));
 	vector<double> numbers;
-	//copy(istream_iterator<double>(cin), istream_iterator<double>(), back_inserter(numbers));
 	
-	while (!cin.eof())
-	{
-		double number;
-		if (cin >> number)
-			numbers.push_back(number);
-		else
-			break;
-	}
+	copy(istream_iterator<double>(cin), istream_iterator<double>(), back_inserter(numbers));
 
 	ProcessVector(numbers, isless<double,double>, 
 		      min_element<vector<double>::iterator>, multiplies<double>());
