@@ -25,12 +25,7 @@ int main()
 	ProcessVector(numbers, isless<double,double>, 
 		      min_element<vector<double>::iterator>, multiplies<double>());
 
-	for (auto number : numbers)
-	{
-		cout << number << ", ";
-	}
-
-	//copy(numbers.begin(), numbers.end(), ostream_iterator<double>(cout, ", "));
+	copy(numbers.begin(), numbers.end(), ostream_iterator<double>(cout, ", "));
 
 	return 0;
 }
