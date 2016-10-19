@@ -22,7 +22,8 @@ int main()
 			break;
 	}
 
-	ProcessVector(numbers, isless<double,double>, boost::min_element(), multiplies<double>());
+	ProcessVector(numbers, isless<double,double>, 
+		      min_element<vector<double>::iterator>, multiplies<double>());
 
 	for (auto number : numbers)
 	{
