@@ -1,25 +1,18 @@
 #include "stdafx.h"
 #include <vector>
-#include <functional>
+#include <boost/range/algorithm/min_element.hpp>
 #include <boost/range/algorithm/transform.hpp>
 #include <boost/phoenix.hpp>
-#include <boost/range/algorithm/sort.hpp>
 #include "VectorProcessor.h"
 
-using namespace std;
-using namespace std::placeholders;
 using namespace boost;
-using boost::transform;
-using boost::sort;
-using boost::min_element;
+using namespace boost::phoenix::placeholders;
 
-
-void ProcessVector(std::vector<double> & numbers, 
-	std::function<bool(double a, double b)> PredicateFunc, 
-	std::function<vector<double>::iterator(vector<double>::iterator, vector<double>::iterator)> SearchFunc,
-	std::function<double(double a, double b)> TransformFunc)
+void ProcessVector(std::vector<double> & numbers)
 {
-	sort(numbers, PredicateFunc);
-	double foundNumber = *SearchFunc(numbers);
-	transform(numbers, numbers.begin(), bind(TransformFunc, _1, foundNumber));
+	if (numbers.size() != 0)
+	{
+		double minElement = *(min_element(numbers));
+		boost::transform(numbers, numbers.begin(), arg1 * minElement);
+	}
 }

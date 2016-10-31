@@ -2,21 +2,22 @@
 #include <functional>
 #include <iostream>
 #include <vector>
-#include <boost/range/algorithm/min_element.hpp>
+#include <boost/range/algorithm/sort.hpp>
+#include <boost/range/algorithm/copy.hpp>
 #include "VectorProcessor.h"
 
 using namespace std;
-
+using namespace boost;
 int main()
 {
-	vector<double> numbers;
-	
-	copy(istream_iterator<double>(cin), istream_iterator<double>(), back_inserter(numbers));
+	cout << "Enter the elements of array with spaces\n";
+	vector<double> numbers(istream_iterator<double>(cin), (istream_iterator<double>()));
 
-	ProcessVector(numbers, isless<double,double>, 
-		      min_element<vector<double>::iterator>, multiplies<double>());
+	ProcessVector(numbers);
+	sort(numbers);
 
-	copy(numbers.begin(), numbers.end(), ostream_iterator<double>(cout, ", "));
+	copy(numbers, ostream_iterator<double>(cout, ", "));
+	cout << endl;
 
 	return 0;
 }
