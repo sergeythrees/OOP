@@ -1,26 +1,23 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include <string>
-#include <boost/range/algorithm/sort.hpp>
-#include <boost/range/algorithm/copy.hpp>
-#include "htmlDecode.h"
+#include "Decode.h"
 
 using namespace std;
-using namespace boost;
-void ProcessInputLines()
+
+void DecodeHtmlLines()
 {
 	string inputLine;
-	while (getline(cin,inputLine))
-	{
-		DecodeHtml(inputLine);
-		cout << inputLine << endl;
-	}
+	map<string, string> htmlMap = { { "&quot;", "\"" }, { "&apos;", "'" }, { "&lt;", "<" }, { "&gt;", ">" }, { "&amp;", "&" } };
+
+	while (getline(cin, inputLine))
+		cout << Decode(inputLine, htmlMap) << endl;
 }
+
 int main()
 {
 	cout << "Enter the html lines\n";
-	ProcessInputLines();
+	DecodeHtmlLines();
 	cout << endl;
 
 	return 0;

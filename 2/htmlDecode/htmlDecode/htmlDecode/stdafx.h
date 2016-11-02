@@ -6,6 +6,7 @@
 #pragma once
 
 #include "targetver.h"
+#include <map>
 #include <string>
 #include <stdio.h>
 #include <tchar.h>

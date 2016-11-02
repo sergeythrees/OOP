@@ -24,7 +24,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\htmlDecode\htmlDecode\htmlDecode.h">
+    <ClInclude Include="..\..\htmlDecode\htmlDecode\Decode.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClCompile Include="htmlDecode_tests.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\htmlDecode\htmlDecode\htmlDecode.cpp">
+    <ClCompile Include="..\..\htmlDecode\htmlDecode\Decode.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
