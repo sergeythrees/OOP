@@ -8,7 +8,7 @@ using namespace std;
 void DecodeHtmlLines()
 {
 	string inputLine;
-	map<string, string> htmlMap = { { "&quot;", "\"" }, { "&apos;", "'" }, { "&lt;", "<" }, { "&gt;", ">" }, { "&amp;", "&" } };
+	vector<pair<string, string>> htmlMap = { { "&quot;", "\"" }, { "&apos;", "'" }, { "&lt;", "<" }, { "&gt;", ">" }, { "&amp;", "&" } };
 
 	while (getline(cin, inputLine))
 		cout << Decode(inputLine, htmlMap) << endl;

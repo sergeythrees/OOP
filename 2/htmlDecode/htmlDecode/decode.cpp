@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include <map>
+#include <vector>
 #include <string>
-#include "Decode.h"
+#include "decode.h"
 #include "ReplaceSubString.h"
 
 using namespace std;
 
-string Decode(const string &inputLine, map<string, string> dictionary)
+string Decode(const string &inputLine, vector<pair<string, string>> &dictionary)
 {
 	string result(inputLine);
 	for (auto currentPair : dictionary)

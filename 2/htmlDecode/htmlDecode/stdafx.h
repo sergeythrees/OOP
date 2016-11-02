@@ -6,11 +6,11 @@
 #pragma once
 
 #include "targetver.h"
-#include <map>
-#include <string>
+
 #include <stdio.h>
 #include <tchar.h>
-
+#include <vector>
+#include <string>
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
