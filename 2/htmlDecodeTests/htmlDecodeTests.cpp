@@ -18,18 +18,21 @@ BOOST_AUTO_TEST_CASE(doesnt_spoil_string)
 
 BOOST_AUTO_TEST_CASE(replace_required_substrings_once)
 {
+	vector<pair<string, string>> htmlMap = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };
 	const string expectedResult = "Cat <says> \"Meow. M&M's";
 	string input = "Cat &lt;says&gt; &quot;Meow. M&amp;M&apos;s";
-	auto result = HtmlDecode(input);
+	auto result = Decode(input, htmlMap);
 
 	BOOST_CHECK(result == expectedResult);
 }
 
 BOOST_AUTO_TEST_CASE(replace_required_repeated_substrings)
 {
+	vector<pair<string, string>> htmlMap = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };
+
 	const string expectedResult = "Cat <says> \"Meow\". M&M's\\\ Cat <says> \"Meow\".";
 	string input = "Cat &lt;says&gt; &quot;Meow&quot;. M&amp;M&apos;s\\\ Cat &lt;says&gt; &quot;Meow&quot;.";
-	auto result = HtmlDecode(input);
+	auto result = Decode(input, htmlMap);
 
 	BOOST_CHECK(result == expectedResult);
 }
