@@ -35,4 +35,12 @@ BOOST_AUTO_TEST_CASE(mult_all_elements_at_negative_value)
 	BOOST_CHECK(VectorsAreEqual(numbers, { 1, 0, -1, -2, -3 }));
 }
 
+BOOST_AUTO_TEST_CASE(process_double_numbers)
+{
+	vector<double> numbers = { -2.00, 5.3435, -25.5689, -3 };
+	ProcessVector(numbers);
+	BOOST_CHECK(VectorsAreEqual(numbers, { 51.137, -136.627, 653.768, 76.706 }));
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()
