@@ -2,14 +2,13 @@
 #include <vector>
 #include <string>
 #include "decode.h"
-#include "ReplaceSubString.h"
 
 using namespace std;
 
 string Decode(string &inputLine, vector<pair<string, string>> &dictionary)
 {
 	string result;
-	
+
 	for (size_t strPos = 0; strPos < inputLine.length(); ++strPos)
 	{
 		bool wasReplace = false;
@@ -32,8 +31,5 @@ string Decode(string &inputLine, vector<pair<string, string>> &dictionary)
 			result += inputLine[strPos];
 		}
 	}
-	
-	/*for (auto currentPair : dictionary)
-		ReplaceSubString(result, currentPair.first, currentPair.second);*/
 	return result;
 }
