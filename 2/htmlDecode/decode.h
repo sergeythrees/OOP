@@ -1,4 +1,4 @@
 #pragma once
 #include "stdafx.h"
 
-std::string Decode(std::string &inputLine);
+std::string DecodeHtmlText(std::string const& html);

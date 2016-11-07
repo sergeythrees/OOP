@@ -7,15 +7,22 @@ using namespace std;
 
 void DecodeHtmlLines()
 {
-	string inputLine, cdf;
+	string inputText, temp;
+	char c;
 	
-	while (getline(cin, inputLine))
-		cout << Decode(inputLine) << endl;
+	while (cin.get(c))
+	{
+		inputText += c;
+	}
+		
+	cout << DecodeHtmlText(inputText);
 }
 
 int main()
 {
-	cout << "Enter the html lines\n";
+	setlocale(LC_ALL, "Russian");
+	cout << "¬ведите текст с HTML" << endl
+		<< "ƒл€ окончани€ ввода нажмите Ctrl+Z и ENTER в пустой строке" << endl;
 	DecodeHtmlLines();
 	cout << endl;
 

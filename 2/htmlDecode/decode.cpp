@@ -5,24 +5,25 @@
 
 using namespace std;
 
-const vector<pair<string, string>> dictionary = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };
+const vector<pair<string, string>> htmlEntities = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };
 
-string Decode(string &inputLine)
+string DecodeHtmlText(string const& html)
 {
 	string result;
 
-	for (size_t strPos = 0; strPos < inputLine.length(); ++strPos)
+	for (size_t readPos = 0; readPos < html.length(); ++readPos)
 	{
+
 		bool wasReplace = false;
 
-		if (inputLine[strPos] == '&')
+		if (html[readPos] == '&')
 		{
-			for (auto currentPair : dictionary)
+			for (auto currentPair : htmlEntities)
 			{
-				if (currentPair.first == inputLine.substr(strPos, currentPair.first.length()))
+				if (currentPair.first == html.substr(readPos, currentPair.first.length()))
 				{
-					result += currentPair.second;
-					strPos += currentPair.first.length() - 1;
+					result.append(currentPair.second);
+					readPos += currentPair.first.length() - 1;
 					wasReplace = true;
 				}
 			}
@@ -30,7 +31,7 @@ string Decode(string &inputLine)
 
 		if (!wasReplace)
 		{
-			result += inputLine[strPos];
+			result += html[readPos];
 		}
 	}
 	return result;
