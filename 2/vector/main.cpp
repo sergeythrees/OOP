@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include <functional>
 #include <iostream>
 #include <vector>
 #include <boost/range/algorithm/sort.hpp>

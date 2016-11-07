@@ -1,12 +1,10 @@
 #include "stdafx.h"
 #include <vector>
-#include <functional>
 #include <boost/range/algorithm/min_element.hpp>
 #include <boost/range/algorithm/transform.hpp>
 #include "VectorProcessor.h"
 
 using namespace std;
-using namespace std::placeholders;
 using namespace boost;
 
 double RoundToThree(double number)
