@@ -7,7 +7,7 @@ using namespace std;
 
 void DecodeHtmlLines()
 {
-	string inputText, temp;
+	string inputText;
 	char c;
 	
 	while (cin.get(c))
@@ -15,16 +15,17 @@ void DecodeHtmlLines()
 		inputText += c;
 	}
 		
-	cout << DecodeHtmlText(inputText);
+	cout << DecodeHtmlText(inputText) << endl;
 }
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
+
 	cout << "¬ведите текст с HTML" << endl
 		<< "ƒл€ окончани€ ввода нажмите Ctrl+Z и ENTER в пустой строке" << endl;
+
 	DecodeHtmlLines();
-	cout << endl;
 
 	return 0;
 }
