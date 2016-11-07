@@ -5,7 +5,9 @@
 
 using namespace std;
 
-string Decode(string &inputLine, vector<pair<string, string>> &dictionary)
+const vector<pair<string, string>> dictionary = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };
+
+string Decode(string &inputLine)
 {
 	string result;
 
