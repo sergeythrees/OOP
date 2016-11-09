@@ -15,22 +15,19 @@ string DecodeHtmlText(string const& html)
 	for (size_t readPos = 0; readPos < html.length(); ++readPos)
 	{
 
-		bool wasReplace = false;
+		bool wasReplaced = false;
 
-		if (html[readPos] == '&')
-		{
-			for (auto currentPair : htmlEntities)
+		for (auto currentPair : htmlEntities)
 			{
 				if (currentPair.first == html.substr(readPos, currentPair.first.length()))
 				{
 					result.append(currentPair.second);
 					readPos += currentPair.first.length() - 1;
-					wasReplace = true;
+					wasReplaced = true;
 				}
 			}
-		}
 
-		if (!wasReplace)
+		if (!wasReplaced)
 		{
 			result += html[readPos];
 		}
