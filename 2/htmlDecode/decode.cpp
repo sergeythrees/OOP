@@ -10,7 +10,8 @@ const vector<pair<string, string>> htmlEntities = { { "&quot;", "\"" },{ "&apos;
 string DecodeHtmlText(string const& html)
 {
 	string result;
-
+	result.reserve(html.size());
+	
 	for (size_t readPos = 0; readPos < html.length(); ++readPos)
 	{
 
