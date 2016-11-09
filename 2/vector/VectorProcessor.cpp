@@ -7,10 +7,6 @@
 using namespace std;
 using namespace boost;
 
-double RoundToThree(double number)
-{
-	return trunc(number * 1000.0) / 1000.0;
-}
 void ProcessVector(vector<double> & numbers)
 {
 	if (numbers.size() != 0)
