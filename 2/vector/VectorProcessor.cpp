@@ -16,6 +16,8 @@ void ProcessVector(vector<double> & numbers)
 	if (numbers.size() != 0)
 	{
 		double minElement = *(min_element(numbers));
-		boost::transform(numbers, numbers.begin(), [minElement](double number) {return RoundToThree(number*minElement); });
+		boost::transform(numbers, numbers.begin(), 
+			[minElement](double number) 
+			{ return RoundToThree(number*minElement);  });
 	}
 }
