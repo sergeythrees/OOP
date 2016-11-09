@@ -20,25 +20,25 @@ BOOST_AUTO_TEST_CASE(doesnt_change_string_without_html_entities)
 	string input = "The quick brown fox jumps over the lazy dog";
 	auto result = DecodeHtmlText(input);
 
-	BOOST_CHECK(result == expectedResult);
+	BOOST_CHECK_EQUAL(result, expectedResult);
 }
 
-BOOST_AUTO_TEST_CASE(replace_required_substrings_once)
+BOOST_AUTO_TEST_CASE(replaces_each_html_entity_with_corresponding_character)
 {
 	const string expectedResult = "Cat <says> \"Meow. M&M's";
 	string input = "Cat &lt;says&gt; &quot;Meow. M&amp;M&apos;s";
 	auto result = DecodeHtmlText(input);
 
-	BOOST_CHECK(result == expectedResult);
+	BOOST_CHECK_EQUAL(result, expectedResult);
 }
 
-BOOST_AUTO_TEST_CASE(correct_replace_required_repeated_substrings)
+BOOST_AUTO_TEST_CASE(correct_replaces_each_html_entity_recursive_character)
 {
 	const string expectedResult = "Cat &lt<says> \"Meow&qu\"ot;. M&M's\\\ Cat <says> \"Meow\".";
 	string input = "Cat &lt&lt;says&gt; &quot;Meow&qu&quot;ot;. M&amp;M&apos;s\\\ Cat &lt;says&gt; &quot;Meow&quot;.";
 	auto result = DecodeHtmlText(input);
 
-	BOOST_CHECK(result == expectedResult);
+	BOOST_CHECK_EQUAL(result, expectedResult);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
