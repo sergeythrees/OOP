@@ -14,7 +14,8 @@ int main()
 
 	ProcessVector(numbers);
 	sort(numbers);
-
+	
+	cout.precision(4);
 	copy(numbers, ostream_iterator<double>(cout, ", "));
 	cout << endl;
 
