@@ -54,11 +54,11 @@ void WorkWithDictionary(Dictionary dictionary)
 		}
 		else
 		{
-			string foundTranslations = FindTranslations(word, dictionary);
+			auto foundTranslations = GetAllTranslations(word, dictionary);
 
 			if (!foundTranslations.empty())
 			{
-				cout << word << " : " << foundTranslations << endl;
+				//cout << word << " : " << foundTranslations << endl;
 			}
 			else
 			{

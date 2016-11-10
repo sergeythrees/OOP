@@ -7,6 +7,7 @@
 //#include <boost/archive/binary_oarchive.hpp>
 //#include <boost/archive/binary_iarchive.hpp>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -30,16 +31,17 @@ void SaveDictionaryToFile(fstream &file, Dictionary &dictionary)
 	//}
 }
 
-string GetAllTranslations(const string &word, Dictionary &dictionary)
+vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 {
-	string translations;
+	vector<string> translations;
+
 	if (IsWordRussian(word))
 	{
 		for (auto tCurrent : dictionary)
 		{
 			if (word == tCurrent.second)
 			{
-				translations.append(tCurrent.first + " | ");
+				translations.push_back(tCurrent.first);
 			}
 		}
 	}
@@ -50,7 +52,7 @@ string GetAllTranslations(const string &word, Dictionary &dictionary)
 		auto tEnd = translationsRange.second;
 		for (auto tCurrent = tBegin; tCurrent != tEnd; ++tCurrent)
 		{
-			translations.append(tCurrent->second + " | ");
+			translations.push_back(tCurrent->second);
 		}
 	}
 
