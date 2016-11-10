@@ -4,6 +4,7 @@
 typedef std::multimap <std::string, std::string> Dictionary;
 void GetDictionaryFromFile(std::fstream &fs, Dictionary &sset2);
 void SaveDictionaryToFile(std::fstream &fs, Dictionary &temp);
-std::string ToLower(std::string line);
+std::string ToLower(const std::string &line);
+bool IsWordRussian(const std::string &word);
 std::string FindTranslations(const std::string word, Dictionary &dictionary);
 void CreateNewPair(std::string word, Dictionary &dictionary);

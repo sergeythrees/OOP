@@ -53,20 +53,25 @@ void CreateNewPair(string word, Dictionary &dictionary) //if return true --> dic
 
 }
 
-char LetterToLower(char symbol)
+bool IsWordRussian(const string &word)
 {
-	if (symbol >= 'À' && symbol <= 'ß')
-		return symbol + 32;
-	else
-		return tolower(symbol);
+	for (auto symbol : word)
+	{
+		if (!(symbol >= 'À' && symbol <= 'ÿ'))
+			return false;
+	}
+	return true;
 }
 
-string ToLower(string line)
+string ToLower(const string &line)
 {
 	string result;
 	for (auto symbol : line)
 	{
-		result += LetterToLower(symbol);
+		if (symbol >= 'À' && symbol <= 'ß')
+			result += symbol + 32;
+		else
+			result += tolower(symbol);
 	}
 
 	return result;

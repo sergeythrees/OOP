@@ -5,12 +5,24 @@ using namespace std;
 
 BOOST_AUTO_TEST_SUITE(ToLower_function)
 
-BOOST_AUTO_TEST_CASE(replace_to_lower_russian_letters)
+BOOST_AUTO_TEST_CASE(should_replace_to_lower_russian_letters)
 {
-	string expectedResult = "яблоко";
-	string result = ToLower("ЯБЛОКО");
-	BOOST_CHECK(result == expectedResult);
+	BOOST_CHECK(ToLower("ЯБЛОКО") == "яблоко");
 }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(IsRussianWord_function)
+
+BOOST_AUTO_TEST_CASE(should_return_false_if_word_contain_not_russian_charaster)
+{
+	BOOST_CHECK(IsWordRussian("apple") == false);
+	BOOST_CHECK(IsWordRussian("APPLE") == false);
+	BOOST_CHECK(IsWordRussian("ЯблокоApple") == false);
+	BOOST_CHECK(IsWordRussian("Яблоко") == true);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
 
 //BOOST_AUTO_TEST_CASE(replace_required_substrings_once)
 //{
@@ -33,4 +45,4 @@ BOOST_AUTO_TEST_CASE(replace_to_lower_russian_letters)
 //	BOOST_CHECK(result == expectedResult);
 //}
 
-BOOST_AUTO_TEST_SUITE_END()
+
