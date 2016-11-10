@@ -39,7 +39,7 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 	{
 		for (auto tCurrent : dictionary)
 		{
-			if (word == tCurrent.second)
+			if (ToLower(word) == tCurrent.second)
 			{
 				translations.push_back(tCurrent.first);
 			}
@@ -47,7 +47,7 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 	}
 	else
 	{
-		auto translationsRange = dictionary.equal_range(word);
+		auto translationsRange = dictionary.equal_range(ToLower(word));
 		auto tBegin = translationsRange.first;
 		auto tEnd = translationsRange.second;
 		for (auto tCurrent = tBegin; tCurrent != tEnd; ++tCurrent)
