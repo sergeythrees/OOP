@@ -21,6 +21,7 @@ bool AreFilesOpened(const ifstream &input, const ofstream &output)
 	}
 	return true;
 }
+
 bool IsValidArgumentsCount(int argumensCount)
 {
 	if (argumensCount != MAX_NUM_OF_ARGUMENTS)
@@ -32,6 +33,7 @@ bool IsValidArgumentsCount(int argumensCount)
 
 	return true;
 }
+
 bool IsSearchStringNotEmpty(const string &searchString)
 {
 	if (searchString.empty())
@@ -42,6 +44,7 @@ bool IsSearchStringNotEmpty(const string &searchString)
 
 	return true;
 }
+
 string::size_type KMP_search(const string& inputLine, size_t begin, const string& searchString) {
 	vector<size_t> prefixFunction(searchString.length());
 
@@ -69,6 +72,7 @@ string::size_type KMP_search(const string& inputLine, size_t begin, const string
 
 	return (string::npos);
 }
+
 void ReplaceSubString(string &inputLine, const string &searchString, const string &replaceString)
 {
 	if ((searchString == replaceString) || searchString.empty())
@@ -90,6 +94,7 @@ void ReplaceSubString(string &inputLine, const string &searchString, const strin
 	if (currentPosition != 0)
 		inputLine = result.append(inputLine, currentPosition, inputLine.length() - currentPosition);
 }
+
 void ReplaceSubstringsInFile(ifstream &input, ofstream &output, const string &searchString, const string &replaceString)
 {
 	size_t numberOfReplacements = 0;
@@ -102,6 +107,7 @@ void ReplaceSubstringsInFile(ifstream &input, ofstream &output, const string &se
 			output << endl;
 	}
 }
+
 bool IsFileSaved(ofstream &outputFile)
 {
 	if (!outputFile.flush())
@@ -111,6 +117,7 @@ bool IsFileSaved(ofstream &outputFile)
 	}
 	return true;
 }
+
 int main(int argc, char *argv[])
 {
 	if (!IsValidArgumentsCount(argc))
