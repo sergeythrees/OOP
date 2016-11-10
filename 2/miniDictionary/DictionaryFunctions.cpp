@@ -30,20 +30,30 @@ void SaveDictionaryToFile(fstream &file, Dictionary &dictionary)
 	//}
 }
 
-string FindTranslations(const string word, Dictionary &dictionary)
+string GetAllTranslations(const string &word, Dictionary &dictionary)
 {
 	string translations;
-	for (auto currentPair : dictionary)
+	if (IsWordRussian(word))
 	{
-		if (word == currentPair.first)
+		for (auto tCurrent : dictionary)
 		{
-			translations.append(currentPair.second + " | ");
-		}
-		if (word == currentPair.second)
-		{
-			translations.append(currentPair.first + " | ");
+			if (word == tCurrent.second)
+			{
+				translations.append(tCurrent.first + " | ");
+			}
 		}
 	}
+	else
+	{
+		auto translationsRange = dictionary.equal_range(word);
+		auto tBegin = translationsRange.first;
+		auto tEnd = translationsRange.second;
+		for (auto tCurrent = tBegin; tCurrent != tEnd; ++tCurrent)
+		{
+			translations.append(tCurrent->second + " | ");
+		}
+	}
+
 	return translations;
 }
 
@@ -73,6 +83,5 @@ string ToLower(const string &line)
 		else
 			result += tolower(symbol);
 	}
-
 	return result;
 }
