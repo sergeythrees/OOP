@@ -8,8 +8,8 @@
     using std::begin; \
     using std::end; \
     auto a = begin(aa), ae = end(aa); \
-    auto b = begin(bb); \
-    BOOST_REQUIRE_EQUAL(distance(a, ae), distance(b, end(bb))); \
+    auto b = begin(bb), be = end(bb); \
+    BOOST_REQUIRE_EQUAL(distance(a, ae), distance(b, be)); \
     for(; a != ae; ++a, ++b) { \
         BOOST_CHECK_CLOSE(*a, *b, tolerance); \
     } \
