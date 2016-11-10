@@ -2,85 +2,72 @@
 #include "DictionaryFunctions.h"
 #include <fstream>
 #include <iostream>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/serialization/map.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/range/algorithm/transform.hpp>
-#include <locale>
+//#include <boost/serialization/map.hpp>
+//#include <boost/serialization/string.hpp>
+//#include <boost/archive/binary_oarchive.hpp>
+//#include <boost/archive/binary_iarchive.hpp>
+#include <algorithm>
 
 using namespace std;
 
-map<char, char> rusAlphabet 
-{
-	{ 'À','à' },{ 'Á','á' },{ 'Â','â' },{ 'Ã','ã' },{ 'Ä','ä' },{ 'Å','å' },
-	{ '¨','¸' },{ 'Æ','æ' },{ 'Ç','ç' },{ 'È','è' },{ 'É','é' },{ 'Ê','ê' },
-	{ 'Ë','ë' },{ 'Ì','ì' },{ 'Í','í' },{ 'Î','î' },{ 'Ï','ï' },{ 'Ð','ð' },
-	{ 'Ñ','ñ' },{ 'Ò','ò' },{ 'Ó','ó' },{ 'Ô','ô' },{ 'Õ','õ' },{ 'Ö','ö' },
-	{ '×','÷' },{ 'Ø','ø' },{ 'Ù','Ù' },{ 'Û','û' },{ 'Ú','ú' },{ 'Ü','Ü' },
-	{'Ý','Ý'},{ 'Þ','Þ' },{ 'ß','ß' } 
-};
-	
-
 void GetDictionaryFromFile(fstream &file, Dictionary &dictionary)
 {
-	if (file.is_open())
+	/*if (file.is_open())
 	{
-		boost::archive::binary_iarchive bia(file);
-		bia >> dictionary;
-		file.close();
-	}
+	boost::archive::binary_iarchive bia(file);
+	bia >> dictionary;
+	file.close();
+	}*/
 }
 
 void SaveDictionaryToFile(fstream &file, Dictionary &dictionary)
 {
-	if (file.is_open())
+	//if (file.is_open())
+	//{
+	//	boost::archive::binary_oarchive boa(file);
+	//	boa << dictionary;
+	//	file.close();
+	//}
+}
+
+string FindTranslations(const string word, Dictionary &dictionary)
+{
+	string translations;
+	for (auto currentPair : dictionary)
 	{
-		boost::archive::binary_oarchive boa(file);
-		boa << dictionary;
-		file.close();
-	}
-}
-
-const string* FindTranslation(const string word, Dictionary &dictionary)
-{
-	for (Dictionary::iterator currentPair = dictionary.begin(); currentPair != dictionary.end(); ++currentPair)
-	{
-		if (word == currentPair->first)
+		if (word == currentPair.first)
 		{
-			return &(currentPair->second);
+			translations.append(currentPair.second + " | ");
 		}
-		if (word == currentPair->second)
+		if (word == currentPair.second)
 		{
-			return &(currentPair->first);
+			translations.append(currentPair.first + " | ");
 		}
 	}
-
-	return nullptr;
+	return translations;
 }
 
-bool CreateNewPair(string word, Dictionary &dictionary) //if return true --> dictionary was changed
+void CreateNewPair(string word, Dictionary &dictionary) //if return true --> dictionary was changed
 {
-	return true;
+
+
 }
 
-char LetterToLower(const char symbol)
+char LetterToLower(char symbol)
 {
-	auto foundPair = rusAlphabet.find(symbol);
-
-	if (foundPair->first == symbol)
-		return foundPair->second;
+	if (symbol >= 'À' && symbol <= 'ß')
+		return symbol + 32;
 	else
 		return tolower(symbol);
 }
 
-string ToLower(const string line)
+string ToLower(string line)
 {
 	string result;
 	for (auto symbol : line)
 	{
 		result += LetterToLower(symbol);
 	}
-	//boost::transform(line, result.begin(), LetterToLower);
+
 	return result;
 }
