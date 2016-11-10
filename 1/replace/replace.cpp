@@ -90,7 +90,7 @@ void ReplaceSubString(string &inputLine, const string &searchString, const strin
 	if (currentPosition != 0)
 		inputLine = result.append(inputLine, currentPosition, inputLine.length() - currentPosition);
 }
-void Replace(ifstream &input, ofstream &output, const string &searchString, const string &replaceString)
+void ReplaceSubstringsInFile(ifstream &input, ofstream &output, const string &searchString, const string &replaceString)
 {
 	size_t numberOfReplacements = 0;
 	string currentLine;
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
 	if (!AreFilesOpened(input, output))
 		return 1;
 
-	Replace(input, output, argv[3], argv[4]);
+	ReplaceSubstringsInFile(input, output, argv[3], argv[4]);
 
 	if (!IsFileSaved(output))
 		return 1;
