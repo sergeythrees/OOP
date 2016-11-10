@@ -24,6 +24,16 @@ BOOST_AUTO_TEST_CASE(should_return_false_if_word_contain_not_russian_charaster)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE(GetAllTranslation_function)
+
+BOOST_AUTO_TEST_CASE(should_return_all_translations_of_russian_word_to_english)
+{
+	multimap<string, string> Dictionary = { { "яблоко","apple" },{ "темный","dark" },{ "Темный","black" },{ "апельсин","orange" } };
+	vector<string> translations = { "dark", "black" };
+	BOOST_CHECK(GetAllTranslations("темный", Dictionary) == translations);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
 //BOOST_AUTO_TEST_CASE(replace_required_substrings_once)
 //{
 //	vector<pair<string, string>> htmlMap = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };
