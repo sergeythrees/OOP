@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 static const int MAX_NUM_OF_ARGUMENTS = 5;
@@ -41,36 +42,53 @@ bool IsSearchStringNotEmpty(const string &searchString)
 
 	return true;
 }
-size_t ReplaceSubString(const string &inputLine, const string &searchString, const string &replaceString, ofstream &output)
+string::size_type KMP_search(const string& inputLine, size_t begin, const string& searchString) {
+	vector<size_t> prefixFunction(searchString.length());
+
+	prefixFunction[0] = 0;
+	for (size_t k = 0, readPos = 1; readPos < searchString.length(); ++readPos) {
+		while (k > 0 && searchString[readPos] != searchString[k])
+			k = prefixFunction[k - 1];
+
+		if (searchString[readPos] == searchString[k])
+			k++;
+
+		prefixFunction[readPos] = k;
+	}
+
+	for (size_t k = 0, readPos = begin; readPos < inputLine.length(); ++readPos) {
+		while ((k > 0) && (searchString[k] != inputLine[readPos]))
+			k = prefixFunction[k - 1];
+
+		if (searchString[k] == inputLine[readPos])
+			k++;
+
+		if (k == searchString.length())
+			return (readPos - searchString.length() + 1);//либо продолжаем поиск следующих вхождений
+	}
+
+	return (string::npos);
+}
+void ReplaceSubString(string &inputLine, const string &searchString, const string &replaceString)
 {
-	if (searchString == replaceString)
-	{
-		output << inputLine;
-		return 0;
-	}
-	size_t foundPosition = inputLine.find(searchString);
-	if (foundPosition == inputLine.npos)
-	{
-		output << inputLine;
-		return 0;
-	}
-		
+	if ((searchString == replaceString) || searchString.empty())
+		return;
+
+	size_t foundPosition = 0;
 	size_t currentPosition = 0;
 	size_t numberOfReplacements = 0;
 	string result;
 	result.reserve(inputLine.length());
 
-	while (foundPosition != inputLine.npos)
+	while ((foundPosition = KMP_search(inputLine, currentPosition, searchString)) != string::npos)
 	{
 		result.append(inputLine, currentPosition, foundPosition - currentPosition);
 		result += replaceString;
 		currentPosition = foundPosition + searchString.length();
-		foundPosition = inputLine.find(searchString, currentPosition);
-		++numberOfReplacements;
 	}
-	output << result.append(inputLine, currentPosition, inputLine.length() - currentPosition);
 
-	return numberOfReplacements;
+	if (currentPosition != 0)
+		inputLine = result.append(inputLine, currentPosition, inputLine.length() - currentPosition);
 }
 void Replace(ifstream &input, ofstream &output, const string &searchString, const string &replaceString)
 {
@@ -78,11 +96,11 @@ void Replace(ifstream &input, ofstream &output, const string &searchString, cons
 	string currentLine;
 	while (getline(input, currentLine))
 	{
-		numberOfReplacements += ReplaceSubString(currentLine, searchString, replaceString, output);
+		ReplaceSubString(currentLine, searchString, replaceString);
+		output << currentLine;
 		if (!input.eof())
 			output << endl;
 	}
-	cout << "Number of replacements: " << numberOfReplacements << "\n";
 }
 bool IsFileSaved(ofstream &outputFile)
 {
