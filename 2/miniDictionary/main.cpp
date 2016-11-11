@@ -1,10 +1,7 @@
 #include "stdafx.h"
-#include <iostream>
-#include <iterator>
 #include <locale>
-#include <fstream>
+#include <iostream>
 #include <string>
-#include <map>
 #include "Windows.h"
 #include "MainFunctions.h"
 #include "DictionaryFunctions.h"
@@ -69,6 +66,5 @@ void MainLoop(Dictionary &dictionary)
 			}
 		}
 		cout << ">";
-		//cin.clear();
 	}
 }

@@ -1,16 +1,5 @@
 #include "stdafx.h"
-#include <fstream>
-#include <iostream>
-#include <boost/serialization/map.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <algorithm>
-#include <vector>
-#include <set>
 #include "DictionaryFunctions.h"
-
-using namespace std;
 
 void FillDictionaryFromInputStream(istream &input, Dictionary &dictionary)
 {

@@ -1,10 +1,15 @@
 #pragma once
 #include "stdafx.h"
+#include <string>
+#include <vector>
+#include <map>
 
-typedef std::multimap <std::string, std::string> Dictionary;
-void FillDictionaryFromInputStream(std::istream &input, Dictionary &dictionary);
-void PrintDictionaryToOutputStream(std::ostream &output, Dictionary &dictionary);
-std::string ToLower(const std::string &line);
-bool IsWordRussian(const std::string &word);
-std::vector<std::string> GetAllTranslations(const std::string &word, Dictionary &dictionary);
-void InsertNewPair(const std::string &word, const std::string &translation, Dictionary &dictionary);
+using namespace std;
+
+typedef multimap <string, string> Dictionary;
+void FillDictionaryFromInputStream(istream &input, Dictionary &dictionary);
+void PrintDictionaryToOutputStream(ostream &output, Dictionary &dictionary);
+string ToLower(const string &line);
+bool IsWordRussian(const string &word);
+vector<string> GetAllTranslations(const string &word, Dictionary &dictionary);
+void InsertNewPair(const string &word, const string &translation, Dictionary &dictionary);

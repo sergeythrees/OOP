@@ -1,12 +1,6 @@
 #include "stdafx.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <map>
 #include "MainFunctions.h"
 #include "DictionaryFunctions.h"
-
-using namespace std;
 
 bool HasUserAgreed(string question)
 {
