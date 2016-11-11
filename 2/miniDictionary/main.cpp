@@ -19,8 +19,9 @@ void MainLoop(Dictionary dictionary);
 
 int main()
 {
-	setlocale(LC_ALL, "Russian");
-
+	setlocale(LC_ALL, "rus");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 	//std::fstream file;
 	//Dictionary dictionary;
 	//Dictionary dict{ { "", "" } ,{ "fgdgdfg", "ûגûגאûא" },{ "ûגאגא", "גאûגא" } ,{ "sdsd", "sds" } };
