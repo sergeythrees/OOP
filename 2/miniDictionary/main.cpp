@@ -25,8 +25,8 @@ int main()
 
 	MainLoop(dictionary);
 
-	if (wasChangedDictionary
-		&& HasUserAgreed("Словарь был изменен, сохранить изменения в файл?"))
+	if (wasChangedDictionary &&
+		HasUserAgreed("Словарь был изменен, сохранить изменения в файл?"))
 	{
 		if (!SaveDictionaryToFile("словарь.txt", dictionary))
 		{
