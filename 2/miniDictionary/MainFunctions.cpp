@@ -59,3 +59,27 @@ bool HasInsertedNewPairInToDictionary(const string &word, Dictionary &dictionary
 	cout << endl;
 	return false;
 }
+
+bool GetDictionaryFromFile(const string &fileName, Dictionary &dictionary)
+{
+	ifstream file(fileName);
+	if (file.is_open())
+	{
+		FillDictionaryFromInputStream(file, dictionary);
+		file.close();
+		return true;
+	}
+	return false;
+}
+
+bool SaveDictionaryToFile(const string &fileName, Dictionary &dictionary)
+{
+	ofstream fileOut(fileName);
+	if (fileOut.is_open())
+	{
+		PrintDictionaryToOutputStream(fileOut, dictionary);
+		fileOut.close();
+		return true;
+	}
+	return false;
+}

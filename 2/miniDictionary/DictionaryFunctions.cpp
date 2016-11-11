@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void FillDictionaryFromSStream(istream &input, Dictionary &dictionary)
+void FillDictionaryFromInputStream(istream &input, Dictionary &dictionary)
 {
 	string word, translation;
 	while (getline(input, word) && getline(input, translation))
@@ -21,31 +21,12 @@ void FillDictionaryFromSStream(istream &input, Dictionary &dictionary)
 	}
 }
 
-bool GetDictionaryFromFile(const string &fileName, Dictionary &dictionary)
+void PrintDictionaryToOutputStream(ostream &output, Dictionary &dictionary)
 {
-	ifstream file(fileName);
-	if (file.is_open())
+	for (auto currentPair : dictionary)
 	{
-		FillDictionaryFromSStream(file, dictionary);
-		file.close();
-		return true;
+		output << currentPair.first << endl << currentPair.second << endl;
 	}
-	return false;
-}
-
-bool SaveDictionaryToFile(const string &fileName, Dictionary &dictionary)
-{
-	ofstream fileOut(fileName);
-	if (fileOut.is_open())
-	{
-		for (auto currentPair : dictionary)
-		{
-			fileOut << currentPair.first << endl << currentPair.second << endl;
-		}
-		fileOut.close();
-		return true;
-	}
-	return false;
 }
 
 vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
@@ -79,9 +60,9 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 void InsertNewPair(const string &word, const string &translation, Dictionary &dictionary) //if return true --> dictionary was changed
 {
 	if (IsWordRussian(word))
-		dictionary.insert({ ToLower(translation), ToLower(word) });
+		dictionary.insert(make_pair(translation, word));
 	else
-		dictionary.insert({ ToLower(word), ToLower(translation) });
+		dictionary.insert(make_pair(word, translation));
 }
 
 bool IsWordRussian(const string &word)

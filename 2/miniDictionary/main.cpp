@@ -13,7 +13,7 @@ using namespace std;
 
 bool wasChangedDictionary = false;
 
-void MainLoop(Dictionary dictionary);
+void MainLoop(Dictionary &dictionary);
 
 
 int main()
@@ -37,7 +37,7 @@ int main()
     return 0;
 }
 
-void MainLoop(Dictionary dictionary)
+void MainLoop(Dictionary &dictionary)
 {
 	string word;
 	cout << "¬ведите слово дл€ перевода, \":\" дл€ ввода нового(варианта) перевода или \"...\" дл€ завершени€ работы со словарем" << endl;
