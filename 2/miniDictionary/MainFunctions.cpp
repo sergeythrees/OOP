@@ -1,15 +1,16 @@
 #include "stdafx.h"
-#include "DictionaryFunctions.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <map>
+#include "MainFunctions.h"
+#include "DictionaryFunctions.h"
 
 using namespace std;
 
 bool HasUserAgreed(string question)
 {
-	cout << question << endl;
+	cout << question << " (םאלזלטעו \"Y\", וסכט הא)" << endl;
 
 	string answer;
 
@@ -22,3 +23,10 @@ bool HasUserAgreed(string question)
 	return false;
 }
 
+void PrintFormatedTranlations(const vector<string> &translations, ostream &output)
+{
+	for (auto tCurrent : translations)
+	{
+		output << "   - " << tCurrent << "\n";
+	}
+}
