@@ -67,13 +67,10 @@ void MainLoop(Dictionary dictionary)
 				PrintFormatedTranlations(foundTranslations, cout);
 			else
 			{
-				if (HasUserAgreed("Перевод не найден. Внести новое слово в словарь?"))
-				{
-					
-					wasChangedDictionary = true;
-				}
-			}
+				cout << "Перевод не найден." << endl;
+				wasChangedDictionary = HasInsertedNewPairInToDictionary(word, dictionary);
 
+			}
 		}
 		cout << ">";
 		//cin.clear();

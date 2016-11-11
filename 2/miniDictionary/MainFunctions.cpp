@@ -34,15 +34,12 @@ void PrintFormatedTranlations(const vector<string> &translations, ostream &outpu
 bool HasInsertedNewPairInToDictionary(const string &word, Dictionary &dictionary)
 {
 	string translation;
-	cout << "¬ведите перевод или \".\"дл€ отмены" << endl;
-	while (getline(cin, translation) && translation.empty())
-	{
-		cout << "ѕуста€ строка, введите слово" << endl;
-	}
-	if (translation != ".") 
+	cout << "¬ведите перевод или пустую строку дл€ отмены" << endl;
+	if (getline(cin, translation) && translation.empty())
 	{
 		InsertNewPair(word, translation, dictionary);
 		return true;
 	}
+
 	return false;
 }
