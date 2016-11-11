@@ -49,9 +49,9 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 void InsertNewPair(const string &word, const string &translation, Dictionary &dictionary) //if return true --> dictionary was changed
 {
 	if (IsWordRussian(word))
-		dictionary.insert(make_pair(translation, word));
+		dictionary.insert(make_pair(ToLower(translation), ToLower(word)));
 	else
-		dictionary.insert(make_pair(word, translation));
+		dictionary.insert(make_pair(ToLower(word), ToLower(translation)));
 }
 
 bool IsWordRussian(const string &word)
