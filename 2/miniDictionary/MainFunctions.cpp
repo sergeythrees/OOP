@@ -63,6 +63,7 @@ bool GetDictionaryFromFile(const string &fileName, Dictionary &dictionary)
 		file.close();
 		return true;
 	}
+
 	return false;
 }
 
@@ -75,5 +76,7 @@ bool SaveDictionaryToFile(const string &fileName, Dictionary &dictionary)
 		fileOut.close();
 		return true;
 	}
+
+	cout << "Не удалось сохранить словарь в файл, попробуйте сменить расположение или имя файла" << endl;
 	return false;
 }
