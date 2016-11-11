@@ -1,35 +1,51 @@
 #include "stdafx.h"
-#include "DictionaryFunctions.h"
 #include <fstream>
 #include <iostream>
-//#include <boost/serialization/map.hpp>
-//#include <boost/serialization/string.hpp>
-//#include <boost/archive/binary_oarchive.hpp>
-//#include <boost/archive/binary_iarchive.hpp>
+#include <boost/serialization/map.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 #include <algorithm>
 #include <vector>
 #include <set>
+#include "DictionaryFunctions.h"
 
 using namespace std;
 
-void GetDictionaryFromFile(fstream &file, Dictionary &dictionary)
+void FillDictionaryFromSStream(istream &input, Dictionary &dictionary)
 {
-	/*if (file.is_open())
+	string word, translation;
+	while (getline(input, word) && getline(input, translation))
 	{
-	boost::archive::binary_iarchive bia(file);
-	bia >> dictionary;
-	file.close();
-	}*/
+		dictionary.insert(make_pair(word, translation));
+	}
 }
 
-void SaveDictionaryToFile(fstream &file, Dictionary &dictionary)
+bool GetDictionaryFromFile(const string &fileName, Dictionary &dictionary)
 {
-	//if (file.is_open())
-	//{
-	//	boost::archive::binary_oarchive boa(file);
-	//	boa << dictionary;
-	//	file.close();
-	//}
+	ifstream file(fileName);
+	if (file.is_open())
+	{
+		FillDictionaryFromSStream(file, dictionary);
+		file.close();
+		return true;
+	}
+	return false;
+}
+
+bool SaveDictionaryToFile(const string &fileName, Dictionary &dictionary)
+{
+	ofstream fileOut(fileName);
+	if (fileOut.is_open())
+	{
+		for (auto currentPair : dictionary)
+		{
+			fileOut << currentPair.first << endl << currentPair.second << endl;
+		}
+		fileOut.close();
+		return true;
+	}
+	return false;
 }
 
 vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)

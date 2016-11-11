@@ -1,11 +1,11 @@
 #include "stdafx.h"
-#include "Windows.h"
 #include <iostream>
 #include <iterator>
 #include <locale>
 #include <fstream>
 #include <string>
 #include <map>
+#include "Windows.h"
 #include "MainFunctions.h"
 #include "DictionaryFunctions.h"
 
@@ -21,29 +21,18 @@ int main()
 	setlocale(LC_ALL, "rus");
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	//std::fstream file;
-	//Dictionary dictionary;
-	//Dictionary dict{ { "", "" } ,{ "fgdgdfg", "ывываыа" },{ "ывава", "ваыва" } ,{ "sdsd", "sds" } };
-	//file.open("словарь", std::ios::out | std::ios::binary);
-	//SaveDictionaryToFile(file, dict);
 
-	//file.open("словарь", std::ios::in | std::ios::binary);
-	//GetDictionaryFromFile(file, dictionary);
+	Dictionary dictionary;
 
-	multimap<string, string> dictionary =
-	{
-		{ "apple" , "€блоко" },{ "black" , "темный" },{ "dark" , "темный" } ,
-		{ "key" , "ключ" },{ "key" , "клавиша" },{ "orange" , "апельсин" },
-		{ "shadow" , "темный" }
-	};
+	GetDictionaryFromFile("словарь.txt", dictionary);
 
 	MainLoop(dictionary);
 
-	//if (wasChangedDictionary
-	//	&& HasUserAgreed("—ловарь был изменен, сохранить изменени€ в файл?"))
-	//{
-	//	SaveDictionaryToFile(file, dictionary);
-	//}
+	if (wasChangedDictionary
+		&& HasUserAgreed("—ловарь был изменен, сохранить изменени€ в файл?"))
+	{
+		SaveDictionaryToFile("словарь.txt", dictionary);
+	}
 
     return 0;
 }
