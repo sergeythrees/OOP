@@ -31,7 +31,10 @@ int main()
 	if (wasChangedDictionary
 		&& HasUserAgreed("Словарь был изменен, сохранить изменения в файл?"))
 	{
-		SaveDictionaryToFile("словарь.txt", dictionary);
+		if (!SaveDictionaryToFile("словарь.txt", dictionary))
+		{
+			cout << "Не удалось сохранить словарь в файл" << endl;
+		}
 	}
 
     return 0;
