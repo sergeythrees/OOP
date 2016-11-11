@@ -72,6 +72,26 @@ BOOST_AUTO_TEST_SUITE_END()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+BOOST_AUTO_TEST_SUITE(InsertNewPair_function)
+
+BOOST_AUTO_TEST_CASE(should_insert_new_pair_from_english_and_russian_words_into_dictionary)
+{
+	multimap<string, string> EmptyDictionary;
+	multimap<string, string> Dictionary =
+	{ { "key" , "клавиша" } };
+	multimap<string, string> UpdatedDictionary =
+	{ { "key" , "клавиша" }, { "key" , "ключ" },};
+
+	InsertNewPair("key", "клавиша", EmptyDictionary);
+	BOOST_CHECK(EmptyDictionary == Dictionary);
+
+	InsertNewPair("key", "ключ", Dictionary);
+	BOOST_CHECK(Dictionary == UpdatedDictionary);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 //BOOST_AUTO_TEST_CASE(replace_required_substrings_once)
 //{
 //	vector<pair<string, string>> htmlMap = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };

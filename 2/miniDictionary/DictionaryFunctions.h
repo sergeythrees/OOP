@@ -7,4 +7,4 @@ void SaveDictionaryToFile(std::fstream &fs, Dictionary &temp);
 std::string ToLower(const std::string &line);
 bool IsWordRussian(const std::string &word);
 std::vector<std::string> GetAllTranslations(const std::string &word, Dictionary &dictionary);
-void CreateNewPair(std::string word, Dictionary &dictionary);
+void InsertNewPair(const std::string &word, const std::string &translation, Dictionary &dictionary);

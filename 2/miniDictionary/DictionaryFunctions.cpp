@@ -60,7 +60,7 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 	return translations;
 }
 
-void InsertNewPairInToDictionary(const string &word, const string &translation, Dictionary &dictionary) //if return true --> dictionary was changed
+void InsertNewPair(const string &word, const string &translation, Dictionary &dictionary) //if return true --> dictionary was changed
 {
 	if (IsWordRussian(word))
 		dictionary.insert({ ToLower(translation), ToLower(word) });

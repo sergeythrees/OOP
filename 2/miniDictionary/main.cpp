@@ -68,7 +68,7 @@ void MainLoop(Dictionary dictionary)
 			{
 				if (HasUserAgreed("Перевод не найден. Внести новое слово в словарь?"))
 				{
-					CreateNewPair(word, dictionary);
+					
 					wasChangedDictionary = true;
 				}
 			}
