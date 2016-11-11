@@ -11,7 +11,6 @@
 
 using namespace std;
 
-static const string EXIT_STRING = "...";
 bool wasChangedDictionary = false;
 
 void MainLoop(Dictionary dictionary);
@@ -52,13 +51,18 @@ int main()
 void MainLoop(Dictionary dictionary)
 {
 	string word;
-	cout << "Введите слово для перевода или \"" + EXIT_STRING + "\" для завершения работы со словарем" << endl;
+	cout << "Введите слово для перевода, \":\" для ввода нового(варианта) перевода или \"...\" для завершения работы со словарем" << endl;
 	cout << ">";
 
-	while (getline(cin, word) && (word != EXIT_STRING))
+	while (getline(cin, word) && (word != "..."))
 	{
 		if (word.empty())
 			cout << "Пустая строка, введите слово" << endl;
+		else if(word == ":")
+		{
+			if (HasInsertedNewPairInToDictionary("", dictionary))
+				wasChangedDictionary = true;
+		}
 		else
 		{
 			auto foundTranslations = GetAllTranslations(word, dictionary);
@@ -68,8 +72,8 @@ void MainLoop(Dictionary dictionary)
 			else
 			{
 				cout << "Перевод не найден." << endl;
-				wasChangedDictionary = HasInsertedNewPairInToDictionary(word, dictionary);
-
+				if (HasInsertedNewPairInToDictionary(word, dictionary))
+						wasChangedDictionary = true;
 			}
 		}
 		cout << ">";
