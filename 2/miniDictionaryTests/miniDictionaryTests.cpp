@@ -3,6 +3,10 @@
 
 using namespace std;
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 BOOST_AUTO_TEST_SUITE(ToLower_function)
 
 BOOST_AUTO_TEST_CASE(should_replace_to_lower_russian_letters)
@@ -11,6 +15,10 @@ BOOST_AUTO_TEST_CASE(should_replace_to_lower_russian_letters)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 
 BOOST_AUTO_TEST_SUITE(IsRussianWord_function)
 
@@ -24,16 +32,46 @@ BOOST_AUTO_TEST_CASE(should_return_false_if_word_contain_not_russian_charaster)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 BOOST_AUTO_TEST_SUITE(GetAllTranslation_function)
 
 BOOST_AUTO_TEST_CASE(should_return_all_translations_of_russian_word_to_english)
 {
-	multimap<string, string> Dictionary = { { "€блоко","apple" },{ "темный","dark" },{ "“емный","black" },{ "апельсин","orange" } };
-	vector<string> translations = { "dark", "black" };
+	multimap<string, string> Dictionary = 
+	{ 
+		{ "apple" , "€блоко" }, { "black" , "темный" }, { "dark" , "темный" } ,	
+		{ "key" , "ключ" }, { "key" , "клавиша" }, {"orange" , "апельсин" }, 
+		{ "shadow" , "темный" } 
+	};
+
+	vector<string> translations = { "black" , "dark" , "shadow"};
 	BOOST_CHECK(GetAllTranslations("темный", Dictionary) == translations);
+	BOOST_CHECK(GetAllTranslations("“емный", Dictionary) == translations);
+}
+
+BOOST_AUTO_TEST_CASE(should_return_all_translations_of_english_word_to_russian)
+{
+	multimap<string, string> Dictionary =
+	{
+		{ "apple" , "€блоко" },{ "black" , "темный" },{ "dark" , "темный" } ,
+		{ "key" , "ключ" },{ "key" , "клавиша" },{ "orange" , "апельсин" },
+		{ "shadow" , "темный" }
+	};
+
+	vector<string> translations = { "ключ" , "клавиша"};
+	BOOST_CHECK(GetAllTranslations("key", Dictionary) == translations);
+	BOOST_CHECK(GetAllTranslations("Key", Dictionary) == translations);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 //BOOST_AUTO_TEST_CASE(replace_required_substrings_once)
 //{
 //	vector<pair<string, string>> htmlMap = { { "&quot;", "\"" },{ "&apos;", "'" },{ "&lt;", "<" },{ "&gt;", ">" },{ "&amp;", "&" } };
