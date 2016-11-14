@@ -45,7 +45,8 @@ bool IsSearchStringNotEmpty(const string &searchString)
 	return true;
 }
 
-string::size_type KMP_search(const string& inputLine, size_t begin, const string& searchString) {
+string::size_type KMP_search(const string& inputLine, size_t begin, const string& searchString) 
+{
 	vector<size_t> prefixFunction(searchString.length());
 
 	prefixFunction[0] = 0;
@@ -80,7 +81,6 @@ void ReplaceSubString(string &inputLine, const string &searchString, const strin
 
 	size_t foundPosition = 0;
 	size_t currentPosition = 0;
-	size_t numberOfReplacements = 0;
 	string result;
 	result.reserve(inputLine.length());
 
