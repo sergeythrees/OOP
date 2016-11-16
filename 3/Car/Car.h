@@ -14,8 +14,6 @@ enum Gear
 class CCar
 {
 public:
-	CCar();
-	~CCar();
 
 	bool IsTurnedOn() const;
 	Direction GetDirection() const;
