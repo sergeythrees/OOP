@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE(should_makes_empty_dictionary_from_empty_file)
 	BOOST_CHECK(EmptyDictionary.empty());
 }
 
-BOOST_AUTO_TEST_CASE(should_add_new_pair_to_non-empty_dictionary)
+BOOST_AUTO_TEST_CASE(should_add_new_pair_to_non_empty_dictionary)
 {
 	Dictionary Dictionary =
 	{ { "key", "клавиша" } };
