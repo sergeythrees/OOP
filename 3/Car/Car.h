@@ -18,11 +18,11 @@ public:
 	bool IsTurnedOn() const;
 	Direction GetDirection() const;
 	int GetSpeed() const;
-	int GetGear() const;
+	Gear GetGear() const;
 
 	bool TurnOnEngine();
 	bool TurnOffEngine();
-	bool SetGear(int gear);
+	bool SetGear(Gear gear);
 	bool SetSpeed(int speed);
 private:
 	bool IsSpeedInRange(int speed, Gear currentGear) const;

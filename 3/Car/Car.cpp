@@ -3,6 +3,10 @@
 
 bool CCar::IsTurnedOn() const
 {
+	if (m_isTurnedOn)
+	{
+		return true;
+	}
 	return false;
 }
 
@@ -16,13 +20,18 @@ int CCar::GetSpeed() const
 	return 0;
 }
 
-int CCar::GetGear() const
+Gear CCar::GetGear() const
 {
-	return 0;
+	return m_gear;
 }
 
 bool CCar::TurnOnEngine()
 {
+	if (m_isTurnedOn == false)
+	{
+		m_isTurnedOn = true;
+		return true;
+	}
 	return false;
 }
 
@@ -31,8 +40,27 @@ bool CCar::TurnOffEngine()
 	return false;
 }
 
-bool CCar::SetGear(int gear)
+bool CCar::SetGear(Gear gear)
 {
+	switch (gear)
+	{
+	case NEUTRAL:
+		if ((m_gear == NEUTRAL) || (m_gear == FIRST) || (m_gear == REVERSE))
+		{
+			m_gear = gear;
+			return true;
+		}
+		break;
+	case REVERSE:
+		if ((m_gear == NEUTRAL) || (m_gear == REVERSE))
+		{
+			m_gear = gear;
+			return true;
+		}
+		break;
+	}
+		
+
 	return false;
 }
 
