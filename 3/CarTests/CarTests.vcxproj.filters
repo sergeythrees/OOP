@@ -4,10 +4,10 @@
     <ClCompile Include="CarTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="..\Car\Car.cpp">
       <Filter>Existing items</Filter>
     </ClCompile>
-    <ClCompile Include="Car.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
