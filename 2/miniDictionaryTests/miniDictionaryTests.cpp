@@ -13,8 +13,8 @@ BOOST_AUTO_TEST_CASE(should_replace_russian_and_english_letters_in_word_to_lower
 {
 	BOOST_CHECK(ToLower("APPLE") == "apple"); 
 	BOOST_CHECK(ToLower("Apple") == "apple");
-	BOOST_CHECK(ToLower("ЯБЛОКО") == "яблоко");
-	BOOST_CHECK(ToLower("Яблоко") == "яблоко");
+	BOOST_CHECK(ToLower("ГџГЃГ‹ГЋГЉГЋ") == "ГїГЎГ«Г®ГЄГ®");
+	BOOST_CHECK(ToLower("ГџГЎГ«Г®ГЄГ®") == "ГїГЎГ«Г®ГЄГ®");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -28,8 +28,8 @@ BOOST_AUTO_TEST_SUITE(IsRussianWord_function)
 BOOST_AUTO_TEST_CASE(should_return_false_if_word_contain_not_russian_charaster)
 {
 	BOOST_CHECK(IsWordRussian("apple") == false);
-	BOOST_CHECK(IsWordRussian("ЯблокоApple") == false);
-	BOOST_CHECK(IsWordRussian("Яблоко") == true);
+	BOOST_CHECK(IsWordRussian("ГџГЎГ«Г®ГЄГ®Apple") == false);
+	BOOST_CHECK(IsWordRussian("ГџГЎГ«Г®ГЄГ®") == true);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -44,26 +44,26 @@ BOOST_AUTO_TEST_CASE(should_return_all_translations_of_russian_word_to_english)
 {
 	multimap<string, string> Dictionary = 
 	{ 
-		{ "apple" , "яблоко" }, { "black" , "темный" }, { "dark" , "темный" } ,	
-		{ "key" , "ключ" }, { "key" , "клавиша" }, {"orange" , "апельсин" }, 
-		{ "shadow" , "темный" } 
+		{ "apple" , "ГїГЎГ«Г®ГЄГ®" }, { "black" , "ГІГҐГ¬Г­Г»Г©" }, { "dark" , "ГІГҐГ¬Г­Г»Г©" } ,	
+		{ "key" , "ГЄГ«ГѕГ·" }, { "key" , "ГЄГ«Г ГўГЁГёГ " }, {"orange" , "Г ГЇГҐГ«ГјГ±ГЁГ­" }, 
+		{ "shadow" , "ГІГҐГ¬Г­Г»Г©" } 
 	};
 
 	vector<string> translations = { "black" , "dark" , "shadow"};
-	BOOST_CHECK(GetAllTranslations("темный", Dictionary) == translations);
-	BOOST_CHECK(GetAllTranslations("Темный", Dictionary) == translations);
+	BOOST_CHECK(GetAllTranslations("ГІГҐГ¬Г­Г»Г©", Dictionary) == translations);
+	BOOST_CHECK(GetAllTranslations("Г’ГҐГ¬Г­Г»Г©", Dictionary) == translations);
 }
 
 BOOST_AUTO_TEST_CASE(should_return_all_translations_of_english_word_to_russian)
 {
 	multimap<string, string> Dictionary =
 	{
-		{ "apple" , "яблоко" },{ "black" , "темный" },{ "dark" , "темный" } ,
-		{ "key" , "ключ" },{ "key" , "клавиша" },{ "orange" , "апельсин" },
-		{ "shadow" , "темный" }
+		{ "apple" , "ГїГЎГ«Г®ГЄГ®" },{ "black" , "ГІГҐГ¬Г­Г»Г©" },{ "dark" , "ГІГҐГ¬Г­Г»Г©" } ,
+		{ "key" , "ГЄГ«ГѕГ·" },{ "key" , "ГЄГ«Г ГўГЁГёГ " },{ "orange" , "Г ГЇГҐГ«ГјГ±ГЁГ­" },
+		{ "shadow" , "ГІГҐГ¬Г­Г»Г©" }
 	};
 
-	vector<string> translations = { "ключ" , "клавиша"};
+	vector<string> translations = { "ГЄГ«ГѕГ·" , "ГЄГ«Г ГўГЁГёГ "};
 	BOOST_CHECK(GetAllTranslations("key", Dictionary) == translations);
 	BOOST_CHECK(GetAllTranslations("Key", Dictionary) == translations);
 }
@@ -80,14 +80,14 @@ BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_english_to_russian_into_
 {
 	multimap<string, string> EmptyDictionary;
 	multimap<string, string> Dictionary =
-	{ { "key" , "клавиша" } };
+	{ { "key" , "ГЄГ«Г ГўГЁГёГ " } };
 	multimap<string, string> UpdatedDictionary =
-	{ { "key" , "клавиша" }, { "key" , "ключ" },};
+	{ { "key" , "ГЄГ«Г ГўГЁГёГ " }, { "key" , "ГЄГ«ГѕГ·" },};
 
-	InsertNewPair("key", "клавиша", EmptyDictionary);
+	InsertNewPair("key", "ГЄГ«Г ГўГЁГёГ ", EmptyDictionary);
 	BOOST_CHECK(EmptyDictionary == Dictionary);
 
-	InsertNewPair("key", "ключ", Dictionary);
+	InsertNewPair("key", "ГЄГ«ГѕГ·", Dictionary);
 	BOOST_CHECK(Dictionary == UpdatedDictionary);
 }
 
@@ -95,14 +95,14 @@ BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_russian_to_english_into_
 {
 	multimap<string, string> EmptyDictionary;
 	multimap<string, string> Dictionary =
-	{ { "key" , "клавиша" } };
+	{ { "key" , "ГЄГ«Г ГўГЁГёГ " } };
 	multimap<string, string> UpdatedDictionary =
-	{ { "key" , "клавиша" },{ "key" , "ключ" }, };
+	{ { "key" , "ГЄГ«Г ГўГЁГёГ " },{ "key" , "ГЄГ«ГѕГ·" }, };
 
-	InsertNewPair("клавиша", "key", EmptyDictionary);
+	InsertNewPair("ГЄГ«Г ГўГЁГёГ ", "key", EmptyDictionary);
 	BOOST_CHECK(EmptyDictionary == Dictionary);
 
-	InsertNewPair("ключ", "key", Dictionary);
+	InsertNewPair("ГЄГ«ГѕГ·", "key", Dictionary);
 	BOOST_CHECK(Dictionary == UpdatedDictionary);
 }
 
@@ -114,27 +114,25 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(FillDictionaryFromInputStream_function)
 
-BOOST_AUTO_TEST_CASE(should_correctly_fill_dictionary_from_stringstream)
+BOOST_AUTO_TEST_CASE(should_makes_empty_dictionary_from_empty_file)
 {
-	multimap<string, string> EmptyDictionary;
-	multimap<string, string> Dictionary =
-	{ { "key" , "клавиша" } };
-	multimap<string, string> UpdatedDictionary =
-	{ { "key" , "клавиша" },{ "key" , "ключ" }, };
-
+	Dictionary EmptyDictionary;
 	stringstream input;
+
 	FillDictionaryFromInputStream(input, EmptyDictionary);
 	BOOST_CHECK(EmptyDictionary.empty());
-
-	input << "key" << endl << "клавиша" << endl;
-	FillDictionaryFromInputStream(input, EmptyDictionary);
-	BOOST_CHECK(EmptyDictionary == Dictionary);
-
-	input << "key" << endl << "ключ" << endl;
-	FillDictionaryFromInputStream(input, EmptyDictionary);
-	BOOST_CHECK(EmptyDictionary == UpdatedDictionary);
 }
 
+BOOST_AUTO_TEST_CASE(should_add_new_pair_to_non-empty_dictionary)
+{
+	Dictionary Dictionary =
+	{ { "key", "РєР»Р°РІРёС€Р°" } };
+	Dictionary UpdatedDictionary =
+	{ { "key", "РєР»Р°РІРёС€Р°" }, { "key", "РєР»СЋС‡" }, };
 
+	input << "key" << endl << "РєР»СЋС‡" << endl;
+	FillDictionaryFromInputStream(input, EmptyDictionary);
+	BOOST_CHECK(Dictionary == UpdatedDictionary);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
