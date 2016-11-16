@@ -26,6 +26,7 @@ public:
 	bool SetSpeed(int speed);
 private:
 	bool IsSpeedInRange(int speed, Gear currentGear) const;
+	void SetDirection();
 
 	bool m_isTurnedOn = false;
 	Direction m_direction = NONE;

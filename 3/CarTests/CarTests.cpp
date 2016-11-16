@@ -21,6 +21,11 @@ BOOST_FIXTURE_TEST_SUITE(After_construction_car, CarFixture)
 		BOOST_CHECK(car.IsTurnedOn());
 	}
 
+	BOOST_AUTO_TEST_CASE(must_not_turn_off_engine)
+	{
+		BOOST_CHECK(car.TurnOffEngine() == false);
+	}
+
 	BOOST_AUTO_TEST_CASE(direction_must_be_as_NONE)
 	{
 		BOOST_CHECK(car.GetDirection() == NONE);
@@ -41,9 +46,47 @@ BOOST_FIXTURE_TEST_SUITE(After_construction_car, CarFixture)
 		BOOST_CHECK(car.GetGear() == NEUTRAL);
 	}
 
-	BOOST_AUTO_TEST_CASE(must_not_turn_off_engine)
+BOOST_AUTO_TEST_SUITE_END()
+
+struct when_turned_on_engine : CarFixture
+{
+	when_turned_on_engine()
 	{
-		BOOST_CHECK(car.TurnOffEngine() == false);
+		car.TurnOnEngine();
 	}
+};
+
+BOOST_FIXTURE_TEST_SUITE(When_turned_on_engine, when_turned_on_engine)
+
+BOOST_AUTO_TEST_CASE(engine_must_be_turned_on)
+{
+	BOOST_CHECK(car.IsTurnedOn());
+}
+
+BOOST_AUTO_TEST_CASE(can_not_turn_on_engine)
+{
+	BOOST_CHECK(!car.TurnOnEngine());
+}
+
+BOOST_AUTO_TEST_CASE(can_turn_off_engine_only_if_gear_is_NEUTRAL_and_speed_is_zero)
+{
+	BOOST_CHECK(car.TurnOffEngine());
+
+	car.SetGear(FIRST);
+	BOOST_CHECK(!car.TurnOffEngine());
+
+	car.SetSpeed(20);
+	BOOST_CHECK(!car.TurnOffEngine());
+}
+
+
+BOOST_AUTO_TEST_CASE(direction_must_be_FORWARD_if_speed_greater_than_zero)
+{
+	car.SetGear(FIRST);
+	car.SetSpeed(20);
+	BOOST_CHECK(car.GetDirection() == FORWARD);
+}
+
+
 
 BOOST_AUTO_TEST_SUITE_END()
