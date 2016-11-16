@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Car.h"
 
-bool CCar::isTurnedOn() const
+bool CCar::IsTurnedOn() const
 {
 	return false;
 }

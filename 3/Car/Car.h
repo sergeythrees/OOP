@@ -17,7 +17,7 @@ public:
 	CCar();
 	~CCar();
 
-	bool isTurnedOn() const;
+	bool IsTurnedOn() const;
 	Direction GetDirection() const;
 	int GetSpeed() const;
 	int GetGear() const;
