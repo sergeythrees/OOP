@@ -112,5 +112,43 @@ BOOST_FIXTURE_TEST_SUITE(When_turned_on_engine, when_turned_on_engine)
 		BOOST_CHECK(car.GetDirection() == BACKWARD);
 	}
 
+	BOOST_AUTO_TEST_CASE(can_set_speed_only_with_in_corresponding_gear_range)
+	{
+		car.SetGear(REVERSE);
+		BOOST_CHECK(car.SetSpeed(10));
+		BOOST_CHECK(!car.SetSpeed(30));
+
+		car.SetGear(NEUTRAL);
+		BOOST_CHECK(!car.SetSpeed(20));
+		BOOST_CHECK(car.SetSpeed(10));
+		BOOST_CHECK(car.SetSpeed(0));
+
+		car.SetGear(FIRST);
+		BOOST_CHECK(car.SetSpeed(30));
+		BOOST_CHECK(car.SetSpeed(10));
+		BOOST_CHECK(!car.SetSpeed(40));
+
+		car.SetGear(SECOND);
+		BOOST_CHECK(car.SetSpeed(40));
+		BOOST_CHECK(!car.SetSpeed(10));
+		BOOST_CHECK(!car.SetSpeed(60));
+
+		car.SetGear(THIRD);
+		BOOST_CHECK(car.SetSpeed(60));
+		BOOST_CHECK(!car.SetSpeed(20));
+		BOOST_CHECK(!car.SetSpeed(70));
+
+		car.SetGear(FOURTH);
+		BOOST_CHECK(car.SetSpeed(90));
+		BOOST_CHECK(!car.SetSpeed(30));
+		BOOST_CHECK(!car.SetSpeed(100));
+
+		car.SetGear(FIFTH);
+		BOOST_CHECK(car.SetSpeed(100));
+		BOOST_CHECK(!car.SetSpeed(40));
+		BOOST_CHECK(!car.SetSpeed(160));
+
+	}
+
 
 BOOST_AUTO_TEST_SUITE_END()

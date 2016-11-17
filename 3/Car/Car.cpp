@@ -71,10 +71,13 @@ bool CCar::SetGear(Gear gear)
 			return false;
 	}
 		
+	if (gear == m_gear)
+		return true;
+
 	switch (gear)
 	{
 	case REVERSE:
-		if ((m_gear == NEUTRAL) || (m_gear == REVERSE))
+		if ((m_gear == NEUTRAL) || ((m_gear == FIRST) && (m_speed == 0)))
 		{
 			m_gear = gear;
 			return true;
@@ -88,7 +91,35 @@ bool CCar::SetGear(Gear gear)
 		}
 		break;
 	case FIRST:
-		if ((m_gear == NEUTRAL) || (m_gear == SECOND))
+		if (((m_gear == NEUTRAL) && (m_speed == 0)) || ((m_gear == REVERSE) && (m_speed == 0)) || (m_gear == SECOND))
+		{
+			m_gear = gear;
+			return true;
+		}
+		break;
+	case SECOND:
+		if ((m_gear == FIRST) || (m_gear == THIRD))
+		{
+			m_gear = gear;
+			return true;
+		}
+		break;
+	case THIRD:
+		if ((m_gear == SECOND) || (m_gear == FOURTH))
+		{
+			m_gear = gear;
+			return true;
+		}
+		break;
+	case FOURTH:
+		if ((m_gear == THIRD) || (m_gear == FIFTH))
+		{
+			m_gear = gear;
+			return true;
+		}
+		break;
+	case FIFTH:
+		if ((m_gear == FOURTH))
 		{
 			m_gear = gear;
 			return true;
@@ -102,25 +133,50 @@ bool CCar::SetSpeed(int speed)
 {
 	switch (m_gear)
 	{
-	case FIRST:
-		if ((speed >= 0) && (speed <= 30))
-		{
-			m_speed = speed;
-		}
-		break;
-	case NEUTRAL:
-			if (speed == 0)
-			{
-				m_speed = speed;
-			}
-		break;
 	case REVERSE:
 		if ((speed >= 0) && (speed <= 20))
 		{
 			m_speed = speed;
 		}
 		break;
+	case NEUTRAL:
+			if (speed <= m_speed)
+			{
+				m_speed = speed;
+			}
+		break;
+	case FIRST:
+		if ((speed >= 0) && (speed <= 30))
+		{
+			m_speed = speed;
+		}
+		break;
+	case SECOND:
+		if ((speed >= 20) && (speed <= 50))
+		{
+			m_speed = speed;
+		}
+		break;
+	case THIRD:
+		if ((speed >= 30) && (speed <= 60))
+		{
+			m_speed = speed;
+		}
+		break;
+	case FOURTH:
+		if ((speed >= 40) && (speed <= 90))
+		{
+			m_speed = speed;
+		}
+		break;
+	case FIFTH:
+		if ((speed >= 50) && (speed <= 150))
+		{
+			m_speed = speed;
+		}
+		break;
 	}
+
 	SetDirection();
 	return m_speed == speed;
 }
