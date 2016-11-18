@@ -6,7 +6,7 @@ void FillDictionaryFromInputStream(istream &input, Dictionary &dictionary)
 	string word, translation;
 	while (getline(input, word) && getline(input, translation))
 	{
-		dictionary.insert(make_pair(word, translation));
+		dictionary.emplace(word, translation);
 	}
 }
 
@@ -50,9 +50,9 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 void InsertNewPair(const string &word, const string &translation, Dictionary &dictionary) //if return true --> dictionary was changed
 {
 	if (IsWordRussian(word))
-		dictionary.insert(make_pair(ToLower(translation), ToLower(word)));
+		dictionary.emplace(ToLower(translation), ToLower(word));
 	else
-		dictionary.insert(make_pair(ToLower(word), ToLower(translation)));
+		dictionary.emplace(ToLower(word), ToLower(translation));
 }
 
 bool IsWordRussian(const string &word)
