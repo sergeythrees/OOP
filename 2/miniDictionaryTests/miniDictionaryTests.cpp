@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(InsertNewPair_function)
 
-BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_english_to_russian_into_dictionary)
+BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_english_word_to_russian_into_dictionary)
 {
 	multimap<string, string> EmptyDictionary;
 	multimap<string, string> Dictionary =
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_english_to_russian_into_
 	BOOST_CHECK(Dictionary == UpdatedDictionary);
 }
 
-BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_russian_to_english_into_dictionary)
+BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_russian_word_to_english_into_dictionary)
 {
 	multimap<string, string> EmptyDictionary;
 	multimap<string, string> Dictionary =
@@ -103,6 +103,33 @@ BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_russian_to_english_into_
 
 	InsertNewPair("ключ", "key", Dictionary);
 	BOOST_CHECK(Dictionary == UpdatedDictionary);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+BOOST_AUTO_TEST_SUITE(PrintDictionaryToOutputStream_function)
+
+BOOST_AUTO_TEST_CASE(should_makes_empty_file_from_empty_dictionary)
+{
+	stringstream output;
+	Dictionary emptyDictionary;
+
+	PrintDictionaryToOutputStream(output, emptyDictionary);
+	BOOST_CHECK(emptyDictionary.empty());
+}
+
+BOOST_AUTO_TEST_CASE(should_print_dictionary_to_file)
+{
+	stringstream output;
+	Dictionary dictionary =
+	{ { "key", "клавиша" },{ "key", "ключ" } };
+
+	PrintDictionaryToOutputStream(output, dictionary);
+	BOOST_CHECK(output.str() == "key\nклавиша\nkey\nключ\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -125,14 +152,13 @@ BOOST_AUTO_TEST_CASE(should_makes_empty_dictionary_from_empty_file)
 BOOST_AUTO_TEST_CASE(should_fill_dictionary_from_file)
 {
 	stringstream input;
-	Dictionary dictionary =
-	{ { "key", "клавиша" } };
-	Dictionary UpdatedDictionary =
+	Dictionary dictionary;
+	Dictionary updatedDictionary =
 	{ { "key", "клавиша" }, { "key", "ключ" } };
 
-	input << "key" << endl << "ключ" << endl;
+	PrintDictionaryToOutputStream(input, updatedDictionary);
 	FillDictionaryFromInputStream(input, dictionary);
-	BOOST_CHECK(dictionary == UpdatedDictionary);
+	BOOST_CHECK(dictionary == updatedDictionary);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
