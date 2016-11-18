@@ -21,12 +21,13 @@ void PrintDictionaryToOutputStream(ostream &output, Dictionary &dictionary)
 vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 {
 	vector<string> translations;
+	string lWord = ToLower(word);
 
 	if (IsWordRussian(word))
 	{
 		for (auto tCurrent : dictionary)
 		{
-			if (ToLower(word) == tCurrent.second)
+			if (lWord == tCurrent.second)
 			{
 				translations.push_back(tCurrent.first);
 			}
@@ -34,7 +35,7 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 	}
 	else
 	{
-		auto translationsRange = dictionary.equal_range(ToLower(word));
+		auto translationsRange = dictionary.equal_range(lWord);
 		auto tBegin = translationsRange.first;
 		auto tEnd = translationsRange.second;
 		for (auto tCurrent = tBegin; tCurrent != tEnd; ++tCurrent)
