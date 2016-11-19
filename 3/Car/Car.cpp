@@ -63,15 +63,15 @@ void CCar::SetMovementDirection()
 
 bool CCar::SetGear(Gear newGear)
 {
-	if 
-	((!m_isTurnedOn && newGear != NEUTRAL) ||
-	((newGear == REVERSE) && (m_gear > FIRST || m_speed != 0)) ||
-	((newGear == FIRST && m_gear < FIRST) && (m_speed != 0)) ||
-	(!m_isTurnedOn && !IsSpeedInRange(m_speed, newGear)))
+	if (!m_isTurnedOn || !IsSpeedInRange(m_speed, newGear))
 	{
-		return false;
+		if ((newGear != NEUTRAL) || 
+			((newGear == REVERSE) && (m_gear > FIRST || m_speed != 0)) || 
+			((newGear == FIRST && m_gear < FIRST) && (m_speed != 0)))
+		{
+			return false;
+		}
 	}
-
 	m_gear = newGear;
 	return true;
 }
