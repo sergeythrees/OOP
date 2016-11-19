@@ -125,10 +125,10 @@ BOOST_FIXTURE_TEST_SUITE(When_turned_on_engine, when_turned_on_engine)
 
 		car.SetGear(FIRST);
 		BOOST_CHECK(car.SetSpeed(30));
-		BOOST_CHECK(car.SetSpeed(10));
+		BOOST_CHECK(car.SetSpeed(20));
 		BOOST_CHECK(!car.SetSpeed(40));
 
-		car.SetGear(SECOND);
+		BOOST_CHECK(car.SetGear(SECOND));
 		BOOST_CHECK(car.SetSpeed(40));
 		BOOST_CHECK(!car.SetSpeed(10));
 		BOOST_CHECK(!car.SetSpeed(60));
