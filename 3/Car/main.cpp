@@ -10,12 +10,13 @@ int main()
 	CCarControl carControl(car, cin, cout);
 
 	cout << "Car and CarControl were initialized, please use these commands: " << endl
-		<< "Info - for print information of current car condition" << endl
-		<< "EngineOn  - for turn on car engine" << endl
-		<< "EngineOn  - for turn off car engine" << endl
-		<< "SetGear <value> - for change engine gear" << endl
-		<< "SetSpeed <value> - for change car speed" << endl;
-	cout << endl;
+		<< "\tInfo - for print information of current car condition" << endl
+		<< "\tEngineOn  - for turn on car engine" << endl
+		<< "\tEngineOn  - for turn off car engine" << endl
+		<< "\tSetGear <value> - for change engine gear" << endl
+		<< "\tSetSpeed <value> - for change car speed" << endl
+		<< "(This program are case-insensitive)" << endl
+		<< endl;
 
 	while (!cin.eof() && !cin.fail())
 	{
