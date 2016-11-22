@@ -6,7 +6,6 @@ using namespace std;
 
 int main()
 {
-	setlocale(LC_ALL, "rus");
 	CCar car;
 	CCarControl carControl(car, cin, cout);
 
