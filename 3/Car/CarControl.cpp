@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include "RemoteControl.h"
+#include "CarControl.h"
 
 using namespace std;
 using namespace std::placeholders;
 
-CRemoteControl::CRemoteControl(CCar & car, std::istream & input, std::ostream & output) 
+CCarControl::CCarControl(CCar & car, std::istream & input, std::ostream & output)
 	: m_car(car)
 	, m_input(input)
 	, m_output(output)
@@ -15,86 +15,123 @@ CRemoteControl::CRemoteControl(CCar & car, std::istream & input, std::ostream & 
 		{ "SetGear", [this](istream & strm) { return SetGear(strm); } },
 		{ "SetSpeed", [this](istream & strm) { return SetSpeed(strm); } },
 		{ "Info", [this](istream & strm) { return Info(strm); } }
-	})
+})
 {
 }
 
-bool CRemoteControl::HandleCommand()
+bool CCarControl::HandleCommand()
 {
 	string commandLine;
 	getline(m_input, commandLine);
 	istringstream strm(commandLine);
 
 	string action;
-	m_input >> action;
+	strm >> action;
 
 	auto it = m_actionMap.find(action);
 	if (it != m_actionMap.end())
 	{
-		return it->second(strm);
+		it->second(strm);
+		return true;
 	}
 
 	return false;
 }
 
-bool CRemoteControl::EngineOn(std::istream & args)
+bool CCarControl::EngineOn(std::istream & args)
 {
-	bool isTurnOnEngine = m_car.TurnOnEngine();
-	m_output << isTurnOnEngine ? "Engine is turned on\n" : "Engine is already on!\n";
-	return isTurnOnEngine;
+	bool isTurnOn = m_car.TurnOnEngine();
+
+	if (isTurnOn)
+	{
+		m_output << "Engine is turned on" << endl;
+	}
+	else
+		m_output << "Engine is already on!" << endl;
+
+	return isTurnOn;
 }
 
-bool CRemoteControl::EngineOff(std::istream & args)
+bool CCarControl::EngineOff(std::istream & args)
 {
 	bool isTurnOff = m_car.TurnOffEngine();
-	m_output << isTurnOff ? "Engine is turned off\n" : "Engine is already off, not on neutral gear or not carero speed!\n";
+
+	if (isTurnOff)
+	{
+		m_output << "Engine is turned off" << endl;
+	}
+	else
+		m_output << "Engine is already off, gear is not NEUTRAL or speed is not zero!" << endl;
+
 	return isTurnOff;
 }
 
-bool CRemoteControl::SetGear(std::istream & args)
+bool CCarControl::SetGear(std::istream & args)
 {
-	int gear;
-	args >> gear;
-	bool isSetGear = m_car.SetGear(FIRST);
-	m_output << isSetGear ? "Gear: " + std::to_string(m_car.GetGear()) : "Error: Gear can not switch at the moment!";
-	return isSetGear;
-}
-
-bool CRemoteControl::SetSpeed(std::istream & args)
-{
-	int speed;
-	args >> speed;
-	bool isSetSpeed = m_car.SetSpeed(speed);
-	m_output << isSetSpeed ? "Speed: " + std::to_string(m_car.GetSpeed()) : "Error: Speed is not the same as a valid gear value or gear is neutral!";
-	return isSetSpeed;
-}
-
-bool CRemoteControl::Info(std::istream & /*args*/)
-{
-	std::string output = m_car.IsTurnedOn() ?
-		"Engine is turned on\n"
-		"Direction: " + GetDirectionString(m_car.GetDirection()) + "\n"
-		"Gear: " + std::to_string(m_car.GetGear()) + "\n"
-		"Speed: " + std::to_string(m_car.GetSpeed()) + "\n"
-		: "Engine is turned off\n";
-	m_output << output;
-	return true;
-}
-
-string CRemoteControl::GetDirectionString(Direction const& direction)
-{
-	std::string result;
-	if (direction == Direction::FORWARD)
+	int newGear;
+	args >> newGear;
+	bool isSetGear = m_car.SetGear(newGear);
+	if (isSetGear)
 	{
-		result = "Forward";
-	}
-	else if (direction == Direction::BACKWARD)
-	{
-		result = "Backward";
+		m_output << "Gear: " << to_string(m_car.GetGear()) << endl;
 	}
 	else
 	{
-		result = "Standing";
+		if (!m_car.IsTurnedOn())
+			m_output << "Engine is turned off" << endl;
+		m_output << "Gear can not switch to this value!" << endl;
 	}
-	return result;
+
+
+	return isSetGear;
+}
+
+bool CCarControl::SetSpeed(std::istream & args)
+{
+	int newSpeed;
+	args >> newSpeed;
+	bool isSetSpeed = m_car.SetSpeed(newSpeed);
+	if (isSetSpeed)
+	{
+		m_output << "Speed: " << to_string(m_car.GetSpeed()) << endl;
+	}
+	else
+	{
+		if (!m_car.IsTurnedOn())
+			m_output << "Engine is turned off" << endl;
+		m_output << "This speed value is not included in the valid range of the " << to_string(m_car.GetGear()) << " gear!" << endl;
+	}
+
+
+	return isSetSpeed;
+}
+
+bool CCarControl::Info(std::istream & /*args*/)
+{
+	if (m_car.IsTurnedOn())
+	{
+		m_output << "Engine is turned on" << endl
+			<< "Direction: " << DirectionToString(m_car.GetDirection()) << endl
+			<< "Gear: " << to_string(m_car.GetGear()) << endl
+			<< "Speed: " << to_string(m_car.GetSpeed()) << endl;
+	}
+	else
+		m_output << "Engine is turned off" << endl;
+
+	return true;
+}
+
+string CCarControl::DirectionToString(Direction direction)
+{
+	switch (direction)
+	{
+	case BACKWARD:
+		return "BACKWARD";
+	case NONE:
+		return "NONE";
+	case FORWARD:
+		return "FORWARD";
+	}
+
+	return "";
 }
