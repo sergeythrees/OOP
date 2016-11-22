@@ -7,11 +7,18 @@
       <Filter>Existing items</Filter>
     </ClCompile>
     <ClCompile Include="CCarTests.cpp" />
+    <ClCompile Include="CarControlTests.cpp" />
+    <ClCompile Include="..\Car\CarControl.cpp">
+      <Filter>Existing items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\Car\Car.h">
+      <Filter>Existing items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Car\CarControl.h">
       <Filter>Existing items</Filter>
     </ClInclude>
   </ItemGroup>

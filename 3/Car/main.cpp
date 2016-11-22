@@ -15,7 +15,7 @@ int main()
 		<< "\tEngineOn  - for turn off car engine" << endl
 		<< "\tSetGear <value> - for change engine gear" << endl
 		<< "\tSetSpeed <value> - for change car speed" << endl
-		<< "(This program are case-insensitive)" << endl
+		<< "(This program is case-insensitive)" << endl
 		<< endl;
 
 	while (!cin.eof() && !cin.fail())
