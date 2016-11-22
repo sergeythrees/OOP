@@ -1,6 +1,6 @@
 #pragma once
-enum Direction {NONE, FORWARD, BACKWARD};
-enum Gear 
+enum Direction { BACKWARD, NONE, FORWARD };
+enum Gear
 {
 	REVERSE = -1,
 	NEUTRAL = 0,
@@ -22,10 +22,11 @@ public:
 
 	bool TurnOnEngine();
 	bool TurnOffEngine();
-	bool SetGear(Gear gear);
+	bool SetGear(int gear);
 	bool SetSpeed(int speed);
 private:
 	bool IsSpeedInRange(int speed, Gear currentGear) const;
+	bool IsValidGear(Gear currentGear) const;
 	void SetMovementDirection();
 
 	bool m_isTurnedOn = false;
@@ -33,4 +34,3 @@ private:
 	int m_speed = 0;
 	Gear m_gear = NEUTRAL;
 };
-
