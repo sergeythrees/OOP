@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CarControl.h"
+#include <algorithm>
 
 using namespace std;
 using namespace std::placeholders;
@@ -10,11 +11,11 @@ CCarControl::CCarControl(CCar & car, std::istream & input, std::ostream & output
 	, m_output(output)
 	, m_actionMap
 	({
-		{ "EngineOn", [this](istream & strm) { return EngineOn(strm); } },
-		{ "EngineOff", [this](istream & strm) { return EngineOff(strm); } },
-		{ "SetGear", [this](istream & strm) { return SetGear(strm); } },
-		{ "SetSpeed", [this](istream & strm) { return SetSpeed(strm); } },
-		{ "Info", [this](istream & strm) { return Info(strm); } }
+		{ "engineon", [this](istream & strm) { return EngineOn(strm); } },
+		{ "engineoff", [this](istream & strm) { return EngineOff(strm); } },
+		{ "setgear", [this](istream & strm) { return SetGear(strm); } },
+		{ "setspeed", [this](istream & strm) { return SetSpeed(strm); } },
+		{ "info", [this](istream & strm) { return Info(strm); } }
 })
 {
 }
@@ -23,6 +24,7 @@ bool CCarControl::HandleCommand()
 {
 	string commandLine;
 	getline(m_input, commandLine);
+	std::transform(commandLine.begin(), commandLine.end(), commandLine.begin(), tolower);
 	istringstream strm(commandLine);
 
 	string action;
