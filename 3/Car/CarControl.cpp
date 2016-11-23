@@ -124,15 +124,19 @@ bool CCarControl::Info(std::istream & /*args*/)
 
 string CCarControl::DirectionToString(Direction direction)
 {
+	string result;
 	switch (direction)
 	{
 	case BACKWARD:
-		return "BACKWARD";
+		result = "BACKWARD";
+		break;
 	case NONE:
-		return "NONE";
+		result = "NONE";
+		break;
 	case FORWARD:
-		return "FORWARD";
+		result = "FORWARD";
+		break;
 	}
 
-	return "";
+	return result;
 }
