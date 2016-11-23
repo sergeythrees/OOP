@@ -47,12 +47,15 @@ vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
 	return translations;
 }
 
-void InsertNewPair(const string &word, const string &translation, Dictionary &dictionary) //if return true --> dictionary was changed
+bool InsertNewPair(const string &word, const string &translation, Dictionary &dictionary) //if return true --> dictionary was changed
 {
-	if (IsWordRussian(word))
+	if (IsWordRussian(word) && IsWordEnglish(translation))
 		dictionary.emplace(ToLower(translation), ToLower(word));
-	else
+	else if (IsWordRussian(translation) && IsWordEnglish(word))
 		dictionary.emplace(ToLower(word), ToLower(translation));
+	else
+		return false;
+	return true;
 }
 
 bool IsWordRussian(const string &word)
@@ -60,6 +63,16 @@ bool IsWordRussian(const string &word)
 	for (auto symbol : word)
 	{
 		if (!(symbol >= 'À' && symbol <= 'ÿ'))
+			return false;
+	}
+	return true;
+}
+
+bool IsWordEnglish(const string &word)
+{
+	for (auto symbol : word)
+	{
+		if (!(symbol >= 'A' && symbol <= 'z'))
 			return false;
 	}
 	return true;

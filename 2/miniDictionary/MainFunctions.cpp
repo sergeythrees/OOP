@@ -45,9 +45,21 @@ bool HasInsertedNewPairInToDictionary(const string &word, Dictionary &dictionary
 	cout << endl << "перевод: ";
 	if (getline(cin, translation) && !translation.empty())
 	{
-		InsertNewPair(newWord, translation, dictionary);
-		cout << endl;
-		return true;
+		if ((IsWordRussian(newWord) && IsWordEnglish(translation)) || (IsWordRussian(translation) && IsWordEnglish(newWord)))
+		{
+			if (InsertNewPair(newWord, translation, dictionary))
+			{
+				cout << endl;
+				return true;
+			}
+		}
+		else
+		{
+			cout << "Новая пара в словаре обязательно должна содержать одно русское " << endl
+				<< "и одно английское слово, которые состоят только из букв своего алфавита" << endl;
+		}
+		
+
 	}
 
 	cout << endl;
