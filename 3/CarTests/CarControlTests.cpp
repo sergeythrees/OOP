@@ -27,7 +27,7 @@ struct CarControlFixture : CarControlDependencies
 		output = stringstream();
 		input = stringstream();
 		BOOST_CHECK(input << command);
-		BOOST_CHECK(carControl.HandleCommand());
+		carControl.HandleCommand();
 		BOOST_CHECK(input.eof());
 		BOOST_CHECK_EQUAL(output.str(), expectedOutput);
 	}
@@ -35,15 +35,66 @@ struct CarControlFixture : CarControlDependencies
 
 BOOST_FIXTURE_TEST_SUITE(Car_Control, CarControlFixture)
 
-BOOST_AUTO_TEST_CASE(can_handle_EngineOn_command)
+BOOST_AUTO_TEST_CASE(can_handle_main_commands)
 {
+	VerifyCommandHandling("Info", "Engine is turned off\n");
 	VerifyCommandHandling("EngineOn", "Engine is turned on\n");
+	VerifyCommandHandling("EngineOff", "Engine is turned off\n");
+	VerifyCommandHandling("SetGear 1", "\
+Engine is turned off\n\
+Gear can not switch to this value!\n");
+	VerifyCommandHandling("SetSpeed 10", "\
+Engine is turned off\n\
+This speed value is not included in the valid range of the 0 gear!\n");
 }
 
-BOOST_AUTO_TEST_CASE(can_turn_off_engine_which_is_on)
+BOOST_AUTO_TEST_CASE(can_handle_main_commands_in_any_cases)
+{
+	VerifyCommandHandling("Info", "Engine is turned off\n");
+	VerifyCommandHandling("engineon", "Engine is turned on\n");
+	VerifyCommandHandling("ENGINEOFF", "Engine is turned off\n");
+}
+
+BOOST_AUTO_TEST_CASE(should_report_if_command_is_unknown)
+{
+	VerifyCommandHandling("Unknown", "Unknown command!\n");
+}
+
+BOOST_AUTO_TEST_CASE(should_report_if_command_can_not_be_done)
+{
+	VerifyCommandHandling("EngineOff", "Engine is already off, gear is not NEUTRAL or speed is not zero!\n");
+	VerifyCommandHandling("SetGear 1", "Engine is turned off\nGear can not switch to this value!\n");
+	VerifyCommandHandling("SetSpeed 10", "Engine is turned off\nThis speed value is not included in the valid range of the 0 gear!\n");
+	car.TurnOnEngine();
+	VerifyCommandHandling("EngineOn", "Engine is already on!\n");
+}
+
+BOOST_AUTO_TEST_CASE(can_turn_on_engine_when_is_is_turned_off)
+{
+	VerifyCommandHandling("EngineOn", "Engine is turned on\n");
+	BOOST_CHECK(car.IsTurnedOn());
+}
+
+BOOST_AUTO_TEST_CASE(can_turn_off_engine_when_is_is_turned_on)
 {
 	car.TurnOnEngine();
 	VerifyCommandHandling("EngineOff", "Engine is turned off\n");
+	BOOST_CHECK(!car.IsTurnedOn());
+}
+
+BOOST_AUTO_TEST_CASE(can_set_a_valid_gear_when_engine_is_turned_on)
+{
+	car.TurnOnEngine();
+	VerifyCommandHandling("SetGear 1", "Gear: 1\n");
+	BOOST_CHECK(car.GetGear() == 1);
+}
+
+BOOST_AUTO_TEST_CASE(can_set_a_valid_speed_when_engine_is_turned_on)
+{
+	car.TurnOnEngine();
+	car.SetGear(-1);
+	VerifyCommandHandling("SetSpeed 10", "Speed: 10\n");
+	BOOST_CHECK(car.GetSpeed() == 10);
 }
 
 BOOST_AUTO_TEST_CASE(can_print_car_info)
@@ -60,44 +111,5 @@ Gear: -1\n\
 Speed: 10\n");
 
 }
-
-
-BOOST_AUTO_TEST_CASE(can_set_a_valid_gear_when_engine_is_turned_on)
-{
-car.TurnOnEngine();
-VerifyCommandHandling("SetGear 1", "Gear: 1\n");
-}
-
-
-BOOST_AUTO_TEST_CASE(cant_set_speed_when_engine_is_turned_off)
-{
-VerifyCommandHandling("SetSpeed 10", "\
-Engine is turned off\n\
-This speed value is not included in the valid range of the 0 gear!\n");
-}
-
-/*
-// Раскомментируйте тест, проверяющий работу команды SelectChannel
-//	попытке при выбрать недоступный номер канала у включенного телевизора
-// Убедитесь, что он не проходит (т.к. в CRemoteControl отсутствует требуемый функционал)
-// Доработайте простейшим образом класс CRemoteControl, чтобы этот тест и предыдущие проходили
-// При необходимости выполните рефакторинг кода, сохраняя работоспособность тестов
-BOOST_AUTO_TEST_CASE(cant_select_an_invalid_channel_when_tv_is_on)
-{
-tv.TurnOn();
-tv.SelectChannel(42);
-VerifyCommandHandling("SelectChannel 100", 42, "Invalid channel\n");
-VerifyCommandHandling("SelectChannel 0", 42, "Invalid channel\n");
-}
-*/
-
-// Напишите тесты для недостающего функционала класса CRemoteControl (если нужно)
-//	и для дополнительных заданий на бонусные баллы (если нужно)
-// После написания каждого теста убедитесь, что он не проходит.
-// Доработайте простейшим образом класс CRemoteControl, чтобы этот тест и предыдущие проходили
-// При необходимости выполните рефакторинг кода, сохраняя работоспособность тестов
-// При необходимости используйте вложенные тесты (как использующие fixture, так и нет)
-// Имена тестам и test suite-ам давайте такие, чтобы выводимая в output иерархия
-//	тестов читалась как спецификация на английском языке, описывающая поведение remote control-а
 
 BOOST_AUTO_TEST_SUITE_END()
