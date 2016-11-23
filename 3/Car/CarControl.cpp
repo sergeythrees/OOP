@@ -20,7 +20,7 @@ CCarControl::CCarControl(CCar & car, std::istream & input, std::ostream & output
 {
 }
 
-bool CCarControl::HandleCommand()
+void CCarControl::HandleCommand()
 {
 	string commandLine;
 	getline(m_input, commandLine);
@@ -34,10 +34,9 @@ bool CCarControl::HandleCommand()
 	if (it != m_actionMap.end())
 	{
 		it->second(strm);
-		return true;
 	}
-
-	return false;
+	else
+		m_output << "Unknown command!\n";
 }
 
 bool CCarControl::EngineOn(std::istream & args)

@@ -21,10 +21,7 @@ int main()
 	while (!cin.eof() && !cin.fail())
 	{
 		cout << "> ";
-		if (!carControl.HandleCommand())
-		{
-			cout << "Unknown command!\n";
-		}
+		carControl.HandleCommand();
 	}
 
 	return 0;
