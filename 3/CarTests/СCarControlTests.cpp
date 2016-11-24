@@ -34,7 +34,7 @@ struct CarControlFixture : CarControlDependencies
 
 BOOST_FIXTURE_TEST_SUITE(CarControl_class, CarControlFixture)
 
-	BOOST_AUTO_TEST_CASE(can_handle_main_commands)
+	BOOST_AUTO_TEST_CASE(should_handle_main_commands)
 	{
 		VerifyCommandHandling("Info", "Engine is turned off\n");
 		VerifyCommandHandling("EngineOn", "Engine is turned on\n");
@@ -47,7 +47,7 @@ Engine is turned off\n\
 This speed value is not included in the valid range of the 0 gear!\n");
 	}
 
-	BOOST_AUTO_TEST_CASE(can_handle_main_commands_in_any_cases)
+	BOOST_AUTO_TEST_CASE(should_handle_main_commands_in_any_cases)
 	{
 		VerifyCommandHandling("Info", "Engine is turned off\n");
 		VerifyCommandHandling("engineon", "Engine is turned on\n");
