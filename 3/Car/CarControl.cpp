@@ -3,7 +3,6 @@
 #include <algorithm>
 
 using namespace std;
-using namespace std::placeholders;
 
 CCarControl::CCarControl(CCar & car, std::istream & input, std::ostream & output)
 	: m_car(car)
