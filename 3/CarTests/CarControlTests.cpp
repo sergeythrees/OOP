@@ -68,27 +68,27 @@ BOOST_AUTO_TEST_CASE(should_report_if_command_can_not_be_done)
 	VerifyCommandHandling("EngineOn", "Engine is already on!\n");
 }
 
-BOOST_AUTO_TEST_CASE(can_turn_on_engine_if_it_possible)
+BOOST_AUTO_TEST_CASE(can_turn_on_engine_if_it_is_possible)
 {
 	VerifyCommandHandling("EngineOn", "Engine is turned on\n");
 	BOOST_CHECK(car.IsTurnedOn());
 }
 
-BOOST_AUTO_TEST_CASE(can_turn_off_engine_if_it_possible)
+BOOST_AUTO_TEST_CASE(can_turn_off_engine_if_it_is_possible)
 {
 	car.TurnOnEngine();
 	VerifyCommandHandling("EngineOff", "Engine is turned off\n");
 	BOOST_CHECK(!car.IsTurnedOn());
 }
 
-BOOST_AUTO_TEST_CASE(can_set_car_gear_if_it_possible)
+BOOST_AUTO_TEST_CASE(can_set_car_gear_if_it_is_possible)
 {
 	car.TurnOnEngine();
 	VerifyCommandHandling("SetGear 1", "Gear: 1\n");
 	BOOST_CHECK(car.GetGear() == 1);
 }
 
-BOOST_AUTO_TEST_CASE(can_set_car_speed_if_it_possible)
+BOOST_AUTO_TEST_CASE(can_set_car_speed_if_it_is_possible)
 {
 	car.TurnOnEngine();
 	car.SetGear(-1);

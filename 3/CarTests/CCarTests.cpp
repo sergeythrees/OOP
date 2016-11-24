@@ -110,7 +110,7 @@ BOOST_FIXTURE_TEST_SUITE(When_turned_on_engine, when_turned_on_engine)
 		BOOST_CHECK(car.GetDirection() == BACKWARD);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_set_speed_only_in_limits_of_corresponding_gear_range)
+	BOOST_AUTO_TEST_CASE(can_set_speed_only_within_the_corresponding_gear_range)
 	{
 		BOOST_CHECK(car.SetGear(REVERSE));
 		BOOST_CHECK(car.SetSpeed(10));
