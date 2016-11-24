@@ -2,7 +2,6 @@
 #include "../Car/CarControl.h"
 #include "../Car/Car.h"
 #include <sstream>
-#include <boost/optional.hpp>
 
 using namespace std;
 
