@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "ProcessErrors.h"
 
+using namespace std;
+
 bool IsValidArgumentsCount(int argumensCount)
 {
 	if (argumensCount != MAX_NUM_OF_ARGUMENTS)

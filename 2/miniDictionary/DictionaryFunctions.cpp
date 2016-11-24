@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DictionaryFunctions.h"
 
+using namespace std;
+
 void FillDictionaryFromInputStream(istream &input, Dictionary &dictionary)
 {
 	string word, translation;

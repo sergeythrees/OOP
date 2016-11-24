@@ -2,6 +2,8 @@
 #include "MainFunctions.h"
 #include "DictionaryFunctions.h"
 
+using namespace std;
+
 bool HasUserAgreed(string question)
 {
 	cout << question << " (םאלזלטעו \"Y\", וסכט הא)" << endl;
