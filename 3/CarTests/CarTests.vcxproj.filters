@@ -7,10 +7,10 @@
       <Filter>Existing items</Filter>
     </ClCompile>
     <ClCompile Include="CCarTests.cpp" />
-    <ClCompile Include="CarControlTests.cpp" />
     <ClCompile Include="..\Car\CarControl.cpp">
       <Filter>Existing items</Filter>
     </ClCompile>
+    <ClCompile Include="СCarControlTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
