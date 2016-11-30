@@ -153,12 +153,12 @@ bool const operator <(CRational const& a, CRational const& b)
 
 bool const operator >=(CRational const& a, CRational const& b)
 {
-	return ((a > b) || (a == b));
+	return !(a < b);
 }
 
 bool const operator <=(CRational const& a, CRational const& b)
 {
-	return ((a < b) || (a == b));
+	return !(a > b);
 }
 
 std::ostream & operator <<(std::ostream &stream, CRational const& rational)
