@@ -21,6 +21,13 @@ void VerifyRational(const CRational & r, int expectedNumerator, int expectedDeno
 	BOOST_CHECK_EQUAL(r.GetDenominator(), expectedDenominator);
 }
 
+void VerifyCompoundFraction(std::pair<int, CRational> const& result, int number, int expectedNumerator, int expectedDenominator)
+{
+	BOOST_CHECK_EQUAL(result.first, number);
+	BOOST_CHECK_EQUAL(result.second.GetNumerator(), expectedNumerator);
+	BOOST_CHECK_EQUAL(result.second.GetDenominator(), expectedDenominator);
+}
+
 BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(is_0_by_default)
 	{
@@ -59,6 +66,15 @@ BOOST_AUTO_TEST_SUITE(ToDouble_function)
 		CRational rational(3, 5);
 		BOOST_CHECK_CLOSE(rational.ToDouble(), 0.6, 0.01);
 	}
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(ToCompoundFraction_function)
+BOOST_AUTO_TEST_CASE(should_convert_the_rational_number_to_compound_fraction)
+{
+	VerifyCompoundFraction(CRational(9, 4).ToCompoundFraction(), 2, 1, 4);
+	VerifyCompoundFraction(CRational(-9, 4).ToCompoundFraction(), -2, -1, 4);
+	VerifyCompoundFraction(CRational(1, 2).ToCompoundFraction(), 0, 1, 2);
+}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(unary_operator_minus)
