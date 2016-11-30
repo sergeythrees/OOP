@@ -197,31 +197,31 @@ BOOST_AUTO_TEST_SUITE(division_and_equal_operator)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_equal)
-	BOOST_AUTO_TEST_CASE(return_true_if_two_rational_numbers_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_two_rational_numbers_are_equal)
 	{
 		BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
 	}
-	BOOST_AUTO_TEST_CASE(return_true_if_rational_number_and_integer_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_and_integer_are_equal)
 	{
 		BOOST_CHECK(CRational(4, 1) == 4);
 	}
-	BOOST_AUTO_TEST_CASE(return_true_if_integer_and_rational_number_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_and_rational_number_are_equal)
 	{
 		BOOST_CHECK(3 == CRational(3, 1));
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_not_equal)
-	BOOST_AUTO_TEST_CASE(return_true_if_two_rational_numbers_are_not_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_two_rational_numbers_are_not_equal)
 	{
 		BOOST_CHECK(CRational(1, 2) != CRational(2, 3));
 	}
-	BOOST_AUTO_TEST_CASE(return_true_if_rational_number_and_integer_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_and_integer_are_equal)
 	{
 		BOOST_CHECK(CRational(1, 2) != 7);
 		BOOST_CHECK(!(CRational(7, 1) != 7));
 	}
-	BOOST_AUTO_TEST_CASE(return_true_if_integer_and_rational_number_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_and_rational_number_are_equal)
 	{
 		BOOST_CHECK(3 != CRational(2, 3));
 		BOOST_CHECK(!(3 != CRational(3, 1)));
@@ -229,47 +229,47 @@ BOOST_AUTO_TEST_SUITE(bool_operator_not_equal)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_greater)
-	BOOST_AUTO_TEST_CASE(returns_true_if_first_rational_number_is_greater_than_second)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_greater_than_second)
 	{
 		BOOST_CHECK(CRational(1, 2) > CRational(1, 3));
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_rational_number_is_greater_than_integer)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_greater_than_integer)
 	{
 		BOOST_CHECK(CRational(4, 1) > 3);
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_integer_is_greater_than_rational_number)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_greater_than_rational_number)
 	{
 		BOOST_CHECK(1 > CRational(1, 2));
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_less)
-	BOOST_AUTO_TEST_CASE(returns_true_if_first_rational_number_is_less_than_second)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_less_than_second)
 	{
 		BOOST_CHECK(CRational(1, 3) < CRational(1, 2));
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_rational_number_is_less_than_integer)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_less_than_integer)
 	{
 		BOOST_CHECK(CRational(1, 2) < 1);
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_integer_is_less_than_rational_number)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_less_than_rational_number)
 	{
 		BOOST_CHECK(1 < CRational(3, 2));
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_greater_or_equal)
-	BOOST_AUTO_TEST_CASE(returns_true_if_first_rational_number_is_greater_than_second_or_they_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_greater_than_second_or_they_are_equal)
 	{
 		BOOST_CHECK(CRational(1, 2) >= CRational(1, 3));
 		BOOST_CHECK(CRational(1, 2) >= CRational(1, 2));
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_rational_number_is_greater_than_integer_or_they_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_greater_than_integer_or_they_are_equal)
 	{
 		BOOST_CHECK(CRational(4, 1) >= 3);
 		BOOST_CHECK(CRational(3, 1) >= 3);
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_integer_is_greater_than_rational_number_or_they_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_greater_than_rational_number_or_they_are_equal)
 	{
 		BOOST_CHECK(1 >= CRational(1, 2));
 		BOOST_CHECK(2 >= CRational(2, 1));
@@ -277,17 +277,17 @@ BOOST_AUTO_TEST_SUITE(bool_operator_greater_or_equal)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_less_or_equal)
-	BOOST_AUTO_TEST_CASE(returns_true_if_first_rational_number_is_less_than_second_or_they_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_less_than_second_or_they_are_equal)
 	{
 		BOOST_CHECK(CRational(1, 3) <= CRational(1, 2));
 		BOOST_CHECK(CRational(1, 3) <= CRational(1, 3));
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_rational_number_is_less_than_integer_or_they_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_less_than_integer_or_they_are_equal)
 	{
 		BOOST_CHECK(CRational(1, 2) <= 1);
 		BOOST_CHECK(CRational(2, 1) <= 2);
 	}
-	BOOST_AUTO_TEST_CASE(returns_true_if_integer_is_less_than_rational_number_or_they_are_equal)
+	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_less_than_rational_number_or_they_are_equal)
 	{
 		BOOST_CHECK(1 <= CRational(3, 2));
 		BOOST_CHECK(2 <= CRational(2, 1));
