@@ -383,6 +383,7 @@ BOOST_AUTO_TEST_SUITE(bool_operator_less_or_equal)
 		}
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE(output_operator)
 	BOOST_AUTO_TEST_CASE(should_output_the_rational_number_in_the_stream)
 	{
@@ -390,7 +391,32 @@ BOOST_AUTO_TEST_SUITE(output_operator)
 		output << CRational(7,15);
 		BOOST_CHECK_EQUAL(output.str(), "7/15");
 	}
-
 BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(input_operator)
+	BOOST_AUTO_TEST_CASE(should_read_the_rational_number_from_the_stream)
+	{
+		std::stringstream input = std::stringstream();
+		input << "7/15";
+		CRational result;
+		BOOST_CHECK(input >> result);
+		VerifyRational(result, 7, 15);
+	}
+	BOOST_AUTO_TEST_CASE(should_return_fail_if_can_not_read_rational_number)
+	{
+		std::stringstream input = std::stringstream();
+		input << "1/k";
+		CRational result;
+		BOOST_CHECK(!(input >> result));
+	}
+	BOOST_AUTO_TEST_CASE(should_not_change_rational_number_if_input_return_fail)
+	{
+		std::stringstream output = std::stringstream();
+		output << "1/k";
+		CRational result;
+		BOOST_CHECK(!(output >> result));
+		VerifyRational(result, 0, 1);
+	}
+	BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

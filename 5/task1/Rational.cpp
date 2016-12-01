@@ -166,3 +166,18 @@ std::ostream & operator <<(std::ostream &stream, CRational const& rational)
 	return stream;
 }
 
+std::istream & operator >> (std::istream & stream, CRational & rational)
+{
+	int numerator;
+	int denominator = 0;
+
+	if (
+		(stream >> numerator) && (stream.get() == '/') &&
+		(stream >> denominator)
+		)
+	{
+		rational = CRational(numerator, denominator);
+	}
+
+	return stream;
+}
