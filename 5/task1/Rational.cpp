@@ -178,6 +178,10 @@ std::istream & operator >> (std::istream & stream, CRational & rational)
 	{
 		rational = CRational(numerator, denominator);
 	}
+	else
+	{
+		stream.setstate(std::ios::failbit);
+	}
 
 	return stream;
 }
