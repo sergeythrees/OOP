@@ -304,5 +304,23 @@ BOOST_AUTO_TEST_SUITE(output_operator)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_contstants)
+{
+	CRational const a(3, 2);
+	CRational const b(4, 7);
+
+	VerifyRational(-a, -3, 2);
+	VerifyRational(+a, 3, 2);
+}
+
+BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants_too)
+{
+	CRational a(3, 2);
+	CRational const b(3, 2);
+
+	VerifyRational(((a += b) += b), 9, 2);
+	VerifyRational(((a -= b) -= b), 3, 2);
+	// аналогичные проблемы вызывают *= и /=
+}
 
 BOOST_AUTO_TEST_SUITE_END()
