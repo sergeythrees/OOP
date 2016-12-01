@@ -107,44 +107,50 @@ BOOST_AUTO_TEST_SUITE(unary_operator_plus)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(binary_operator_plus)
-	BOOST_AUTO_TEST_CASE(should_return_the_sum_of_two_rational_numbers)
-	{
-		VerifyRational(CRational(1, 2) + CRational(1, 6), 2, 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_sum_of_rational_number_and_integer)
-	{
-		VerifyRational(CRational(1, 2) + 1, 3, 2);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_sum_of_integer_and_rational_number)
-	{
-		VerifyRational(1 + CRational(1, 2), 3, 2);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_sum_of)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			VerifyRational(CRational(1, 2) + CRational(1, 6), 2, 3);
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			VerifyRational(CRational(1, 2) + 1, 3, 2);
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			VerifyRational(1 + CRational(1, 2), 3, 2);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(binary_operator_minus)
-	BOOST_AUTO_TEST_CASE(should_return_the_complement_of_two_rational_numbers)
-	{
-		VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_complement_of_rational_number_and_integer)
-	{
-		VerifyRational(CRational(1, 2) - 1, -1, 2);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_complement_of_integer_and_rational_number)
-	{
-		VerifyRational(1 - CRational(1, 2), 1, 2);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_complement_of)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			VerifyRational(CRational(1, 2) - 1, -1, 2);
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			VerifyRational(1 - CRational(1, 2), 1, 2);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(plus_equal_operator)
-	BOOST_AUTO_TEST_CASE(should_add_second_rational_number_to_first_rational_number)
-	{
-		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_add_integer_to_first_rational_number)
-	{
-		VerifyRational(CRational(1, 2) += 1, 3, 2);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_sum_and_add)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
+		}
+		BOOST_AUTO_TEST_CASE(integer_to_first_rational_number)
+		{
+			VerifyRational(CRational(1, 2) += 1, 3, 2);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
 	{
 		CRational a(3, 2);
@@ -156,14 +162,16 @@ BOOST_AUTO_TEST_SUITE(plus_equal_operator)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(minus_equal_operator)
-	BOOST_AUTO_TEST_CASE(should_subtract_second_rational_number_from_first_rational_number)
-	{
-		VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_subtract_integer_from_first_rational_number)
-	{
-		VerifyRational(CRational(1, 2) -= 1, -1, 2);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_complement_and_subtract)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
+		}
+		BOOST_AUTO_TEST_CASE(integer_from_first_rational_number)
+		{
+			VerifyRational(CRational(1, 2) -= 1, -1, 2);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
 	{
 		CRational a(3, 2);
@@ -175,44 +183,50 @@ BOOST_AUTO_TEST_SUITE(minus_equal_operator)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(multiplicaton_operator)
-	BOOST_AUTO_TEST_CASE(should_return_the_result_of_multiplicaton_two_rational_numbers)
-	{
-		VerifyRational(CRational(1, 2) * CRational(2, 3), 1, 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_result_of_multiplicaton_rational_number_and_integer)
-	{
-		VerifyRational(CRational(1, 2) * -3, -3, 2);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_result_of_multiplicaton_integer_and_rational_number)
-	{
-		VerifyRational(7 * CRational(2, 3), 14, 3);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_product_of)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			VerifyRational(CRational(1, 2) * CRational(2, 3), 1, 3);
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			VerifyRational(CRational(1, 2) * -3, -3, 2);
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			VerifyRational(7 * CRational(2, 3), 14, 3);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(division_operator)
-	BOOST_AUTO_TEST_CASE(should_return_the_result_of_division_two_rational_numbers)
-	{
-		VerifyRational(CRational(1, 2) / CRational(2, 3), 3, 4);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_result_of_division_rational_number_and_integer)
-	{
-		VerifyRational(CRational(1, 2) / 5, 1, 10);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_the_result_of_division_integer_and_rational_number)
-	{
-		VerifyRational(7 / CRational(2, 3), 21, 2);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_quotient_of)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+			{
+				VerifyRational(CRational(1, 2) / CRational(2, 3), 3, 4);
+			}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			VerifyRational(CRational(1, 2) / 5, 1, 10);
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			VerifyRational(7 / CRational(2, 3), 21, 2);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(multiple_equal_operator)
-	BOOST_AUTO_TEST_CASE(should_multiply_the_first_rational_number_by_second_rational_number)
-	{
-		VerifyRational(CRational(1, 2) *= CRational(2, 3), 1, 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_multiply_the_rational_number_by_integer)
-	{
-		VerifyRational(CRational(1, 2) *= 3, 3, 2);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_product_and_multiple)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			VerifyRational(CRational(1, 2) *= CRational(2, 3), 1, 3);
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_by_integer)
+		{
+			VerifyRational(CRational(1, 2) *= 3, 3, 2);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
 	{
 		CRational a(3, 2);
@@ -224,14 +238,16 @@ BOOST_AUTO_TEST_SUITE(multiple_equal_operator)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(division_and_equal_operator)
-	BOOST_AUTO_TEST_CASE(should_divide_the_first_rational_number_by_second_rational_number)
-	{
-		VerifyRational(CRational(1, 2) /= CRational(2, 3), 3, 4);
-	}
-	BOOST_AUTO_TEST_CASE(should_divide_the_rational_number_by_integer)
-	{
-		VerifyRational(CRational(1, 2) /= 3, 1, 6);
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_quotient_and_divide)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			VerifyRational(CRational(1, 2) /= CRational(2, 3), 3, 4);
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_by_integer)
+		{
+			VerifyRational(CRational(1, 2) /= 3, 1, 6);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
 	{
 		CRational a(27, 8);
@@ -243,103 +259,130 @@ BOOST_AUTO_TEST_SUITE(division_and_equal_operator)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_equal)
-	BOOST_AUTO_TEST_CASE(should_return_true_if_two_rational_numbers_are_equal)
-	{
-		BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_and_integer_are_equal)
-	{
-		BOOST_CHECK(CRational(4, 1) == 4);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_and_rational_number_are_equal)
-	{
-		BOOST_CHECK(3 == CRational(3, 1));
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_result_of_comparison)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
+			BOOST_CHECK(!(CRational(1, 2) == CRational(3, 2)));
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			BOOST_CHECK(CRational(4, 1) == 4);
+			BOOST_CHECK(!(CRational(4, 1) == 1));
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			BOOST_CHECK(3 == CRational(3, 1));
+			BOOST_CHECK(!(3 == CRational(3, 2)));
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_not_equal)
-	BOOST_AUTO_TEST_CASE(should_return_true_if_two_rational_numbers_are_not_equal)
+	BOOST_AUTO_TEST_SUITE(should_return_the_result_of_comparison)
+	BOOST_AUTO_TEST_CASE(two_rational_numbers)
 	{
 		BOOST_CHECK(CRational(1, 2) != CRational(2, 3));
+		BOOST_CHECK(!(CRational(1, 2) != CRational(1, 2)));
 	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_and_integer_are_equal)
+	BOOST_AUTO_TEST_CASE(rational_number_and_integer)
 	{
 		BOOST_CHECK(CRational(1, 2) != 7);
 		BOOST_CHECK(!(CRational(7, 1) != 7));
 	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_and_rational_number_are_equal)
+	BOOST_AUTO_TEST_CASE(integer_and_rational_number)
 	{
 		BOOST_CHECK(3 != CRational(2, 3));
 		BOOST_CHECK(!(3 != CRational(3, 1)));
 	}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_greater)
-	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_greater_than_second)
-	{
-		BOOST_CHECK(CRational(1, 2) > CRational(1, 3));
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_greater_than_integer)
-	{
-		BOOST_CHECK(CRational(4, 1) > 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_greater_than_rational_number)
-	{
-		BOOST_CHECK(1 > CRational(1, 2));
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_result_of_comparison)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			BOOST_CHECK(CRational(1, 2) > CRational(1, 3));
+			BOOST_CHECK(!(CRational(1, 3) > CRational(1, 2)));
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			BOOST_CHECK(CRational(4, 1) > 3);
+			BOOST_CHECK(!(CRational(1, 2) > 3));
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			BOOST_CHECK(1 > CRational(1, 2));
+			BOOST_CHECK(!(1 > CRational(3, 2)));
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_less)
-	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_less_than_second)
-	{
-		BOOST_CHECK(CRational(1, 3) < CRational(1, 2));
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_less_than_integer)
-	{
-		BOOST_CHECK(CRational(1, 2) < 1);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_less_than_rational_number)
-	{
-		BOOST_CHECK(1 < CRational(3, 2));
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_result_of_comparison)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			BOOST_CHECK(CRational(1, 3) < CRational(1, 2));
+			BOOST_CHECK(!(CRational(1, 2) < CRational(1, 3)));
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			BOOST_CHECK(CRational(1, 2) < 1);
+			BOOST_CHECK(!(CRational(3, 2) < 1));
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			BOOST_CHECK(1 < CRational(3, 2));
+			BOOST_CHECK(!(1 < CRational(1, 3)));
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_greater_or_equal)
-	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_greater_than_second_or_they_are_equal)
-	{
-		BOOST_CHECK(CRational(1, 2) >= CRational(1, 3));
-		BOOST_CHECK(CRational(1, 2) >= CRational(1, 2));
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_greater_than_integer_or_they_are_equal)
-	{
-		BOOST_CHECK(CRational(4, 1) >= 3);
-		BOOST_CHECK(CRational(3, 1) >= 3);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_greater_than_rational_number_or_they_are_equal)
-	{
-		BOOST_CHECK(1 >= CRational(1, 2));
-		BOOST_CHECK(2 >= CRational(2, 1));
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_result_of_comparison)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			BOOST_CHECK(CRational(1, 2) >= CRational(1, 3));
+			BOOST_CHECK(CRational(1, 2) >= CRational(1, 2));
+			BOOST_CHECK(!(CRational(1, 3) >= CRational(1, 2)));
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			BOOST_CHECK(CRational(4, 1) >= 3);
+			BOOST_CHECK(CRational(3, 1) >= 3);
+			BOOST_CHECK(!(CRational(2, 1) >= 3));
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			BOOST_CHECK(1 >= CRational(1, 2));
+			BOOST_CHECK(2 >= CRational(2, 1));
+			BOOST_CHECK(!(1 >= CRational(2, 1)));
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(bool_operator_less_or_equal)
-	BOOST_AUTO_TEST_CASE(should_return_true_if_first_rational_number_is_less_than_second_or_they_are_equal)
-	{
-		BOOST_CHECK(CRational(1, 3) <= CRational(1, 2));
-		BOOST_CHECK(CRational(1, 3) <= CRational(1, 3));
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_rational_number_is_less_than_integer_or_they_are_equal)
-	{
-		BOOST_CHECK(CRational(1, 2) <= 1);
-		BOOST_CHECK(CRational(2, 1) <= 2);
-	}
-	BOOST_AUTO_TEST_CASE(should_return_true_if_integer_is_less_than_rational_number_or_they_are_equal)
-	{
-		BOOST_CHECK(1 <= CRational(3, 2));
-		BOOST_CHECK(2 <= CRational(2, 1));
-	}
+	BOOST_AUTO_TEST_SUITE(should_return_the_result_of_comparison)
+		BOOST_AUTO_TEST_CASE(two_rational_numbers)
+		{
+			BOOST_CHECK(CRational(1, 3) <= CRational(1, 2));
+			BOOST_CHECK(CRational(1, 3) <= CRational(1, 3));
+			BOOST_CHECK(!(CRational(1, 2) <= CRational(1, 3)));
+		}
+		BOOST_AUTO_TEST_CASE(rational_number_and_integer)
+		{
+			BOOST_CHECK(CRational(1, 2) <= 1);
+			BOOST_CHECK(CRational(2, 1) <= 2);
+			BOOST_CHECK(!(CRational(4, 2) <= 1));
+		}
+		BOOST_AUTO_TEST_CASE(integer_and_rational_number)
+		{
+			BOOST_CHECK(1 <= CRational(3, 2));
+			BOOST_CHECK(2 <= CRational(2, 1));
+			BOOST_CHECK(!(CRational(1, 2) <= CRational(1, 3)));
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
-
 BOOST_AUTO_TEST_SUITE(output_operator)
 	BOOST_AUTO_TEST_CASE(should_output_the_rational_number_in_the_stream)
 	{
