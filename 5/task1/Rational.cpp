@@ -60,15 +60,14 @@ std::pair<int, CRational> CRational::ToCompoundFraction()const
 	return{ integer, CRational(numerator, m_denominator) };
 }
 
-CRational const CRational::operator +() 
+CRational const CRational::operator +() const
 {
 	return *this;
 }
 
-CRational const CRational::operator -()
+CRational const CRational::operator -() const
 {
-	(*this).m_numerator = -(*this).m_numerator;
-	return *this;
+	return CRational(-(*this).m_numerator, (*this).m_denominator);
 }
 
 CRational const operator +(CRational const& a, CRational const& b)
@@ -89,13 +88,13 @@ CRational const operator -(CRational const& a, CRational const& b)
 	return CRational(numerator, denominator);
 }
 
-CRational const CRational::operator +=(CRational const& b)
+CRational CRational::operator +=(CRational const& b)
 {
 	*this = *this + b;
 	return *this;
 }
 
-CRational const CRational::operator -=(CRational const& b)
+CRational CRational::operator -=(CRational const& b)
 {
 	*this = *this - b;
 	return *this;
@@ -115,13 +114,13 @@ CRational const operator /(CRational const& a, CRational const& b)
 	return CRational(numerator, denominator);
 }
 
-CRational const CRational::operator *=(CRational const& b)
+CRational CRational::operator *=(CRational const& b)
 {
 	*this = *this * b;
 	return *this;
 }
 
-CRational const CRational::operator /=(CRational const& b)
+CRational CRational::operator /=(CRational const& b)
 {
 	*this = *this / b;
 	return *this;

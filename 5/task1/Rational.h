@@ -12,12 +12,12 @@ public:
 	double ToDouble() const;
 	std::pair<int, CRational> ToCompoundFraction()const;
 
-	CRational const operator +();
-	CRational const operator -();
-	CRational const operator +=(CRational const& b);
-	CRational const operator -=(CRational const& b);
-	CRational const operator *=(CRational const& b);
-	CRational const operator /=(CRational const& b);
+	CRational const operator +()  const;
+	CRational const operator -()  const;
+	CRational operator +=(CRational const& b);
+	CRational operator -=(CRational const& b);
+	CRational operator *=(CRational const& b);
+	CRational operator /=(CRational const& b);
 private:
 	int m_numerator;
 	int m_denominator;

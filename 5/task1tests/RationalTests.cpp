@@ -82,14 +82,28 @@ BOOST_AUTO_TEST_SUITE(unary_operator_minus)
 	{
 		VerifyRational(-CRational(3, 5), -3, 5);
 	}
+	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_contstants)
+	{
+		CRational const a(3, 2);
+		CRational const b(4, 7);
+		VerifyRational(-a, -3, 2);
+		VerifyRational(((-a) + 1) - 2, -5, 2);
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(unary_operator_plus)
-BOOST_AUTO_TEST_CASE(should_return_not_changed_rational_number)
-{
-	VerifyRational(+CRational(3, 5), 3, 5);
-	VerifyRational(+CRational(-3, 5), -3, 5);
-}
+	BOOST_AUTO_TEST_CASE(should_return_not_changed_rational_number)
+	{
+		VerifyRational(+CRational(3, 5), 3, 5);
+		VerifyRational(+CRational(-3, 5), -3, 5);
+	}
+	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_contstants)
+	{
+		CRational const a(3, 2);
+		CRational const b(4, 7);
+		VerifyRational(+a, 3, 2);
+		VerifyRational(((+a) - 1) + 2, 5, 2);
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(binary_operator_plus)
@@ -131,6 +145,13 @@ BOOST_AUTO_TEST_SUITE(plus_equal_operator)
 	{
 		VerifyRational(CRational(1, 2) += 1, 3, 2);
 	}
+	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
+	{
+		CRational a(3, 2);
+		CRational const b(3, 2);
+
+		VerifyRational(((a += b) += b), 9, 2);
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(minus_equal_operator)
@@ -141,6 +162,13 @@ BOOST_AUTO_TEST_SUITE(minus_equal_operator)
 	BOOST_AUTO_TEST_CASE(should_subtract_integer_from_first_rational_number)
 	{
 		VerifyRational(CRational(1, 2) -= 1, -1, 2);
+	}
+	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
+	{
+		CRational a(3, 2);
+		CRational const b(3, 2);
+
+		VerifyRational(((a -= b) -= b), -3, 2);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -303,24 +331,5 @@ BOOST_AUTO_TEST_SUITE(output_operator)
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
-
-BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_contstants)
-{
-	CRational const a(3, 2);
-	CRational const b(4, 7);
-
-	VerifyRational(-a, -3, 2);
-	VerifyRational(+a, 3, 2);
-}
-
-BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants_too)
-{
-	CRational a(3, 2);
-	CRational const b(3, 2);
-
-	VerifyRational(((a += b) += b), 9, 2);
-	VerifyRational(((a -= b) -= b), 3, 2);
-	// аналогичные проблемы вызывают *= и /=
-}
 
 BOOST_AUTO_TEST_SUITE_END()
