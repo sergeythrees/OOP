@@ -88,13 +88,13 @@ CRational const operator -(CRational const& a, CRational const& b)
 	return CRational(numerator, denominator);
 }
 
-CRational CRational::operator +=(CRational const& b)
+CRational & CRational::operator +=(CRational const& b)
 {
 	*this = *this + b;
 	return *this;
 }
 
-CRational CRational::operator -=(CRational const& b)
+CRational & CRational::operator -=(CRational const& b)
 {
 	*this = *this - b;
 	return *this;
@@ -114,48 +114,48 @@ CRational const operator /(CRational const& a, CRational const& b)
 	return CRational(numerator, denominator);
 }
 
-CRational CRational::operator *=(CRational const& b)
+CRational & CRational::operator *=(CRational const& b)
 {
 	*this = *this * b;
 	return *this;
 }
 
-CRational CRational::operator /=(CRational const& b)
+CRational & CRational::operator /=(CRational const& b)
 {
 	*this = *this / b;
 	return *this;
 }
 
-bool const operator ==(CRational const& a, CRational const& b)
+bool operator ==(CRational const& a, CRational const& b)
 {
 	return ((a.GetNumerator() == b.GetNumerator()) && (a.GetDenominator() == b.GetDenominator()));
 }
 
-bool const operator !=(CRational const& a, CRational const& b)
+bool operator !=(CRational const& a, CRational const& b)
 {
 	return !(a==b);
 }
 
-bool const operator >(CRational const& a, CRational const& b)
+bool operator >(CRational const& a, CRational const& b)
 {
 	int aNumerator = a.GetNumerator() * b.GetDenominator();
 	int bNumerator = b.GetNumerator() * a.GetDenominator();
 	return (aNumerator > bNumerator);
 }
 
-bool const operator <(CRational const& a, CRational const& b)
+bool operator <(CRational const& a, CRational const& b)
 {
 	int aNumerator = a.GetNumerator() * b.GetDenominator();
 	int bNumerator = b.GetNumerator() * a.GetDenominator();
 	return (aNumerator < bNumerator);
 }
 
-bool const operator >=(CRational const& a, CRational const& b)
+bool operator >=(CRational const& a, CRational const& b)
 {
 	return !(a < b);
 }
 
-bool const operator <=(CRational const& a, CRational const& b)
+bool operator <=(CRational const& a, CRational const& b)
 {
 	return !(a > b);
 }

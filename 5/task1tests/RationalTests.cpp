@@ -151,6 +151,7 @@ BOOST_AUTO_TEST_SUITE(plus_equal_operator)
 		CRational const b(3, 2);
 
 		VerifyRational(((a += b) += b), 9, 2);
+		VerifyRational(a, 9, 2);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -169,6 +170,7 @@ BOOST_AUTO_TEST_SUITE(minus_equal_operator)
 		CRational const b(3, 2);
 
 		VerifyRational(((a -= b) -= b), -3, 2);
+		VerifyRational(a, -3, 2);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -211,6 +213,14 @@ BOOST_AUTO_TEST_SUITE(multiple_equal_operator)
 	{
 		VerifyRational(CRational(1, 2) *= 3, 3, 2);
 	}
+	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
+	{
+		CRational a(3, 2);
+		CRational const b(-3, 2);
+
+		VerifyRational(((a *= b) *= b), 27, 8);
+		VerifyRational(a, 27, 8);
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(division_and_equal_operator)
@@ -221,6 +231,14 @@ BOOST_AUTO_TEST_SUITE(division_and_equal_operator)
 	BOOST_AUTO_TEST_CASE(should_divide_the_rational_number_by_integer)
 	{
 		VerifyRational(CRational(1, 2) /= 3, 1, 6);
+	}
+	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_constants)
+	{
+		CRational a(27, 8);
+		CRational const b(-3, 2);
+
+		VerifyRational(((a /= b) /= b), 3, 2);
+		VerifyRational(a, 3, 2);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 

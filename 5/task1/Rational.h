@@ -14,10 +14,10 @@ public:
 
 	CRational const operator +()  const;
 	CRational const operator -()  const;
-	CRational operator +=(CRational const& b);
-	CRational operator -=(CRational const& b);
-	CRational operator *=(CRational const& b);
-	CRational operator /=(CRational const& b);
+	CRational & operator +=(CRational const& b);
+	CRational & operator -=(CRational const& b);
+	CRational & operator *=(CRational const& b);
+	CRational & operator /=(CRational const& b);
 private:
 	int m_numerator;
 	int m_denominator;
@@ -29,10 +29,10 @@ CRational const operator +(CRational const& a, CRational const& b);
 CRational const operator -(CRational const& a, CRational const& b);
 CRational const operator *(CRational const& a, CRational const& b);
 CRational const operator /(CRational const& a, CRational const& b);
-bool const operator ==(CRational const& a, CRational const& b);
-bool const operator !=(CRational const& a, CRational const& b);
-bool const operator >(CRational const& a, CRational const& b);
-bool const operator <(CRational const& a, CRational const& b);
-bool const operator >=(CRational const& a, CRational const& b);
-bool const operator <=(CRational const& a, CRational const& b);
+bool operator ==(CRational const& a, CRational const& b);
+bool operator !=(CRational const& a, CRational const& b);
+bool operator >(CRational const& a, CRational const& b);
+bool operator <(CRational const& a, CRational const& b);
+bool operator >=(CRational const& a, CRational const& b);
+bool operator <=(CRational const& a, CRational const& b);
 std::ostream & operator <<(std::ostream &stream, CRational const& rational);
