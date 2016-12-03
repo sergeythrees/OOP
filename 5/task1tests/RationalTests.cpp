@@ -423,6 +423,7 @@ BOOST_AUTO_TEST_SUITE(input_operator)
 	BOOST_AUTO_TEST_CASE(should_read_the_rational_number_from_the_stream)
 	{
 		VerifyInputOperator("7/15", CRational(7, 15));
+		VerifyInputOperator("-7/15", CRational(-7, 15));
 	}
 	BOOST_AUTO_TEST_CASE(should_return_fail_if_can_not_read_rational_number)
 	{
