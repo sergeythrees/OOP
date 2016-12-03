@@ -180,7 +180,7 @@ std::istream & operator >> (std::istream & stream, CRational & rational)
 	}
 	else
 	{
-		stream.setstate(std::ios::failbit);
+		stream.setstate(std::ios_base::failbit);
 	}
 
 	return stream;

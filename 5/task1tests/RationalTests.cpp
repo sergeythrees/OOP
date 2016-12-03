@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "../task1/Rational.h"
+#include <boost/optional.hpp>
 
 BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 {
@@ -26,6 +27,25 @@ void VerifyCompoundFraction(std::pair<int, CRational> const& result, int number,
 	BOOST_CHECK_EQUAL(result.first, number);
 	BOOST_CHECK_EQUAL(result.second.GetNumerator(), expectedNumerator);
 	BOOST_CHECK_EQUAL(result.second.GetDenominator(), expectedDenominator);
+}
+
+void VerifyInputOperator(std::string inputString, boost::optional<CRational> expectedRational)
+{
+	std::stringstream input = std::stringstream();
+	input << inputString;
+	CRational result;
+	input >> result;
+	if (expectedRational)
+	{
+		if (!input.fail())
+			VerifyRational(result, expectedRational->GetNumerator(), expectedRational->GetDenominator());
+		else
+			VerifyRational(*expectedRational, expectedRational->GetNumerator(), expectedRational->GetDenominator());
+	}
+	else
+	{
+		BOOST_CHECK(input.fail());
+	}
 }
 
 BOOST_AUTO_TEST_SUITE(Rational_number)
@@ -402,26 +422,15 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(input_operator)
 	BOOST_AUTO_TEST_CASE(should_read_the_rational_number_from_the_stream)
 	{
-		std::stringstream input = std::stringstream();
-		input << "7/15";
-		CRational result;
-		BOOST_CHECK(input >> result);
-		VerifyRational(result, 7, 15);
+		VerifyInputOperator("7/15", CRational(7, 15));
 	}
 	BOOST_AUTO_TEST_CASE(should_return_fail_if_can_not_read_rational_number)
 	{
-		std::stringstream input = std::stringstream();
-		input << "1/k";
-		CRational result;
-		BOOST_CHECK(!(input >> result));
+		VerifyInputOperator("1.15", boost::none);
 	}
 	BOOST_AUTO_TEST_CASE(should_not_change_rational_number_if_input_return_fail)
 	{
-		std::stringstream output = std::stringstream();
-		output << "1/k";
-		CRational result;
-		BOOST_CHECK(!(output >> result));
-		VerifyRational(result, 0, 1);
+		VerifyInputOperator("1.15", CRational(0, 1));
 	}
 	BOOST_AUTO_TEST_SUITE_END()
 
