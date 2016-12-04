@@ -424,7 +424,7 @@ BOOST_AUTO_TEST_SUITE(input_operator)
 		VerifyInputOperator("7/15", CRational(7, 15));
 		VerifyInputOperator("-7/15", CRational(-7, 15));
 	}
-	BOOST_AUTO_TEST_CASE(should_not_change_rational_number_variable_and_should_return_fail_if_input_had_incorrect)
+	BOOST_AUTO_TEST_CASE(must_not_change_rational_number_variable_and_should_return_fail_if_the_input_was_incorrect)
 	{
 		VerifyInputOperator("1.15", boost::none);
 	}
