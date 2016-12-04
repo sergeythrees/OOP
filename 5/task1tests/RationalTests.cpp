@@ -104,9 +104,7 @@ BOOST_AUTO_TEST_SUITE(unary_operator_minus)
 	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_contstants)
 	{
 		CRational const a(3, 2);
-		CRational const b(4, 7);
 		VerifyRational(-a, -3, 2);
-		VerifyRational(((-a) + 1) - 2, -5, 2);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -119,9 +117,7 @@ BOOST_AUTO_TEST_SUITE(unary_operator_plus)
 	BOOST_AUTO_TEST_CASE(should_be_able_to_work_with_contstants)
 	{
 		CRational const a(3, 2);
-		CRational const b(4, 7);
 		VerifyRational(+a, 3, 2);
-		VerifyRational(((+a) - 1) + 2, 5, 2);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
