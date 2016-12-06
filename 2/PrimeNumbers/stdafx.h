@@ -9,12 +9,7 @@
 
 #include <stdio.h>
 #include <tchar.h>
-#include <utility>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <functional>
-#include <map>
+#include <set>
 
 
 // TODO: reference additional headers your program requires here
