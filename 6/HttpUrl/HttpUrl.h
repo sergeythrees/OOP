@@ -54,6 +54,8 @@ private:
 	Protocol VerifiedProtocol(Protocol const protocol);
 	unsigned short VerifiedPort(unsigned short const port);
 
+	std::string ToLower(std::string str);
+
 	std::string m_domain;
 	std::string m_document;
 	Protocol m_protocol;

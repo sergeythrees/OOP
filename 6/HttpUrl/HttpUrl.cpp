@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <string>
+#include <algorithm>
 #include "HttpUrl.h"
 
 using namespace std;
@@ -13,7 +14,7 @@ CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Pro
 }
 
 CHttpUrl::CHttpUrl(std::string const & url)
-	: CHttpUrl::CHttpUrl(GetDomainFromStr(url), GetDocumentFromStr(url), GetProtocolFromStr(url), GetPortFromStr(url))
+	: CHttpUrl::CHttpUrl(GetDomainFromStr(url), GetDocumentFromStr(url), GetProtocolFromStr(url))
 {
 	
 }
@@ -25,22 +26,22 @@ std::string CHttpUrl::GetURL() const
 
 std::string CHttpUrl::GetDomain() const
 {
-	return std::string();
+	return m_domain;
 }
 
 std::string CHttpUrl::GetDocument() const
 {
-	return std::string();
+	return m_document;
 }
 
 Protocol CHttpUrl::GetProtocol() const
 {
-	return Protocol();
+	return m_protocol;
 }
 
 unsigned short CHttpUrl::GetPort() const
 {
-	return 0;
+	return m_port;
 }
 
 std::string CHttpUrl::GetDomainFromStr(std::string const & str)
@@ -55,8 +56,20 @@ std::string CHttpUrl::GetDocumentFromStr(std::string const & str)
 
 Protocol CHttpUrl::GetProtocolFromStr(std::string const & str)
 {
-	string temp = str;
-	return Protocol();
+	size_t foundPos = str.find("://");
+	if (foundPos != str.npos)
+	{
+		string httpSubstr = ToLower(str.substr(0, foundPos));
+		if (httpSubstr == "http")
+		{
+			return HTTP;
+		}
+		else if (httpSubstr == "https")
+		{
+			return HTTPS;
+		}
+	}
+	throw invalid_argument("invalid protocol");
 }
 
 unsigned short CHttpUrl::GetPortFromStr(std::string const & str)
@@ -83,4 +96,10 @@ Protocol CHttpUrl::VerifiedProtocol(Protocol const protocol)
 unsigned short CHttpUrl::VerifiedPort(unsigned short const port)
 {
 	return port;
+}
+
+string CHttpUrl::ToLower(string str)
+{
+	std::transform(str.begin(), str.end(), str.begin(), tolower);
+	return str;
 }
