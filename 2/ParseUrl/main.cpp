@@ -5,28 +5,32 @@ const unsigned ARG_COUNT = 2;
 
 using namespace std;
 
-bool IsValidArgumentsCount(int argc)
+void ParseUrlFromStream()
 {
-	return (argc == ARG_COUNT);
-}
-
-int main(int argc, char * argv[])
-{
-	setlocale(LC_ALL, "rus");
 	string urlString;
-	if (!IsValidArgumentsCount(argc))
+	while (!cin.eof())
 	{
-		cout << "Неверные аргументы коммандной строки. Используйте :" << endl;
-		cout << "ParseUrl.exe <URL line>" << endl;
-		cout << "Введите URL или пустую строку для завершения" << endl;
+		cout << "URL: ";
 		cin >> urlString;
 		if (urlString.empty())
-			return EXIT_SUCCESS;
+		{
+			continue;
+		}
+		CUrl url(urlString);
+		if (url.IsInitialized())
+		{
+			cout << "HOST: " << url.host() << endl;
+			cout << "PORT: " << url.port() << endl;
+			cout << "DOC: " << url.document() << endl;
+		}
+		cout << endl;
 	}
-	else
-	{
-		urlString = argv[1];
-	}
+}
 
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	cout << "Для завершения введите Ctrl-Z" << endl;
+	ParseUrlFromStream();
 	return EXIT_SUCCESS;
 }
