@@ -1,8 +1,14 @@
 #pragma once
-enum Protocol
+
+static const int MAX_PORT_VAlUE = 65535;
+static const int MIN_PORT_VAlUE = 1;
+static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)/([^ ]*)");
+
+enum class Protocol
 {
-	HTTP,
-	HTTPS
+	HTTP = 80,
+	HTTPS = 443,
+	FTP = 21
 };
 
 class CHttpUrl
@@ -20,7 +26,7 @@ public:
 	CHttpUrl(
 		std::string const& domain,
 		std::string const& document,
-		Protocol protocol  = HTTP,
+		Protocol protocol = Protocol::HTTP,
 		unsigned short port = 80);
 
 	// возвращает строковое представление URL-а. Порт, являющийся стандартным для
@@ -44,21 +50,15 @@ public:
 	// возвращает номер порта
 	unsigned short GetPort()const;
 private:
-	std::string GetDomainFromStr(std::string const& str);
-	std::string GetDocumentFromStr(std::string const& str);
-	Protocol GetProtocolFromStr(std::string const& str);
-	unsigned short GetPortFromStr(std::string const& str);
-
-	std::string VerifiedDomain(std::string const& domain);
-	std::string VerifiedDocument(std::string const& document);
-	Protocol VerifiedProtocol(Protocol const protocol);
-	unsigned short VerifiedPort(unsigned short const port);
-
-	std::string ToLower(std::string str);
-
 	std::string m_domain;
 	std::string m_document;
 	Protocol m_protocol;
 	unsigned short m_port;
 
+	std::string VerifiedDomain(std::string const& domain);
+	std::string VerifiedDocument(std::string const& document);
+	Protocol VerifiedProtocol(Protocol const protocol);
+	unsigned short VerifiedPort(unsigned short const port);
+	Protocol GetProtocolFromStr(std::string protocol);
+	std::string ToLower(std::string str);
 };
