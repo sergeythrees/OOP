@@ -1,5 +1,22 @@
 #include "stdafx.h"
+#include <utility>
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <functional>
+#include <map>
 #include "Car.h"
+
+std::map<Gear, std::pair<size_t, size_t>> gearSpeedsMap
+{
+	{ REVERSE,{ 0, 20 } },
+	{ NEUTRAL,{ 0, 150 } },
+	{ FIRST,{ 0, 30 } },
+	{ SECOND,{ 20, 50 } },
+	{ THIRD,{ 30, 60 } },
+	{ FOURTH,{ 40, 90 } },
+	{ FIFTH,{ 50, 150 } }
+};
 
 bool CCar::IsTurnedOn() const
 {
@@ -101,56 +118,20 @@ bool CCar::SetSpeed(int speed)
 	return m_speed == speed;
 }
 
-bool CCar::IsSpeedInRange(int speed, Gear currentGear) const
+bool CCar::IsSpeedInRange(int speed, Gear gear) const
 {
-	switch (currentGear)
-	{
-	case REVERSE:
-		if ((speed >= 0) && (speed <= 20))
-		{
-			return true;
-		}
-		break;
-	case NEUTRAL:
-		if ((speed >= 0) && (speed <= m_speed))
-		{
-			return true;
-		}
-		break;
-	case FIRST:
-		if ((speed >= 0) && (speed <= 30))
-		{
+	bool isSpeedInRange = false;
+	auto currentGear = gearSpeedsMap.find(gear);
 
-			return true;
-		}
-		break;
-	case SECOND:
-		if ((speed >= 20) && (speed <= 50))
+	if (currentGear != gearSpeedsMap.end())
+	{
+		if (speed >= currentGear->second.first && speed <= currentGear->second.second)
 		{
-			return true;
+			isSpeedInRange = true;
+			if ((gear == NEUTRAL) && !(speed <= m_speed))
+				isSpeedInRange = false;
 		}
-		break;
-	case THIRD:
-		if ((speed >= 30) && (speed <= 60))
-		{
-			return true;
-		}
-		break;
-	case FOURTH:
-		if ((speed >= 40) && (speed <= 90))
-		{
-			return true;
-		}
-		break;
-	case FIFTH:
-		if ((speed >= 50) && (speed <= 150))
-		{
-			return true;
-		}
-		break;
-	default:
-		return false;
 	}
 
-	return false;
+	return isSpeedInRange;
 }
