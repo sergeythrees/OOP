@@ -2,6 +2,7 @@
 #include "PrimeNumbers.h"
 
 using namespace std;
+
 void InitSieve(int upperBound, vector<bool>& sieve)
 {
 	sieve[0] = sieve[1] = false;
@@ -18,14 +19,15 @@ void InitSieve(int upperBound, vector<bool>& sieve)
 		}
 	}
 }
-std::set<int> GeneratePrimeNumbersSet(int upperBound)
+
+set<int> GeneratePrimeNumbersSet(int upperBound)
 {
 	set<int> result;
 	if (upperBound > 0 && upperBound <= MAX_UPPER_BOUND)
 	{
 		if (upperBound >= MIN_PRIME_NUMBER)
 		{
-			std::vector<bool> sieve(upperBound + 1, true);
+			vector<bool> sieve(upperBound + 1, true);
 			InitSieve(upperBound, sieve);
 			for (int i = MIN_PRIME_NUMBER; i <= upperBound; ++i)
 			{
