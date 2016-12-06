@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <ctime>
 
 #define BOOST_TEST_INCLUDED
 #pragma warning (disable:4702) // To disable 4702 warning in boost
