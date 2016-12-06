@@ -23,6 +23,9 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\HttpUrl\HttpUrl.h">
+      <Filter>ExistingItems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -31,8 +34,11 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CClassTests.cpp">
+    <ClCompile Include="CHttpUrl_tests.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HttpUrl\HttpUrl.cpp">
+      <Filter>ExistingItems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
