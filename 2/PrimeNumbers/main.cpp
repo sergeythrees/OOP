@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
 	{
 		cout << "Неверные аргументы коммандной строки. Используйте :" << endl;
 		cout << "PrimeNumbersSetGenerator.exe <upperBound>" << endl;
-		cout << "Введите значение верхней границы поиска или пустую строку для завершения" << endl;
+		cout << "Введите значение верхней границы поиска или любой не числовой символ для завершения" << endl;
 		if (!(cin >> upperBound))
 			return EXIT_SUCCESS;
 	}
@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
 	set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
 
 	std::copy(primeNumbers.begin(), primeNumbers.end(), std::ostream_iterator<int>(std::cout, " "));
-
+	cout << endl;
 
 	return EXIT_SUCCESS;
 }
