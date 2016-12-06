@@ -23,20 +23,22 @@ void InitSieve(int upperBound, vector<bool>& sieve)
 set<int> GeneratePrimeNumbersSet(int upperBound)
 {
 	set<int> result;
-	if (upperBound > 0 && upperBound <= MAX_UPPER_BOUND)
+	if (IsValidUpperBound(upperBound) && upperBound >= MIN_PRIME_NUMBER)
 	{
-		if (upperBound >= MIN_PRIME_NUMBER)
+		vector<bool> sieve(upperBound + 1, true);
+		InitSieve(upperBound, sieve);
+		for (int i = MIN_PRIME_NUMBER; i <= upperBound; ++i)
 		{
-			vector<bool> sieve(upperBound + 1, true);
-			InitSieve(upperBound, sieve);
-			for (int i = MIN_PRIME_NUMBER; i <= upperBound; ++i)
+			if (sieve[i])
 			{
-				if (sieve[i])
-				{
-					result.emplace_hint(result.end(), i);
-				}
+				result.emplace_hint(result.end(), i);
 			}
 		}
 	}
 	return result;
+}
+
+bool IsValidUpperBound(int upperBound)
+{
+	return (upperBound > 0 && upperBound <= MAX_UPPER_BOUND);
 }
