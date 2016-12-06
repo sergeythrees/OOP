@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(ParseUrl_class)
 		BOOST_CHECK(ftpUrl.protocol() == Protocol::FTP);
 	}
 
-	BOOST_AUTO_TEST_CASE(must_not_being_initialized_from_incorrect_url_line)
+	BOOST_AUTO_TEST_CASE(must_not_be_initialized_from_incorrect_url_line)
 	{
 		CUrl crashedUrl("http:/www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
 		BOOST_CHECK(!crashedUrl.IsInitialized());
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(ParseUrl_class)
 		BOOST_CHECK(!emptyUrl.IsInitialized());
 	}
 
-	BOOST_AUTO_TEST_CASE(must_not_being_initialized_if_port_value_is_out_of_range)
+	BOOST_AUTO_TEST_CASE(must_not_be_initialized_if_port_value_is_out_of_range)
 	{
 		CUrl urlWithZeroProtocol("http://www.mysite.com:0/docs/document1.html?page=30&lang=en#title");
 		BOOST_CHECK(!urlWithZeroProtocol.IsInitialized());
