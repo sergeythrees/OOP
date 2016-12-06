@@ -112,7 +112,7 @@ bool CCar::IsSpeedInRange(int speed, Gear currentGear) const
 		}
 		break;
 	case NEUTRAL:
-		if (speed <= m_speed)
+		if ((speed >= 0) && (speed <= m_speed))
 		{
 			return true;
 		}
@@ -120,6 +120,7 @@ bool CCar::IsSpeedInRange(int speed, Gear currentGear) const
 	case FIRST:
 		if ((speed >= 0) && (speed <= 30))
 		{
+
 			return true;
 		}
 		break;
