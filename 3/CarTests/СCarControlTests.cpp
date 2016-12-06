@@ -96,6 +96,19 @@ This speed value is not included in the valid range of the 0 gear!\n");
 		BOOST_CHECK(car.GetSpeed() == 10);
 	}
 
+	BOOST_AUTO_TEST_CASE(should_report_if_argument_is_invalid)
+	{
+		VerifyCommandHandling("SetSpeed ", "Invalid argument\n");
+		BOOST_CHECK(car.GetSpeed() == 0);
+		VerifyCommandHandling("SetSpeed ,", "Invalid argument\n");
+		BOOST_CHECK(car.GetSpeed() == 0);
+
+		VerifyCommandHandling("SetGear ", "Invalid argument\n");
+		BOOST_CHECK(car.GetGear() == 0);
+		VerifyCommandHandling("SetGear ,", "Invalid argument\n");
+		BOOST_CHECK(car.GetGear() == 0);
+	}
+
 	BOOST_AUTO_TEST_CASE(can_print_car_info)
 	{
 		VerifyCommandHandling("Info", "Engine is turned off\n");

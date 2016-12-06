@@ -68,18 +68,26 @@ bool CCarControl::EngineOff(std::istream & args)
 
 bool CCarControl::SetGear(std::istream & args)
 {
-	int newGear;
-	args >> newGear;
-	bool isSetGear = m_car.SetGear(newGear);
-	if (isSetGear)
+	int newGear = 0;
+	bool isSetGear = false;
+
+	if (args >> newGear)
 	{
-		m_output << "Gear: " << to_string(m_car.GetGear()) << endl;
+		isSetGear = m_car.SetGear(newGear);
+		if (isSetGear)
+		{
+			m_output << "Gear: " << to_string(m_car.GetGear()) << endl;
+		}
+		else
+		{
+			if (!m_car.IsTurnedOn())
+				m_output << "Engine is turned off" << endl;
+			m_output << "Gear can not switch to this value!" << endl;
+		}
 	}
 	else
 	{
-		if (!m_car.IsTurnedOn())
-			m_output << "Engine is turned off" << endl;
-		m_output << "Gear can not switch to this value!" << endl;
+		m_output << "Invalid argument" << endl;
 	}
 
 
@@ -88,21 +96,28 @@ bool CCarControl::SetGear(std::istream & args)
 
 bool CCarControl::SetSpeed(std::istream & args)
 {
-	int newSpeed;
-	args >> newSpeed;
-	bool isSetSpeed = m_car.SetSpeed(newSpeed);
-	if (isSetSpeed)
+	int newSpeed = 0;
+	bool isSetSpeed = false;
+
+	if (args >> newSpeed)
 	{
-		m_output << "Speed: " << to_string(m_car.GetSpeed()) << endl;
+		isSetSpeed = m_car.SetSpeed(newSpeed);
+		if (isSetSpeed)
+		{
+			m_output << "Speed: " << to_string(m_car.GetSpeed()) << endl;
+		}
+		else
+		{
+			if (!m_car.IsTurnedOn())
+				m_output << "Engine is turned off" << endl;
+			m_output << "This speed value is not included in the valid range of the " << to_string(m_car.GetGear()) << " gear!" << endl;
+		}
 	}
 	else
 	{
-		if (!m_car.IsTurnedOn())
-			m_output << "Engine is turned off" << endl;
-		m_output << "This speed value is not included in the valid range of the " << to_string(m_car.GetGear()) << " gear!" << endl;
+		m_output << "Invalid argument" << endl;
 	}
-
-
+		
 	return isSetSpeed;
 }
 
