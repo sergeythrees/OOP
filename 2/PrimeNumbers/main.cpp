@@ -33,10 +33,13 @@ int main(int argc, char * argv[])
 		return EXIT_FAILURE;
 	}
 
+	size_t beginTime = clock();
 	set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
+	size_t endTime = clock();
 
 	std::copy(primeNumbers.begin(), primeNumbers.end(), std::ostream_iterator<int>(std::cout, " "));
 	cout << endl;
+	cout << "Примерное время вычислений: " << ((endTime - beginTime) / 1000.0) << " c" << endl;
 
 	return EXIT_SUCCESS;
 }
