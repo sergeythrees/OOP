@@ -23,9 +23,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\task1\Class.h">
-      <Filter>ExistingItems</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,9 +33,6 @@
     </ClCompile>
     <ClCompile Include="CClassTests.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\task1\Class.cpp">
-      <Filter>ExistingItems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

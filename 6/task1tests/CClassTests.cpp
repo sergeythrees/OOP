@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "../task1/Class.h"
+#include "../task1/HttpUrl.h"
 
 
 BOOST_AUTO_TEST_SUITE(____)
