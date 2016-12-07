@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 		BOOST_CHECK_EQUAL(url.GetPort(), 80);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_with_other_protocol)
+	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_with_other_protocols)
 	{
 		CHttpUrl httpsUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
 		BOOST_CHECK(httpsUrl.IsInitialized());

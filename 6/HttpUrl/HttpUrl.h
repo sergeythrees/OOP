@@ -29,16 +29,10 @@ public:
 		Protocol protocol = Protocol::HTTP,
 		unsigned short port = 80);
 
-	// возвращает строковое представление URL-а. Порт, являющийся стандартным для
-	// выбранного протокола (80 для http и 443 для https) в URL не должен включаться
 	std::string GetURL() const;
 	std::string GetDomain() const;
 	std::string GetDocument() const;
-
-	// возвращает тип протокола
 	Protocol GetProtocol() const;
-
-	// возвращает номер порта
 	unsigned short GetPort() const;
 
 	bool IsInitialized();
