@@ -140,7 +140,7 @@ std::string CHttpUrl::ConvertProtocol(Protocol const protocol) const
 	{
 		result = "ftp";
 	}
-	return std::string();
+	return result;
 }
 
 string CHttpUrl::ToLower(string str) const
