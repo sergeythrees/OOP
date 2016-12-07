@@ -1,6 +1,8 @@
 #pragma once
 #include "stdafx.h"
-class CUrlParsingError
+#include <exception>
+
+class CUrlParsingError : std::exception
 {
 public:
 
