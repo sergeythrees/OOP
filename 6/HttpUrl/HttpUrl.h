@@ -31,10 +31,10 @@ public:
 
 	// возвращает строковое представление URL-а. Порт, являющийся стандартным для
 	// выбранного протокола (80 для http и 443 для https) в URL не должен включаться
-	std::string GetURL()const;
+	std::string GetURL() const;
 
 	// возвращает доменное имя
-	std::string GetDomain()const;
+	std::string GetDomain() const;
 
 	/*
 	Возвращает имя документа. Примеры:
@@ -42,23 +42,27 @@ public:
 	/index.html
 	/images/photo.jpg
 	*/
-	std::string GetDocument()const;
+	std::string GetDocument() const;
 
 	// возвращает тип протокола
-	Protocol GetProtocol()const;
+	Protocol GetProtocol() const;
 
 	// возвращает номер порта
-	unsigned short GetPort()const;
+	unsigned short GetPort() const;
+
+	bool IsInitialized();
 private:
 	std::string m_domain;
 	std::string m_document;
 	Protocol m_protocol;
 	unsigned short m_port;
+	bool m_isInitialized = false;
 
-	std::string VerifiedDomain(std::string const& domain);
-	std::string VerifiedDocument(std::string const& document);
-	Protocol VerifiedProtocol(Protocol const protocol);
-	unsigned short VerifiedPort(unsigned short const port);
-	Protocol GetProtocolFromStr(std::string protocol);
-	std::string ToLower(std::string str);
+	std::string VerifiedDomain(std::string const& domain) const;
+	std::string VerifiedDocument(std::string const& document) const;
+	Protocol VerifiedProtocol(Protocol const protocol) const;
+	unsigned short VerifiedPort(unsigned short const port) const;
+	Protocol GetProtocolFromStr(std::string protocol) const;
+	std::string ConvertProtocol(Protocol const protocol) const;
+	std::string ToLower(std::string str) const;
 };
