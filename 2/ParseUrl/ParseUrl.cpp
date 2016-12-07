@@ -5,9 +5,14 @@
 
 using namespace std;
 
-CUrl::CUrl(const std::string & url) 
+namespace
+{
+	static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)/([^ ]*)");
+}
+
+CUrl::CUrl(const std::string & url)
 	: m_protocol()
-	, m_port()
+	, m_port(static_cast<unsigned short>(Protocol::HTTP))
 	, m_host()
 	, m_document()
 	, m_isInitialized(false)
@@ -20,11 +25,21 @@ CUrl::CUrl(const std::string & url)
 		string host = std::string(result[2].first, result[2].second);
 
 		string portStr = std::string(result[3].first, result[3].second).c_str();
-		unsigned short port;
+		int port;
 		if (portStr.empty())
-			port = static_cast<unsigned short>(protocol);
+			port = static_cast<int>(protocol);
 		else
-			port = stoi(portStr);
+		{
+			try
+			{
+				port = stoi(portStr);
+			}
+			catch (const std::out_of_range&)
+			{
+				throw std::out_of_range("Port value is out of range ");
+			}
+		}
+			
 
 		string document = std::string(result[4].first, result[4].second);
 
@@ -36,6 +51,8 @@ CUrl::CUrl(const std::string & url)
 			m_document = document;
 			m_isInitialized = true;
 		}
+		else
+			throw std::out_of_range("Port value is out of range ");
 	}
 }
 

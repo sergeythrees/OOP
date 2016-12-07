@@ -3,7 +3,6 @@
 
 static const int MAX_PORT_VAlUE = 65535;
 static const int MIN_PORT_VAlUE = 1;
-static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)/([^ ]*)");
 
 enum class Protocol
 {
@@ -23,11 +22,11 @@ public:
 	bool IsInitialized();
 
 private:
-	Protocol m_protocol = Protocol::HTTP;
-	unsigned short m_port = static_cast<unsigned short>(Protocol::HTTP);
+	Protocol m_protocol;
+	unsigned short m_port;
 	std::string m_host;
 	std::string m_document;
-	bool m_isInitialized = false;
+	bool m_isInitialized;
 
 	Protocol GetProtocolFromStr(std::string protocol);
 };

@@ -11,17 +11,23 @@ void ParseUrlFromStream()
 	while (!cin.eof())
 	{
 		cout << "URL: ";
-		cin >> urlString;
-		if (urlString.empty())
+		try
 		{
-			continue;
+			cin >> urlString;
+			if (urlString.empty())
+				throw std::invalid_argument("URL should not empty");
+
+			CUrl url(urlString);
+			if (url.IsInitialized())
+			{
+				cout << "HOST: " << url.host() << endl;
+				cout << "PORT: " << url.port() << endl;
+				cout << "DOC: " << url.document() << endl;
+			}
 		}
-		CUrl url(urlString);
-		if (url.IsInitialized())
+		catch (const std::exception& except)
 		{
-			cout << "HOST: " << url.host() << endl;
-			cout << "PORT: " << url.port() << endl;
-			cout << "DOC: " << url.document() << endl;
+			std::cerr << except.what() << endl;
 		}
 		cout << endl;
 	}
