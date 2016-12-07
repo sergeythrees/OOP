@@ -6,6 +6,16 @@
 
 BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 
+	BOOST_AUTO_TEST_CASE(can_be_costruct_from_input_arguments)
+	{
+		CHttpUrl url("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100);
+		BOOST_CHECK(url.IsInitialized());
+		BOOST_CHECK_EQUAL(url.GetPort(), 100);
+		BOOST_CHECK_EQUAL(url.GetDomain(), "www.mysite.com");
+		BOOST_CHECK_EQUAL(url.GetDocument(), "/docs/document1.html?page=30&lang=en#title");
+		BOOST_CHECK(url.GetProtocol() == Protocol::HTTP);
+	}
+	
 	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_string)
 	{
 		CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
