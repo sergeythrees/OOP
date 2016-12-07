@@ -32,16 +32,7 @@ public:
 	// возвращает строковое представление URL-а. Порт, являющийся стандартным для
 	// выбранного протокола (80 для http и 443 для https) в URL не должен включаться
 	std::string GetURL() const;
-
-	// возвращает доменное имя
 	std::string GetDomain() const;
-
-	/*
-	Возвращает имя документа. Примеры:
-	/
-	/index.html
-	/images/photo.jpg
-	*/
 	std::string GetDocument() const;
 
 	// возвращает тип протокола
