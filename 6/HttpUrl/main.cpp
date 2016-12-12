@@ -1,27 +1,32 @@
 ﻿#include "stdafx.h"
 #include "HttpUrl.h"
+#include "CUrlParsingError.h"
 
 using namespace std;
 
-void ParseUrlFromStream()
+void ParseURLsFromStream(istream& input, ostream& output)
 {
 	string urlString;
-	while (!cin.eof())
+	while (!input.eof())
 	{
-		cout << "URL: ";
-		cin >> urlString;
+		output << "URL: ";
+		input >> urlString;
 		if (urlString.empty())
 		{
 			continue;
 		}
-		CHttpUrl url(urlString);
-		if (url.IsInitialized())
+		try 
 		{
-			cout << "HOST: " << url.GetDomain() << endl;
-			cout << "PORT: " << url.GetDomain() << endl;
-			cout << "DOC: " << url.GetDocument() << endl;
+			CHttpUrl url(urlString);
+			output << "HOST: " << url.GetDomain() << endl;
+			output << "PORT: " << url.GetPort() << endl;
+			output << "DOC: " << url.GetDocument() << endl;
 		}
-		cout << endl;
+		catch (invalid_argument &ex)
+		{
+			cerr << ex.what() << endl;
+		}
+		output << endl;
 	}
 }
 
@@ -29,7 +34,7 @@ int main()
 {
 	setlocale(LC_ALL, "rus");
 	cout << "Для завершения введите Ctrl-Z" << endl;
-	ParseUrlFromStream();
+	ParseURLsFromStream(cin, cout);
 	return EXIT_SUCCESS;
 }
 
