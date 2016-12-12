@@ -1,40 +1,141 @@
-﻿// task1tests.cpp : Defines the entry point for the console application.
-//
-
-#include "stdafx.h"
+﻿#include "stdafx.h"
+#include <boost/optional.hpp>
+#include <boost/variant.hpp>
 #include "../HttpUrl/HttpUrl.h"
+#include "../HttpUrl/CUrlParsingError.h"
+
+using namespace std;
+using namespace boost;
+
+template <typename Ex, typename Fn>
+void ExpectException(Fn && fn, const string & expectedDescription)
+{
+	try
+	{
+
+	fn(); // Выполняем действие, от которого ожидаем выброс исключения
+	// Если не выбросило, то тест провалился
+	BOOST_ERROR("No exception thrown");
+	}
+	catch (const Ex & e) // Ловим исключение типа Ex (или его подкласс)
+	{
+	// Проверяем, что исключение будет иметь ожидаемое сообщение
+	BOOST_CHECK_EQUAL(expectedDescription, e.what());
+	}
+	catch (...)
+	{
+	// Если выбросили иное исключение, то это также ошибка
+	BOOST_ERROR("Unexpected exception");
+	}
+	
+}
+struct CHttpUrlParameters
+{
+	std::string domain;
+	std::string document;
+	optional<Protocol> protocol;
+	optional<unsigned short> port;
+};
+void ExpectCHttpUrl(const CHttpUrl& url, const CHttpUrlParameters& expected)
+{
+		BOOST_CHECK_EQUAL(url.GetDomain(), expected.domain);
+		BOOST_CHECK_EQUAL(url.GetDocument(), expected.document);
+		if (expected.port.is_initialized())
+			BOOST_CHECK_EQUAL(url.GetPort(), expected.port.get());
+		if (expected.protocol.is_initialized())
+			BOOST_CHECK(url.GetProtocol() == expected.protocol.get());
+}
 
 BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 
-	BOOST_AUTO_TEST_CASE(can_be_costruct_from_input_arguments)
-	{
-		CHttpUrl url("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100);
-		BOOST_CHECK_EQUAL(url.GetPort(), 100);
-		BOOST_CHECK_EQUAL(url.GetDomain(), "www.mysite.com");
-		BOOST_CHECK_EQUAL(url.GetDocument(), "/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK(url.GetProtocol() == Protocol::HTTP);
-	}
-	
-	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_string)
-	{
-		CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK_EQUAL(url.GetPort(), 100);
-	}
+	BOOST_AUTO_TEST_SUITE(constructor_from_string)
+		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_string)
+		{
+			CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
+			BOOST_CHECK_EQUAL(url.GetPort(), 100);
+		}
+		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_without_port_value)
+		{
+			CHttpUrl url("http://www.mysite.com/docs/document1.html?page=30&lang=en#title");
+			BOOST_CHECK_EQUAL(url.GetPort(), 80);
+		}
+		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_with_other_protocols)
+		{
+			CHttpUrl httpsUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
+			BOOST_CHECK(httpsUrl.GetProtocol() == Protocol::HTTPS);
 
-	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_without_port_value)
-	{
-		CHttpUrl url("http://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK_EQUAL(url.GetPort(), 80);
-	}
+			CHttpUrl ftpUrl("ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title");
+			BOOST_CHECK(ftpUrl.GetProtocol() == Protocol::FTP);
+		}
+		BOOST_AUTO_TEST_SUITE(should_return_approppriate_exceptions)
+			BOOST_AUTO_TEST_CASE(when_can_not_parse_URL_line)
+			{
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl(""); },
+					"Invalid URL line");
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("http:/ur"); },
+					"Invalid URL line");
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("http:///"); },
+					"Invalid URL line");
+			}
+			BOOST_AUTO_TEST_CASE(when_port_value_is_out_of_integer_range)
+			{
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("http://ur.ru:2222222222/"); },
+					"Port value is out of integer range");
+			}
+			BOOST_AUTO_TEST_CASE(when_port_value_is_out_of_port_allow_range)
+			{
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("http://ur.ru:-1/"); },
+					"Port value is out of port allow range (1..65535)");
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("http://ur.ru:0/"); },
+					"Port value is out of port allow range (1..65535)");
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("http://ur.ru:65536/"); },
+					"Port value is out of port allow range (1..65535)");
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+	BOOST_AUTO_TEST_SUITE_END()
 
-	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_with_other_protocols)
-	{
-		CHttpUrl httpsUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK(httpsUrl.GetProtocol() == Protocol::HTTPS);
+	BOOST_AUTO_TEST_SUITE(constructor_from_parameters)
+		BOOST_AUTO_TEST_CASE(can_be_construct_from_correct_parameters)
+		{
+			CHttpUrlParameters expected({ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 });
+			BOOST_CHECK_NO_THROW(CHttpUrl(expected.domain, expected.document.c_str() + 1, expected.protocol.get(), expected.port.get()));
+			ExpectCHttpUrl(CHttpUrl(expected.domain, expected.document.c_str() + 1, expected.protocol.get(), expected.port.get()), expected);
+		}
+		BOOST_AUTO_TEST_CASE(can_be_construct_without_port_value)
+		{			
+			CHttpUrlParameters expected({ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP});
+			BOOST_CHECK_NO_THROW(CHttpUrl urlWithoutPort(expected.domain, expected.document.c_str() + 1, expected.protocol.get()));
+			ExpectCHttpUrl(CHttpUrl(expected.domain, expected.document.c_str() + 1, expected.protocol.get()), expected);
+		}
+		BOOST_AUTO_TEST_CASE(can_be_construct_without_port_and_protocol_value)
+		{
+			CHttpUrlParameters expected({ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title"});
+			BOOST_CHECK_NO_THROW(CHttpUrl urlWithoutPort(expected.domain, expected.document.c_str() + 1));
+			ExpectCHttpUrl(CHttpUrl(expected.domain, expected.document.c_str() + 1), expected);
+		}
+		BOOST_AUTO_TEST_SUITE(should_return_approppriate_exceptions)
+			BOOST_AUTO_TEST_CASE(when_parameters_are_incorrect)
+			{
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("", "/index.html"); },
+					"Domain must not be empty");
+			}
+			BOOST_AUTO_TEST_CASE(when_port_value_is_out_of_port_allow_range)
+			{
+				ExpectException<invalid_argument>([]() {
+					CHttpUrl("mysite.com", "/index.html", Protocol::HTTP, 0); },
+					"Port value is out of port allow range (1..65535)");
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+	BOOST_AUTO_TEST_SUITE_END()
 
-		CHttpUrl ftpUrl("ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK(ftpUrl.GetProtocol() == Protocol::FTP);
-	}
 
 	struct HttpUrlFixture
 	{
@@ -86,4 +187,3 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 	BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()
-

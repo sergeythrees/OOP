@@ -82,7 +82,9 @@ unsigned short CHttpUrl::VerifiedPort(int const port) const
 	{
 		return static_cast<unsigned short>(port);
 	}
-	throw CUrlParsingError("Port value is out of range");
+	stringstream mess;
+	mess << "Port value is out of port allow range (" << MIN_PORT_VALUE << ".." << MAX_PORT_VALUE << ")";
+	throw CUrlParsingError(mess.str());
 }
 
 unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
