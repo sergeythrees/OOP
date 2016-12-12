@@ -3,44 +3,31 @@
 #include <boost/algorithm/string.hpp>
 #include <sstream>
 #include "HttpUrl.h"
+#include "CUrlParsingError.h"
 
 using namespace std;
 
 CHttpUrl::CHttpUrl(std::string const & url)
-	: m_domain("")
-	, m_document("")
-	, m_protocol(Protocol())
-	, m_port(0)
-	, m_isInitialized(false)
 {
 	regex urlRegex(regexLine);
 	match_results<const char *> result;
 	if (!(regex_search(url.c_str(), result, urlRegex)))
-		m_isInitialized =  false; //throw incorrect url
+	{
+		throw CUrlParsingError("Invalid URL line");
+	}
 
-		m_protocol = VerifiedProtocol(GetProtocolFromStr(std::string(result[1].first, result[1].second)));
-		m_domain = VerifiedDomain(string(result[2].first, result[2].second));
-
-		string portStr = std::string(result[3].first, result[3].second).c_str();
-		unsigned short port = 0;
-		if (portStr.empty())
-			port = static_cast<unsigned short>(m_protocol);
-		else
-			port = static_cast<unsigned short>(stoi(portStr));
-		m_port = VerifiedPort(port);
-
-		m_document = VerifiedDocument(string(result[4].first, result[4].second));
-		m_isInitialized = true;
-		
+	m_domain = VerifiedDomain(string (result[2].first, result[2].second));
+	m_document = VerifiedDocument(string(result[4].first, result[4].second));
+	m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
+	m_port = GetPortFromStr(string(result[3].first, result[3].second));		
 }
 
 
 CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Protocol protocol, unsigned short port)
 	: m_domain(VerifiedDomain(domain))
 	, m_document(VerifiedDocument(document))
-	, m_protocol(VerifiedProtocol(protocol))
-	, m_port(VerifiedPort(port))
-	, m_isInitialized(true)
+	, m_protocol(protocol)
+	, m_port(VerifiedPort(port)) 
 {
 }
 
@@ -74,36 +61,47 @@ unsigned short CHttpUrl::GetPort() const
 	return m_port;
 }
 
-bool CHttpUrl::IsInitialized()
-{
-	return m_isInitialized;
-}
-
 std::string CHttpUrl::VerifiedDomain(std::string const & domain) const
 {
+	if (domain.empty())
+		throw invalid_argument("Domain must not be empty");
 	return domain;
 }
 
 std::string CHttpUrl::VerifiedDocument(std::string const & document) const
 {
 	string result(document);
-	if (document[0] != '/')
+	if (document[0] != '/' && !document.empty())
 		result = "/" + document;
 	return result;
 }
 
-Protocol CHttpUrl::VerifiedProtocol(Protocol const protocol) const
+unsigned short CHttpUrl::VerifiedPort(int const port) const
 {
-	return protocol;
+	if ((port <= MAX_PORT_VALUE) && (port >= MIN_PORT_VALUE))
+	{
+		return static_cast<unsigned short>(port);
+	}
+	throw CUrlParsingError("Port value is out of range");
 }
 
-unsigned short CHttpUrl::VerifiedPort(unsigned short const port) const
+unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 {
-	if (!((port <= MAX_PORT_VAlUE) && (port >= MIN_PORT_VAlUE)))
+	int port = 0;
+	if (portStr.empty())
 	{
-		// throw port is out of range
+		return static_cast<unsigned short>(m_protocol);
 	}
-	return port;
+	else try
+	{
+		port = stoi(portStr);
+	}
+	catch (out_of_range)
+	{
+		throw CUrlParsingError("Port value is out of integer range");
+	}
+
+	return VerifiedPort(port);
 }
 
 Protocol CHttpUrl::GetProtocolFromStr(std::string protocol) const

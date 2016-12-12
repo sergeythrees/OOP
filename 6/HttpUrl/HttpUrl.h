@@ -1,7 +1,7 @@
 #pragma once
 
-static const int MAX_PORT_VAlUE = 65535;
-static const int MIN_PORT_VAlUE = 1;
+static const int MAX_PORT_VALUE = 65535;
+static const int MIN_PORT_VALUE = 1;
 static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)/([^ ]*)");
 
 enum class Protocol
@@ -34,19 +34,16 @@ public:
 	std::string GetDocument() const;
 	Protocol GetProtocol() const;
 	unsigned short GetPort() const;
-
-	bool IsInitialized();
 private:
 	std::string m_domain;
 	std::string m_document;
 	Protocol m_protocol;
 	unsigned short m_port;
-	bool m_isInitialized = false;
 
-	std::string VerifiedDomain(std::string const& domain) const;
-	std::string VerifiedDocument(std::string const& document) const;
-	Protocol VerifiedProtocol(Protocol const protocol) const;
-	unsigned short VerifiedPort(unsigned short const port) const;
+	std::string CHttpUrl::VerifiedDomain(std::string const & domain) const;
+	std::string CHttpUrl::VerifiedDocument(std::string const & document) const;
+	unsigned short VerifiedPort(int const port) const;
+	unsigned short GetPortFromStr(std::string const &portStr) const;
 	Protocol GetProtocolFromStr(std::string protocol) const;
 	std::string ConvertProtocol(Protocol const protocol) const;
 	std::string ToLower(std::string str) const;

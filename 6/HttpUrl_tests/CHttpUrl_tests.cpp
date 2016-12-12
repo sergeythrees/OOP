@@ -9,7 +9,6 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 	BOOST_AUTO_TEST_CASE(can_be_costruct_from_input_arguments)
 	{
 		CHttpUrl url("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100);
-		BOOST_CHECK(url.IsInitialized());
 		BOOST_CHECK_EQUAL(url.GetPort(), 100);
 		BOOST_CHECK_EQUAL(url.GetDomain(), "www.mysite.com");
 		BOOST_CHECK_EQUAL(url.GetDocument(), "/docs/document1.html?page=30&lang=en#title");
@@ -19,25 +18,21 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_string)
 	{
 		CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK(url.IsInitialized());
 		BOOST_CHECK_EQUAL(url.GetPort(), 100);
 	}
 
 	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_without_port_value)
 	{
 		CHttpUrl url("http://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK(url.IsInitialized());
 		BOOST_CHECK_EQUAL(url.GetPort(), 80);
 	}
 
 	BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_with_other_protocols)
 	{
 		CHttpUrl httpsUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK(httpsUrl.IsInitialized());
 		BOOST_CHECK(httpsUrl.GetProtocol() == Protocol::HTTPS);
 
 		CHttpUrl ftpUrl("ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-		BOOST_CHECK(ftpUrl.IsInitialized());
 		BOOST_CHECK(ftpUrl.GetProtocol() == Protocol::FTP);
 	}
 
@@ -80,13 +75,11 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			}
 			BOOST_AUTO_TEST_CASE(should_not_include_standart_ports_in_url)
 			{
-				CHttpUrl httpUrl("https://www.mysite.com:80/docs/document1.html?page=30&lang=en#title");
-				BOOST_CHECK(httpUrl.IsInitialized());
-				BOOST_CHECK(httpUrl.GetURL() == "https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
+				CHttpUrl httpUrl("http://www.mysite.com:80/docs/document1.html?page=30&lang=en#title");
+				BOOST_CHECK_EQUAL(httpUrl.GetURL(), "http://www.mysite.com/docs/document1.html?page=30&lang=en#title");
 
 				CHttpUrl httpsUrl("https://www.mysite.com:443/docs/document1.html?page=30&lang=en#title");
-				BOOST_CHECK(httpsUrl.IsInitialized());
-				BOOST_CHECK(httpsUrl.GetURL() == "https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
+				BOOST_CHECK_EQUAL(httpsUrl.GetURL(), "https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
 			}
 		BOOST_AUTO_TEST_SUITE_END()
 
