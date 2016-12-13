@@ -39,22 +39,20 @@ void VerifyUrlParams(const UrlParams& result, const UrlParams& expected)
 {
 	BOOST_CHECK_EQUAL(result.domain, expected.domain);
 	BOOST_CHECK_EQUAL(result.document, expected.document);
-	if (result.port.is_initialized())
-		BOOST_CHECK_EQUAL(result.port, expected.port.get());
-	if (result.protocol.is_initialized())
-		BOOST_CHECK(result.protocol == expected.protocol.get());
+	BOOST_CHECK_EQUAL(result.port, expected.port.get());
+	BOOST_CHECK(result.protocol == expected.protocol.get());
 
 }
 
-void VerifyCHttpUrl(variant<string, UrlParams> parameters, optional<const UrlParams> expected)
+void VerifyCHttpUrl(const variant<const string&, const UrlParams&> parameters, const UrlParams& expected)
 {
 	optional<CHttpUrl> url;
 	if (parameters.type() == typeid(string))
 	{
-		BOOST_CHECK_NO_THROW(url = CHttpUrl(get<string>(parameters)));
+		BOOST_CHECK_NO_THROW(url = CHttpUrl(get<const string&>(parameters)));
 		VerifyUrlParams(
 			{ url.get().GetDomain(), url.get().GetDocument(), url.get().GetProtocol(), url.get().GetPort() }, 
-			expected.get());
+			expected);
 	}
 	else if (parameters.type() == typeid(UrlParams))
 	{
@@ -62,20 +60,18 @@ void VerifyCHttpUrl(variant<string, UrlParams> parameters, optional<const UrlPar
 		if (p.port.is_initialized())
 		{
 			BOOST_CHECK_NO_THROW(url = CHttpUrl(p.domain, p.document.c_str() + 1, p.protocol.get(), p.port.get()));
-			VerifyUrlParams(
-				{ url.get().GetDomain(), url.get().GetDocument(), url.get().GetProtocol(), url.get().GetPort() }, 
-				p);
 		}
 		else if (!p.port.is_initialized() && !p.protocol.is_initialized())
 		{
 			BOOST_CHECK_NO_THROW(url = CHttpUrl(p.domain, p.document.c_str() + 1));
-			VerifyUrlParams({ url.get().GetDomain(), url.get().GetDocument()}, p);
 		}
 		else
 		{
 			BOOST_CHECK_NO_THROW(url = CHttpUrl(p.domain, p.document.c_str() + 1, p.protocol.get()));
-			VerifyUrlParams({ url.get().GetDomain(), url.get().GetDocument(), url.get().GetProtocol()}, p);
 		}
+		VerifyUrlParams(
+		{ url.get().GetDomain(), url.get().GetDocument(), url.get().GetProtocol(), url.get().GetPort() },
+			expected);
 		
 	}	
 		
@@ -84,23 +80,29 @@ void VerifyCHttpUrl(variant<string, UrlParams> parameters, optional<const UrlPar
 BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 
 	BOOST_AUTO_TEST_SUITE(constructor_from_string)
+		string urlLine;
+		UrlParams expectedParams;
 		BOOST_AUTO_TEST_CASE(can_be_costruct_from_correct_url_string)
 		{
-			VerifyCHttpUrl("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title", UrlParams(
-				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 }));
+			urlLine = "http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title";
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 };
+			VerifyCHttpUrl(urlLine, expectedParams);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_without_port_value)
 		{
-			VerifyCHttpUrl("http://www.mysite.com/docs/document1.html?page=30&lang=en#title", UrlParams(
-				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 80 }));
+			urlLine = "http://www.mysite.com/docs/document1.html?page=30&lang=en#title";
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 80 };
+			VerifyCHttpUrl(urlLine, expectedParams);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_with_other_protocols)
 		{
-			VerifyCHttpUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title", UrlParams(
-				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTPS, 443}));
+			urlLine = "https://www.mysite.com/docs/document1.html?page=30&lang=en#title";
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTPS, 443 };
+			VerifyCHttpUrl(urlLine, expectedParams);
 
-			VerifyCHttpUrl("ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title", UrlParams(
-				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::FTP, 21 }));
+			urlLine = "ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title";
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::FTP, 21 };
+			VerifyCHttpUrl(urlLine, expectedParams);
 		}
 		BOOST_AUTO_TEST_SUITE(should_return_approppriate_exceptions)
 			BOOST_AUTO_TEST_CASE(when_can_not_parse_URL_line)
@@ -137,23 +139,33 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 	BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE(constructor_from_parameters)
+		UrlParams params;
+		UrlParams expectedParams;
 		BOOST_AUTO_TEST_CASE(can_be_construct_from_correct_parameters)
 		{
-			VerifyCHttpUrl(UrlParams(
-				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 }), 
-				none);
+			params = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 };
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 };
+			VerifyCHttpUrl(params, expectedParams);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_construct_without_port_value)
 		{
-			VerifyCHttpUrl(UrlParams(
-				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP }), 
-				none);
+			params = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP };
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 80 };
+			VerifyCHttpUrl(params, expectedParams);
+
+			params = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTPS };
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTPS, 443 };
+			VerifyCHttpUrl(params, expectedParams);
+
+			params = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::FTP };
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::FTP, 21 };
+			VerifyCHttpUrl(params, expectedParams);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_construct_without_port_and_protocol_value)
 		{
-			VerifyCHttpUrl(UrlParams(
-				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" }), 
-				none);
+			params = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" };
+			expectedParams = { "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 80 };
+			VerifyCHttpUrl(params, expectedParams);
 		}
 		BOOST_AUTO_TEST_SUITE(should_return_approppriate_exceptions)
 			BOOST_AUTO_TEST_CASE(when_parameters_are_incorrect)

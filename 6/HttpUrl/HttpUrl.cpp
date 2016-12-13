@@ -31,6 +31,22 @@ CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Pro
 {
 }
 
+CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Protocol protocol)
+	: m_domain(VerifiedDomain(domain))
+	, m_document(VerifiedDocument(document))
+	, m_protocol(protocol)
+	, m_port(static_cast<unsigned short>(protocol))
+{
+}
+
+CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document)
+	: m_domain(VerifiedDomain(domain))
+	, m_document(VerifiedDocument(document))
+	, m_protocol(Protocol::HTTP)
+	, m_port(static_cast<unsigned short>(m_protocol))
+{
+}
+
 std::string CHttpUrl::GetURL() const
 {
 	std::stringstream result = std::stringstream();
