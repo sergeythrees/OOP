@@ -75,23 +75,23 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 
 	BOOST_AUTO_TEST_SUITE(constructor_from_string)
 		BOOST_AUTO_TEST_CASE(can_be_costruct_from_correct_url_string)
-		{			
-			CHttpUrlParameters expected({ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 });
-			ExpectCHttpUrl("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title", expected);
+		{
+			ExpectCHttpUrl("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title", 
+							{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 });
 		}
 		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_without_port_value)
 		{
-			CHttpUrlParameters expected({ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP});
-			ExpectCHttpUrl("http://www.mysite.com/docs/document1.html?page=30&lang=en#title", expected);
+			ExpectCHttpUrl("http://www.mysite.com/docs/document1.html?page=30&lang=en#title", 
+							{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP });
 		}
-		/*BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_with_other_protocols)
+		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_with_other_protocols)
 		{
-			CHttpUrl httpsUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-			BOOST_CHECK(httpsUrl.GetProtocol() == Protocol::HTTPS);
+			ExpectCHttpUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title",
+							{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTPS});
 
-			CHttpUrl ftpUrl("ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-			BOOST_CHECK(ftpUrl.GetProtocol() == Protocol::FTP);
-		}*/
+			ExpectCHttpUrl("ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title",
+			{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::FTP });
+		}
 		BOOST_AUTO_TEST_SUITE(should_return_approppriate_exceptions)
 			BOOST_AUTO_TEST_CASE(when_can_not_parse_URL_line)
 			{
