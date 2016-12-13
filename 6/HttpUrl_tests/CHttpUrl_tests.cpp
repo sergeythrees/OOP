@@ -49,17 +49,19 @@ void ExpectCHttpUrl(const CHttpUrl& url, const CHttpUrlParameters& expected)
 BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 
 	BOOST_AUTO_TEST_SUITE(constructor_from_string)
-		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_string)
-		{
-			CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
-			BOOST_CHECK_EQUAL(url.GetPort(), 100);
+		BOOST_AUTO_TEST_CASE(can_be_costruct_from_correct_url_string)
+		{			
+			CHttpUrlParameters expected({ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 });
+			BOOST_CHECK_NO_THROW(CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title"));
+			ExpectCHttpUrl(CHttpUrl("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title"), expected);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_without_port_value)
+		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_without_port_value)
 		{
-			CHttpUrl url("http://www.mysite.com/docs/document1.html?page=30&lang=en#title");
-			BOOST_CHECK_EQUAL(url.GetPort(), 80);
+			CHttpUrlParameters expected({ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP});
+			BOOST_CHECK_NO_THROW(CHttpUrl url("http://www.mysite.com/docs/document1.html?page=30&lang=en#title"));
+			ExpectCHttpUrl(CHttpUrl("http://www.mysite.com/docs/document1.html?page=30&lang=en#title"), expected);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_with_other_protocols)
+		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_with_other_protocols)
 		{
 			CHttpUrl httpsUrl("https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
 			BOOST_CHECK(httpsUrl.GetProtocol() == Protocol::HTTPS);
