@@ -228,6 +228,14 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 					"ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title");
 			}
 		BOOST_AUTO_TEST_SUITE_END()
+
 	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_CASE(is_case_insensitive)
+	{
+		BOOST_CHECK_NO_THROW(CHttpUrl url("wWW.mysite.COM", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100));
+		BOOST_CHECK_NO_THROW(CHttpUrl url("hTTp://www.mysite.cOm:80/docs/document1.html?page=30&lang=en#title"));
+	}
+
 
 BOOST_AUTO_TEST_SUITE_END()

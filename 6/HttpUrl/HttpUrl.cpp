@@ -11,7 +11,8 @@ CHttpUrl::CHttpUrl(std::string const & url)
 {
 	regex urlRegex(regexLine);
 	match_results<const char *> result;
-	if (!(regex_search(url.c_str(), result, urlRegex)))
+	string urlLowerCase(ToLower(url));
+	if (!(regex_search(urlLowerCase.c_str(), result, urlRegex)))
 	{
 		throw CUrlParsingError("Invalid URL line");
 	}
