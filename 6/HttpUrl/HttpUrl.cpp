@@ -7,6 +7,7 @@
 
 static const int MAX_PORT_VALUE = 65535;
 static const int MIN_PORT_VALUE = 1;
+static const unsigned int REGEX_ELEMENTS_COUNT = 5;
 static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)([^ ]*)");
 
 using namespace std;
@@ -20,11 +21,18 @@ CHttpUrl::CHttpUrl(std::string const & url)
 	{
 		throw CUrlParsingError("Invalid URL line");
 	}
-
-	m_domain = VerifiedDomain(string (result[2].first, result[2].second));
-	m_document = VerifiedDocument(string(result[4].first, result[4].second));
-	m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
-	m_port = GetPortFromStr(string(result[3].first, result[3].second));		
+	if (result.size() == REGEX_ELEMENTS_COUNT)
+	{
+		m_domain = VerifiedDomain(string(result[2].first, result[2].second));
+		m_document = VerifiedDocument(string(result[4].first, result[4].second));
+		m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
+		m_port = GetPortFromStr(string(result[3].first, result[3].second));
+	}
+	else
+	{
+		throw CUrlParsingError("Invalid URL line");
+	}
+	
 }
 
 
