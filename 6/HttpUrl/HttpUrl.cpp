@@ -125,7 +125,7 @@ unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 	{
 		port = stoi(portStr);
 	}
-	catch (out_of_range&)
+	catch (const out_of_range&)
 	{
 		throw CUrlParsingError("Port value is out of integer range");
 	}
