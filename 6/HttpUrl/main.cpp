@@ -22,7 +22,7 @@ void ParseURLsFromStream(istream& input, ostream& output)
 			output << "PORT: " << url.GetPort() << endl;
 			output << "DOC: " << url.GetDocument() << endl;
 		}
-		catch (invalid_argument &ex)
+		catch (const invalid_argument &ex)
 		{
 			cerr << ex.what() << endl;
 		}
