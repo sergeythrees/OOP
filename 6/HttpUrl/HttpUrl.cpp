@@ -32,18 +32,12 @@ CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Pro
 }
 
 CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Protocol protocol)
-	: m_domain(VerifiedDomain(domain))
-	, m_document(VerifiedDocument(document))
-	, m_protocol(protocol)
-	, m_port(static_cast<unsigned short>(protocol))
+	: CHttpUrl::CHttpUrl(domain, document, protocol, static_cast<unsigned short>(protocol))
 {
 }
 
 CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document)
-	: m_domain(VerifiedDomain(domain))
-	, m_document(VerifiedDocument(document))
-	, m_protocol(Protocol::HTTP)
-	, m_port(static_cast<unsigned short>(m_protocol))
+	: CHttpUrl::CHttpUrl(domain, document, Protocol::HTTP)
 {
 }
 
