@@ -222,6 +222,10 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				CHttpUrl httpsUrl("https://www.mysite.com:443/docs/document1.html?page=30&lang=en#title");
 				BOOST_CHECK_EQUAL(httpsUrl.GetURL(), 
 					"https://www.mysite.com/docs/document1.html?page=30&lang=en#title");
+
+				CHttpUrl ftpUrl("ftp://www.mysite.com:21/docs/document1.html?page=30&lang=en#title");
+				BOOST_CHECK_EQUAL(ftpUrl.GetURL(),
+					"ftp://www.mysite.com/docs/document1.html?page=30&lang=en#title");
 			}
 		BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE_END()

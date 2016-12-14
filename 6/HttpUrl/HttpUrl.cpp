@@ -51,8 +51,12 @@ std::string CHttpUrl::GetURL() const
 {
 	std::stringstream result = std::stringstream();
 	result << ConvertProtocol(m_protocol) << "://" << m_domain;
-	if (m_port != 80 && m_port != 443)
+	if (m_port != static_cast<unsigned short>(Protocol::HTTP) &&
+		m_port != static_cast<unsigned short>(Protocol::HTTPS) &&
+		m_port != static_cast<unsigned short>(Protocol::FTP))
+	{
 		result << ":" << m_port;
+	}
 	result << m_document;
 	return result.str();
 }
