@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 	BOOST_AUTO_TEST_SUITE(constructor_from_string)
 		string urlLine;
 		UrlParams expectedParams;
-		BOOST_AUTO_TEST_CASE(can_be_costruct_from_correct_url_string)
+		BOOST_AUTO_TEST_CASE(can_be_costructed_from_correct_url_string)
 		{
 			urlLine = 
 				"http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title";
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 };
 			VerifyCHttpUrl(urlLine, expectedParams);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_without_port_value)
+		BOOST_AUTO_TEST_CASE(can_be_costructed_from_url_line_without_port_value)
 		{
 			urlLine = 
 				"http://www.mysite.com/docs/document1.html?page=30&lang=en#title";
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 80 };
 			VerifyCHttpUrl(urlLine, expectedParams);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costruct_when_domain_have_not_close_slash)
+		BOOST_AUTO_TEST_CASE(can_be_costructed_when_domain_have_not_close_slash)
 		{
 			urlLine = 
 				"http://www.mysite.com:90";
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "" , Protocol::HTTP, 80 };
 			VerifyCHttpUrl(urlLine, expectedParams);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costruct_when_domain_have_not_dot)
+		BOOST_AUTO_TEST_CASE(can_be_costructed_when_domain_have_not_dot)
 		{
 			urlLine =
 				"http://www.mysite:90";
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			{ "mysite", "" , Protocol::HTTP, 80 };
 			VerifyCHttpUrl(urlLine, expectedParams);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_with_other_protocols)
+		BOOST_AUTO_TEST_CASE(can_be_costructed_from_url_line_with_other_protocols)
 		{
 			urlLine = 
 				"https://www.mysite.com/docs/document1.html?page=30&lang=en#title";
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 	BOOST_AUTO_TEST_SUITE(constructor_from_parameters)
 		UrlParams params;
 		UrlParams expectedParams;
-		BOOST_AUTO_TEST_CASE(can_be_construct_from_correct_parameters)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_from_correct_parameters)
 		{
 			params = 
 				{ "www.mysite.com", "docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 };
@@ -185,7 +185,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 100 };
 			VerifyCHttpUrl(params, expectedParams);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_construct_without_port_value)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_without_port_value)
 		{
 			params = 
 				{ "www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP };
@@ -205,7 +205,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::FTP, 21 };
 			VerifyCHttpUrl(params, expectedParams);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_construct_without_port_and_protocol_value)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_without_port_and_protocol_value)
 		{
 			params = 
 				{ "www.mysite.com", "docs/document1.html?page=30&lang=en#title" };
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				url.GetURL() == "http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
 		}
 		BOOST_AUTO_TEST_SUITE(GetURL_method)
-			BOOST_AUTO_TEST_CASE(should_not_include_standart_ports_in_url)
+			BOOST_AUTO_TEST_CASE(should_not_include_standard_ports_in_url)
 			{
 				CHttpUrl httpUrl("http://www.mysite.com:80/docs/document1.html?page=30&lang=en#title");
 				BOOST_CHECK_EQUAL(httpUrl.GetURL(), 
