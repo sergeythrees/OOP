@@ -11,20 +11,9 @@ using namespace boost;
 template <typename Ex, typename Fn>
 void VerifyException(Fn && fn, const string & expectedDescription)
 {
-	try
-	{
-		fn();
-		BOOST_ERROR("No exception thrown");
-	}
-	catch (const Ex & e)
-	{
-		BOOST_CHECK_EQUAL(expectedDescription, e.what());
-	}
-	catch (...)
-	{
-		BOOST_ERROR("Unexpected exception");
-	}
-	
+	BOOST_CHECK_EXCEPTION(fn(), Ex, [&](const Ex& e) {
+		return e.what() == expectedDescription;
+	});
 }
 
 struct UrlParams
@@ -140,7 +129,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::FTP, 21 };
 			VerifyCHttpUrl(urlLine, expectedParams);
 		}
-		BOOST_AUTO_TEST_SUITE(should_return_approppriate_exceptions)
+		BOOST_AUTO_TEST_SUITE(should_throw_approppriate_exceptions)
 			BOOST_AUTO_TEST_CASE(when_can_not_parse_URL_line)
 			{
 				VerifyException<invalid_argument>([]() {
@@ -213,7 +202,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 80 };
 			VerifyCHttpUrl(params, expectedParams);
 		}
-		BOOST_AUTO_TEST_SUITE(should_return_approppriate_exceptions)
+		BOOST_AUTO_TEST_SUITE(should_throw_approppriate_exceptions)
 			BOOST_AUTO_TEST_CASE(when_parameters_are_incorrect)
 			{
 				VerifyException<invalid_argument>([]() {
