@@ -129,6 +129,10 @@ unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 	{
 		throw CUrlParsingError("Port value is out of integer range");
 	}
+	catch (invalid_argument)
+	{
+		throw CUrlParsingError("Port value is not integer");
+	}
 
 	return VerifiedPort(port);
 }
