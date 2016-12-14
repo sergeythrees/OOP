@@ -34,7 +34,6 @@ int main()
 {
 	setlocale(LC_ALL, "rus");
 	cout << "Для завершения введите Ctrl-Z" << endl;
-	CHttpUrl("ddd", "", Protocol::HTTPS);
 	ParseURLsFromStream(cin, cout);
 	return EXIT_SUCCESS;
 }
