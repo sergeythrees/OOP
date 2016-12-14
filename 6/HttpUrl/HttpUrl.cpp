@@ -30,7 +30,7 @@ CHttpUrl::CHttpUrl(std::string const & url)
 	}
 	else
 	{
-		throw CUrlParsingError("Invalid URL line");
+		throw CUrlParsingError("Invalid regex");
 	}
 	
 }
