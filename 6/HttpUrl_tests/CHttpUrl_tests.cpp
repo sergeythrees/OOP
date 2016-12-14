@@ -112,6 +112,20 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "" , Protocol::HTTP, 80 };
 			VerifyCHttpUrl(urlLine, expectedParams);
 		}
+		BOOST_AUTO_TEST_CASE(can_be_costruct_when_domain_have_not_dot)
+		{
+			urlLine =
+				"http://www.mysite:90";
+			expectedParams =
+			{ "www.mysite", "" , Protocol::HTTP, 90 };
+			VerifyCHttpUrl(urlLine, expectedParams);
+
+			urlLine =
+				"http://mysite";
+			expectedParams =
+			{ "mysite", "" , Protocol::HTTP, 80 };
+			VerifyCHttpUrl(urlLine, expectedParams);
+		}
 		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_with_other_protocols)
 		{
 			urlLine = 
