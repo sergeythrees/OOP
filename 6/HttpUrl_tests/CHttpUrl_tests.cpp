@@ -98,6 +98,20 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				{ "www.mysite.com", "/docs/document1.html?page=30&lang=en#title" , Protocol::HTTP, 80 };
 			VerifyCHttpUrl(urlLine, expectedParams);
 		}
+		BOOST_AUTO_TEST_CASE(can_be_costruct_when_domain_have_not_close_slash)
+		{
+			urlLine = 
+				"http://www.mysite.com:90";
+			expectedParams =
+				{ "www.mysite.com", "" , Protocol::HTTP, 90 };
+			VerifyCHttpUrl(urlLine, expectedParams);
+
+			urlLine =
+				"http://www.mysite.com";
+			expectedParams =
+				{ "www.mysite.com", "" , Protocol::HTTP, 80 };
+			VerifyCHttpUrl(urlLine, expectedParams);
+		}
 		BOOST_AUTO_TEST_CASE(can_be_costruct_from_url_line_with_other_protocols)
 		{
 			urlLine = 

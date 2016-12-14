@@ -5,6 +5,10 @@
 #include "HttpUrl.h"
 #include "CUrlParsingError.h"
 
+static const int MAX_PORT_VALUE = 65535;
+static const int MIN_PORT_VALUE = 1;
+static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)([^ ]*)");
+
 using namespace std;
 
 CHttpUrl::CHttpUrl(std::string const & url)
