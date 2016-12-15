@@ -1,7 +1,8 @@
 #include "stdafx.h"
+#include <map>
 #include <regex>
-#include <boost/algorithm/string.hpp>
 #include <sstream>
+#include <boost/algorithm/string.hpp>
 #include "HttpUrl.h"
 #include "CUrlParsingError.h"
 
@@ -9,6 +10,11 @@ static const int MAX_PORT_VALUE = 65535;
 static const int MIN_PORT_VALUE = 1;
 static const unsigned int REGEX_ELEMENTS_COUNT = 5;
 static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)([^ ]*)");
+static const std::map<std::string, Protocol> protocolStringMap = {
+	{ "http", Protocol::HTTP },
+	{ "https", Protocol::HTTPS },
+	{ "ftp", Protocol::FTP }
+};
 
 using namespace std;
 
@@ -16,7 +22,7 @@ CHttpUrl::CHttpUrl(std::string const & url)
 {
 	regex urlRegex(regexLine);
 	match_results<const char *> result;
-	string urlLowerCase(ToLower(url));
+	string urlLowerCase(boost::to_lower_copy(url));
 	if (!(regex_search(urlLowerCase.c_str(), result, urlRegex)))
 	{
 		throw CUrlParsingError("Invalid URL line");
@@ -129,7 +135,7 @@ unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 	{
 		throw CUrlParsingError("Port value is out of integer range");
 	}
-	catch (invalid_argument)
+	catch (invalid_argument&)
 	{
 		throw CUrlParsingError("Port value is not integer");
 	}
@@ -137,45 +143,31 @@ unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 	return VerifiedPort(port);
 }
 
-Protocol CHttpUrl::GetProtocolFromStr(std::string protocol) const
+Protocol CHttpUrl::GetProtocolFromStr(const std::string& protocol) const
 {
 	Protocol resultProtocol = Protocol::HTTP;
-	boost::to_lower(protocol);
-	if (protocol == "http")
+	if (!protocol.empty())
 	{
-		resultProtocol = Protocol::HTTP;
+		try
+		{ 
+			resultProtocol = protocolStringMap.at(boost::to_lower_copy(protocol));
+		}
+		catch (out_of_range&)
+		{
+			throw CUrlParsingError("Protocol value is incorrect");
+		}
 	}
-	else if (protocol == "https")
-	{
-		resultProtocol = Protocol::HTTPS;
-	}
-	else if (protocol == "ftp")
-	{
-		resultProtocol = Protocol::FTP;
-	}
+
 	return resultProtocol;
 }
 
 std::string CHttpUrl::ConvertProtocol(Protocol const protocol) const
 {
 	string result;
-	if (protocol == Protocol::HTTP)
-	{
-		result = "http";
-	}
-	else if (protocol == Protocol::HTTPS)
-	{
-		result = "https";
-	}
-	else if (protocol == Protocol::FTP)
-	{
-		result = "ftp";
-	}
-	return result;
-}
+	
+	for (auto current : protocolStringMap)
+		if (current.second == protocol)
+			result = current.first;
 
-string CHttpUrl::ToLower(string str) const
-{
-	std::transform(str.begin(), str.end(), str.begin(), tolower);
-	return str;
+	return result;
 }
