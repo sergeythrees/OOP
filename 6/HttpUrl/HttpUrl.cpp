@@ -10,10 +10,10 @@ static const int MAX_PORT_VALUE = 65535;
 static const int MIN_PORT_VALUE = 1;
 static const unsigned int REGEX_ELEMENTS_COUNT = 5;
 static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)([^ ]*)");
-static const std::map<std::string, Protocol> protocolStringMap = {
-	{ "http", Protocol::HTTP },
-	{ "https", Protocol::HTTPS },
-	{ "ftp", Protocol::FTP }
+static const std::map<Protocol, std::string> protocolStringMap = {
+	{ Protocol::HTTP, "http"},
+	{ Protocol::HTTPS, "https"},
+	{ Protocol::FTP, "ftp"}
 };
 
 using namespace std;
@@ -64,9 +64,7 @@ std::string CHttpUrl::GetURL() const
 {
 	std::stringstream result = std::stringstream();
 	result << ConvertProtocol(m_protocol) << "://" << m_domain;
-	if (m_port != static_cast<unsigned short>(Protocol::HTTP) &&
-		m_port != static_cast<unsigned short>(Protocol::HTTPS) &&
-		m_port != static_cast<unsigned short>(Protocol::FTP))
+	if (!protocolStringMap.count(static_cast<Protocol>(m_port)))
 	{
 		result << ":" << m_port;
 	}
@@ -145,29 +143,26 @@ unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 
 Protocol CHttpUrl::GetProtocolFromStr(const std::string& protocol) const
 {
-	Protocol resultProtocol = Protocol::HTTP;
+	Protocol result = Protocol::HTTP;
 	if (!protocol.empty())
-	{
-		try
-		{ 
-			resultProtocol = protocolStringMap.at(boost::to_lower_copy(protocol));
-		}
-		catch (out_of_range&)
-		{
-			throw CUrlParsingError("Protocol value is incorrect");
-		}
-	}
+		for (auto current : protocolStringMap)
+			if (current.second == protocol)
+				result = current.first;
 
-	return resultProtocol;
+	return result;
 }
 
 std::string CHttpUrl::ConvertProtocol(Protocol const protocol) const
 {
 	string result;
-	
-	for (auto current : protocolStringMap)
-		if (current.second == protocol)
-			result = current.first;
+	try
+	{
+		result = protocolStringMap.at(protocol);
+	}
+	catch (out_of_range&)
+	{
+		throw CUrlParsingError("Protocol value is not found in protocolMap");
+	}
 
 	return result;
 }
