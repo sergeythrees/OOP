@@ -16,20 +16,20 @@ BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 	BOOST_CHECK_EQUAL(GCD(0, 0), 1u);
 }
 
-void VerifyRational(const CRational & r, int expectedNumerator, int expectedDenominator)
+void VerifyRational(const CRational& r, int expectedNumerator, int expectedDenominator)
 {
 	BOOST_CHECK_EQUAL(r.GetNumerator(), expectedNumerator);
 	BOOST_CHECK_EQUAL(r.GetDenominator(), expectedDenominator);
 }
 
-void VerifyCompoundFraction(std::pair<int, CRational> const& result, int number, int expectedNumerator, int expectedDenominator)
+void VerifyCompoundFraction(const std::pair<int, CRational>& result, int number, int expectedNumerator, int expectedDenominator)
 {
 	BOOST_CHECK_EQUAL(result.first, number);
 	BOOST_CHECK_EQUAL(result.second.GetNumerator(), expectedNumerator);
 	BOOST_CHECK_EQUAL(result.second.GetDenominator(), expectedDenominator);
 }
 
-void VerifyInputOperator(std::string inputString, boost::optional<CRational> expectedRational)
+void VerifyInputOperator(const std::string& inputString, const boost::optional<CRational>& expectedRational)
 {
 	std::stringstream input = std::stringstream();
 	input << inputString;
