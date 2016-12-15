@@ -17,7 +17,12 @@ void VerifyException(Fn && fn, const string & expectedDescription)
 	});
 }
 
-void VerifyUrl(const CHttpUrl& result, const string& expectedDomain, const string& expectedDocument, const Protocol& expectedProtocol, const unsigned short expectedPort)
+void VerifyUrl(
+	const CHttpUrl& result, 
+	const string& expectedDomain, 
+	const string& expectedDocument, 
+	const Protocol& expectedProtocol, 
+	const unsigned short expectedPort)
 {
 	BOOST_CHECK(result.GetProtocol() == expectedProtocol);
 	BOOST_CHECK_EQUAL(result.GetDomain(), expectedDomain);
@@ -124,21 +129,25 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 	BOOST_AUTO_TEST_SUITE(constructor_from_parameters)
 		BOOST_AUTO_TEST_CASE(can_be_constructed_from_correct_parameters)
 		{
-			BOOST_CHECK_NO_THROW(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100));
+			BOOST_CHECK_NO_THROW(CHttpUrl(
+				"www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100));
 			VerifyUrl(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100),
 				"www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_constructed_without_port_value)
 		{
-			BOOST_CHECK_NO_THROW(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP));
+			BOOST_CHECK_NO_THROW(CHttpUrl(
+				"www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP));
 			VerifyUrl(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP),
 				"www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 80);
 
-			BOOST_CHECK_NO_THROW(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTPS));
+			BOOST_CHECK_NO_THROW(CHttpUrl(
+				"www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTPS));
 			VerifyUrl(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::HTTPS),
 				"www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTPS, 443);
 
-			BOOST_CHECK_NO_THROW(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::FTP));
+			BOOST_CHECK_NO_THROW(CHttpUrl(
+				"www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::FTP));
 			VerifyUrl(CHttpUrl("www.mysite.com", "docs/document1.html?page=30&lang=en#title", Protocol::FTP),
 				"www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::FTP, 21);
 		}
@@ -197,8 +206,10 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 
 	BOOST_AUTO_TEST_CASE(is_case_insensitive)
 	{
-		BOOST_CHECK_NO_THROW(CHttpUrl url("wWW.mysite.COM", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100));
-		BOOST_CHECK_NO_THROW(CHttpUrl url("hTTp://www.mysite.cOm:80/docs/document1.html?page=30&lang=en#title"));
+		BOOST_CHECK_NO_THROW(CHttpUrl url(
+			"wWW.mysite.COM", "docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100));
+		BOOST_CHECK_NO_THROW(CHttpUrl url(
+			"hTTp://www.mysite.cOm:80/docs/document1.html?page=30&lang=en#title"));
 	}
 
 
