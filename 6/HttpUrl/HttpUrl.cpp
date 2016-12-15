@@ -133,7 +133,7 @@ unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 	{
 		throw CUrlParsingError("Port value is out of integer range");
 	}
-	catch (invalid_argument&)
+	catch (const invalid_argument&)
 	{
 		throw CUrlParsingError("Port value is not integer");
 	}
@@ -159,7 +159,7 @@ std::string CHttpUrl::ConvertProtocol(Protocol const protocol) const
 	{
 		result = protocolStringMap.at(protocol);
 	}
-	catch (out_of_range&)
+	catch (const out_of_range&)
 	{
 		throw CUrlParsingError("Protocol value is not found in protocolMap");
 	}
