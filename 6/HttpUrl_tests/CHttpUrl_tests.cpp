@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 
 	BOOST_AUTO_TEST_SUITE(constructor_from_string)
 		string urlLine;
-		BOOST_AUTO_TEST_CASE(can_be_costructed_from_correct_url_string)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_from_correct_url_string)
 		{
 			urlLine = 
 				"http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title";
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			VerifyUrl(CHttpUrl(urlLine), 
 				"www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 100);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costructed_from_url_line_without_port_value)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_from_url_line_without_port_value)
 		{
 			urlLine = 
 				"http://www.mysite.com/docs/document1.html?page=30&lang=en#title";
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			VerifyUrl(CHttpUrl(urlLine), 
 				"www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::HTTP, 80);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costructed_when_domain_have_not_close_slash)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_when_domain_have_not_close_slash)
 		{
 			urlLine = 
 				"http://www.mysite.com:90";			
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			VerifyUrl(CHttpUrl(urlLine),
 				"www.mysite.com", "", Protocol::HTTP, 80);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costructed_when_domain_have_not_dot)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_when_domain_have_not_dot)
 		{
 			urlLine =
 				"http://www.mysite:90";
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			VerifyUrl(CHttpUrl(urlLine),
 				"mysite", "", Protocol::HTTP, 80);
 		}
-		BOOST_AUTO_TEST_CASE(can_be_costructed_from_url_line_with_other_protocols)
+		BOOST_AUTO_TEST_CASE(can_be_constructed_from_url_line_with_other_protocols)
 		{
 			urlLine = 
 				"https://www.mysite.com/docs/document1.html?page=30&lang=en#title";
