@@ -161,12 +161,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ParseUrl\ParseUrl.h" />
+    <ClInclude Include="..\ParseUrl\HttpUrl.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\ParseUrl\ParseUrl.cpp" />
+    <ClCompile Include="..\ParseUrl\HttpUrl.cpp" />
     <ClCompile Include="ParseUrlTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">

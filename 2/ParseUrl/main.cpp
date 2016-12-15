@@ -1,35 +1,31 @@
 #include "stdafx.h"
-#include "ParseUrl.h"
-
-const unsigned ARG_COUNT = 2;
+#include "HttpUrl.h"
 
 using namespace std;
 
-void ParseUrlFromStream()
+void ParseURLsFromStream(istream& input, ostream& output)
 {
 	string urlString;
-	while (!cin.eof())
+	while (!input.eof())
 	{
-		cout << "URL: ";
+		output << "URL: ";
+		input >> urlString;
+		if (urlString.empty())
+		{
+			continue;
+		}
 		try
 		{
-			cin >> urlString;
-			if (urlString.empty())
-				throw std::invalid_argument("URL should not empty");
-
-			CUrl url(urlString);
-			if (url.IsInitialized())
-			{
-				cout << "HOST: " << url.host() << endl;
-				cout << "PORT: " << url.port() << endl;
-				cout << "DOC: " << url.document() << endl;
-			}
+			CHttpUrl url(urlString);
+			output << "HOST: " << url.GetDomain() << endl;
+			output << "PORT: " << url.GetPort() << endl;
+			output << "DOC: " << url.GetDocument() << endl;
 		}
-		catch (const std::exception& except)
+		catch (const invalid_argument &ex)
 		{
-			std::cerr << except.what() << endl;
+			cerr << ex.what() << endl;
 		}
-		cout << endl;
+		output << endl;
 	}
 }
 
@@ -37,6 +33,6 @@ int main()
 {
 	setlocale(LC_ALL, "rus");
 	cout << "Для завершения введите Ctrl-Z" << endl;
-	ParseUrlFromStream();
+	ParseURLsFromStream(cin, cout);
 	return EXIT_SUCCESS;
 }

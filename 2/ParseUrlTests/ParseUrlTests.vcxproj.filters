@@ -4,14 +4,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="ParseUrlTests.cpp" />
-    <ClCompile Include="..\ParseUrl\ParseUrl.cpp">
+    <ClCompile Include="..\ParseUrl\HttpUrl.cpp">
       <Filter>Existing items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="..\ParseUrl\ParseUrl.h">
+    <ClInclude Include="..\ParseUrl\HttpUrl.h">
       <Filter>Existing items</Filter>
     </ClInclude>
   </ItemGroup>

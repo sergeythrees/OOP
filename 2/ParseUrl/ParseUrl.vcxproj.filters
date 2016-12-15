@@ -24,7 +24,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParseUrl.h">
+    <ClInclude Include="HttpUrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParseUrl.cpp">
+    <ClCompile Include="HttpUrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
