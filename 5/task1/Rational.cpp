@@ -70,7 +70,7 @@ CRational const CRational::operator -() const
 	return CRational(-(*this).m_numerator, (*this).m_denominator);
 }
 
-CRational const operator +(CRational const& a, CRational const& b)
+CRational const operator +(const CRational& a, const CRational& b)
 {
 
 	int numerator = a.GetNumerator() * b.GetDenominator() +
@@ -79,7 +79,7 @@ CRational const operator +(CRational const& a, CRational const& b)
 	return CRational(numerator, denominator);
 }
 
-CRational const operator -(CRational const& a, CRational const& b)
+CRational const operator -(const CRational& a, const CRational& b)
 {
 
 	int numerator = a.GetNumerator() * b.GetDenominator() -
@@ -88,79 +88,79 @@ CRational const operator -(CRational const& a, CRational const& b)
 	return CRational(numerator, denominator);
 }
 
-CRational & CRational::operator +=(CRational const& b)
+CRational & CRational::operator +=(const CRational& b)
 {
 	*this = *this + b;
 	return *this;
 }
 
-CRational & CRational::operator -=(CRational const& b)
+CRational & CRational::operator -=(const CRational& b)
 {
 	*this = *this - b;
 	return *this;
 }
 
-CRational const operator *(CRational const& a, CRational const& b) 
+CRational const operator *(const CRational& a, const CRational& b) 
 {
 	int numerator = a.GetNumerator() * b.GetNumerator();
 	int denominator = a.GetDenominator() * b.GetDenominator();
 	return CRational(numerator, denominator);
 }
 
-CRational const operator /(CRational const& a, CRational const& b)
+CRational const operator /(const CRational& a, const CRational& b)
 {
 	int numerator = a.GetNumerator() * b.GetDenominator();
 	int denominator = a.GetDenominator() * b.GetNumerator();
 	return CRational(numerator, denominator);
 }
 
-CRational & CRational::operator *=(CRational const& b)
+CRational & CRational::operator *=(const CRational& b)
 {
 	*this = *this * b;
 	return *this;
 }
 
-CRational & CRational::operator /=(CRational const& b)
+CRational & CRational::operator /=(const CRational& b)
 {
 	*this = *this / b;
 	return *this;
 }
 
-bool operator ==(CRational const& a, CRational const& b)
+bool operator ==(const CRational& a, const CRational& b)
 {
 	return ((a.GetNumerator() == b.GetNumerator()) && (a.GetDenominator() == b.GetDenominator()));
 }
 
-bool operator !=(CRational const& a, CRational const& b)
+bool operator !=(const CRational& a, const CRational& b)
 {
 	return !(a==b);
 }
 
-bool operator >(CRational const& a, CRational const& b)
+bool operator >(const CRational& a, const CRational& b)
 {
 	int aNumerator = a.GetNumerator() * b.GetDenominator();
 	int bNumerator = b.GetNumerator() * a.GetDenominator();
 	return (aNumerator > bNumerator);
 }
 
-bool operator <(CRational const& a, CRational const& b)
+bool operator <(const CRational& a, const CRational& b)
 {
 	int aNumerator = a.GetNumerator() * b.GetDenominator();
 	int bNumerator = b.GetNumerator() * a.GetDenominator();
 	return (aNumerator < bNumerator);
 }
 
-bool operator >=(CRational const& a, CRational const& b)
+bool operator >=(const CRational& a, const CRational& b)
 {
 	return !(a < b);
 }
 
-bool operator <=(CRational const& a, CRational const& b)
+bool operator <=(const CRational& a, const CRational& b)
 {
 	return !(a > b);
 }
 
-std::ostream & operator <<(std::ostream &stream, CRational const& rational)
+std::ostream & operator <<(std::ostream &stream, const CRational& rational)
 {
 	stream << rational.GetNumerator() << "/" << rational.GetDenominator();
 	return stream;

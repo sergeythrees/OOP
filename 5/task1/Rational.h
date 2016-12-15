@@ -14,10 +14,10 @@ public:
 
 	CRational const operator +()  const;
 	CRational const operator -()  const;
-	CRational & operator +=(CRational const& b);
-	CRational & operator -=(CRational const& b);
-	CRational & operator *=(CRational const& b);
-	CRational & operator /=(CRational const& b);
+	CRational & operator +=(const CRational& b);
+	CRational & operator -=(const CRational& b);
+	CRational & operator *=(const CRational& b);
+	CRational & operator /=(const CRational& b);
 private:
 	int m_numerator;
 	int m_denominator;
@@ -25,15 +25,15 @@ private:
 	void Normalize();
 };
 unsigned GCD(unsigned a, unsigned b);
-CRational const operator +(CRational const& a, CRational const& b);
-CRational const operator -(CRational const& a, CRational const& b);
-CRational const operator *(CRational const& a, CRational const& b);
-CRational const operator /(CRational const& a, CRational const& b);
-bool operator ==(CRational const& a, CRational const& b);
-bool operator !=(CRational const& a, CRational const& b);
-bool operator >(CRational const& a, CRational const& b);
-bool operator <(CRational const& a, CRational const& b);
-bool operator >=(CRational const& a, CRational const& b);
-bool operator <=(CRational const& a, CRational const& b);
-std::ostream & operator <<(std::ostream &stream, CRational const& rational);
+CRational const operator +(const CRational& a, const CRational& b);
+CRational const operator -(const CRational& a, const CRational& b);
+CRational const operator *(const CRational& a, const CRational& b);
+CRational const operator /(const CRational& a, const CRational& b);
+bool operator ==(const CRational& a, const CRational& b);
+bool operator !=(const CRational& a, const CRational& b);
+bool operator >(const CRational& a, const CRational& b);
+bool operator <(const CRational& a, const CRational& b);
+bool operator >=(const CRational& a, const CRational& b);
+bool operator <=(const CRational& a, const CRational& b);
+std::ostream & operator <<(std::ostream &stream, const CRational& rational);
 std::istream & operator >>(std::istream & stream, CRational & rational);
