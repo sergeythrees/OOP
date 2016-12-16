@@ -12,7 +12,7 @@ void FillDictionaryFromInputStream(istream &input, Dictionary &dictionary)
 	}
 }
 
-void PrintDictionaryToOutputStream(ostream &output, Dictionary &dictionary)
+void PrintDictionaryToOutputStream(ostream &output, const Dictionary &dictionary)
 {
 	for (auto currentPair : dictionary)
 	{
@@ -20,7 +20,7 @@ void PrintDictionaryToOutputStream(ostream &output, Dictionary &dictionary)
 	}
 }
 
-vector<string> GetAllTranslations(const string &word, Dictionary &dictionary)
+vector<string> GetAllTranslations(const string &word, const Dictionary &dictionary)
 {
 	vector<string> translations;
 	string lWord = ToLower(word);

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool HasUserAgreed(string question)
+bool HasUserAgreed(const string& question)
 {
 	cout << question << " (םאלזלטעו \"Y\", וסכט הא)" << endl;
 

@@ -4,7 +4,7 @@
 #include <fstream>
 #include "DictionaryFunctions.h"
 
-bool HasUserAgreed(std::string question);
+bool HasUserAgreed(const std::string& question);
 void PrintFormatedTranlations(const std::vector<std::string> &translations, std::ostream &output);
 bool HasInsertedNewPairInToDictionary(const std::string &word, Dictionary &dictionary);
 bool GetDictionaryFromFile(const std::string &fileName, Dictionary &dictionary);
