@@ -2,6 +2,8 @@
 #include <map>
 #include <regex>
 #include <sstream>
+#include <boost/assign.hpp>
+#include <boost/bimap.hpp>
 #include <boost/algorithm/string.hpp>
 #include "HttpUrl.h"
 #include "CUrlParsingError.h"
@@ -10,11 +12,18 @@ static const int MAX_PORT_VALUE = 65535;
 static const int MIN_PORT_VALUE = 1;
 static const unsigned int REGEX_ELEMENTS_COUNT = 5;
 static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)([^ ]*)");
-static const std::map<Protocol, std::string> protocolStringMap = {
-	{ Protocol::HTTP, "http"},
-	{ Protocol::HTTPS, "https"},
-	{ Protocol::FTP, "ftp"}
-};
+
+static const boost::bimap<Protocol, std::string> protocolStringMap 
+	= boost::assign::list_of<boost::bimap<Protocol, std::string>::relation >
+		(Protocol::HTTP, "http")
+		(Protocol::HTTPS, "https")
+		( Protocol::FTP, "ftp");
+
+//{
+//	{ Protocol::HTTP, "http"},
+//	{ Protocol::HTTPS, "https"},
+//	{ Protocol::FTP, "ftp"}
+//};
 
 using namespace std;
 
@@ -64,7 +73,7 @@ std::string CHttpUrl::GetURL() const
 {
 	std::stringstream result = std::stringstream();
 	result << ConvertProtocol(m_protocol) << "://" << m_domain;
-	if (!protocolStringMap.count(static_cast<Protocol>(m_port)))
+	if (!protocolStringMap.left.count(static_cast<Protocol>(m_port)))
 	{
 		result << ":" << m_port;
 	}
@@ -145,9 +154,16 @@ Protocol CHttpUrl::GetProtocolFromStr(const std::string& protocol) const
 {
 	Protocol result = Protocol::HTTP;
 	if (!protocol.empty())
-		for (auto current : protocolStringMap)
-			if (current.second == protocol)
-				result = current.first;
+	{
+		try
+		{
+			result = protocolStringMap.right.at(protocol);
+		}
+		catch (const out_of_range&)
+		{
+			throw CUrlParsingError("Protocol string is not found in protocolMap");
+		}
+	}
 
 	return result;
 }
@@ -157,7 +173,7 @@ std::string CHttpUrl::ConvertProtocol(Protocol const protocol) const
 	string result;
 	try
 	{
-		result = protocolStringMap.at(protocol);
+		result = protocolStringMap.left.at(protocol);
 	}
 	catch (const out_of_range&)
 	{
