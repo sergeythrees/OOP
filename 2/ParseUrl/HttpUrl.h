@@ -36,8 +36,6 @@ private:
 	Protocol m_protocol;
 	unsigned short m_port;
 
-	std::string CHttpUrl::VerifiedDomain(std::string const & domain) const;
-	std::string CHttpUrl::VerifiedDocument(std::string const & document) const;
 	unsigned short VerifiedPort(int const port) const;
 	unsigned short GetPortFromStr(std::string const& portStr) const;
 	Protocol GetProtocolFromStr(const std::string& protocol) const;

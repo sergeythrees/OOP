@@ -31,8 +31,8 @@ CHttpUrl::CHttpUrl(std::string const & url)
 	}
 	if (result.size() == REGEX_ELEMENTS_COUNT)
 	{
-		m_domain = VerifiedDomain(string(result[2].first, result[2].second));
-		m_document = VerifiedDocument(string(result[4].first, result[4].second));
+		m_domain = string(result[2].first, result[2].second);
+		m_document = string(result[4].first, result[4].second);
 		m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
 		m_port = GetPortFromStr(string(result[3].first, result[3].second));
 	}
@@ -61,21 +61,6 @@ Protocol CHttpUrl::GetProtocol() const
 unsigned short CHttpUrl::GetPort() const
 {
 	return m_port;
-}
-
-std::string CHttpUrl::VerifiedDomain(std::string const & domain) const
-{
-	if (domain.empty())
-		throw invalid_argument("Domain must not be empty");
-	return domain;
-}
-
-std::string CHttpUrl::VerifiedDocument(std::string const & document) const
-{
-	string result(document);
-	if (document[0] != '/' && !document.empty())
-		result = "/" + document;
-	return result;
 }
 
 unsigned short CHttpUrl::VerifiedPort(int const port) const
