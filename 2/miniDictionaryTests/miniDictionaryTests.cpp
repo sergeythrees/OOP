@@ -105,6 +105,18 @@ BOOST_AUTO_TEST_CASE(should_insert_new_translation_from_russian_word_to_english_
 	BOOST_CHECK(Dictionary == UpdatedDictionary);
 }
 
+BOOST_AUTO_TEST_CASE(should_not_insert_translation_if_it_is_incorrect)
+{
+	multimap<string, string> Dictionary;
+
+	InsertNewPair("клавиша", "кей", Dictionary);
+	BOOST_CHECK(Dictionary.empty());
+
+	InsertNewPair("key", "klavisha", Dictionary);
+	BOOST_CHECK(Dictionary.empty());
+}
+
+
 BOOST_AUTO_TEST_SUITE_END()
 
 
