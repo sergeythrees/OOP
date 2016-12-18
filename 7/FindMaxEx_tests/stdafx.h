@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <string>
 
 #define BOOST_TEST_INCLUDED
 #pragma warning (disable: 4702)

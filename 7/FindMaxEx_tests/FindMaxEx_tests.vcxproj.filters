@@ -26,6 +26,9 @@
     <ClInclude Include="..\FindMaxEx\FindMaxEx.h">
       <Filter>ExistingItems</Filter>
     </ClInclude>
+    <ClInclude Include="res\CAthlete.h">
+      <Filter>ExistingItems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
