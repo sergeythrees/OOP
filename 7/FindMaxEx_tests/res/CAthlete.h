@@ -4,14 +4,15 @@
 class CAthlete
 {
 public:
-	CAthlete(const std::string & name, double weight, double height) 
-		: m_name(name), m_weight(weight), m_height(height) {};
+	CAthlete(const std::string & name, double height, double weight)
+		: m_name(name), m_height(height), m_weight(weight) {};
+	CAthlete() : CAthlete(std::string(), 0, 0) {};
 
 	std::string Name() { return m_name; }
-	double Weight() { return m_weight; }
 	double Height() { return m_height; }
+	double Weight() { return m_weight; }
 private:
 	std::string m_name;
-	double m_weight;
 	double m_height;
+	double m_weight;
 };
