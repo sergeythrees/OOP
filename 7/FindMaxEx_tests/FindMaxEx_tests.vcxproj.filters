@@ -37,8 +37,5 @@
     <ClCompile Include="FindMaxEx_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FindMaxEx\FindMaxEx.cpp">
-      <Filter>ExistingItems</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
