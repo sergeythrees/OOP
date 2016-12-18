@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FindMaxEx", "FindMaxEx\Find
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FindMaxEx_tests", "FindMaxEx_tests\FindMaxEx_tests.vcxproj", "{8E2D2C5D-AC70-4C3F-B8AD-D639683F2CB5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CMyArray", "CMyArray\CMyArray.vcxproj", "{10889378-46FC-46B0-9124-0CFB9F376369}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CMyArray_tests", "CMyArray_tests\CMyArray_tests.vcxproj", "{F93AC9E7-428C-4E2F-A2F1-531F30E908F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -21,6 +25,14 @@ Global
 		{8E2D2C5D-AC70-4C3F-B8AD-D639683F2CB5}.Debug|x86.Build.0 = Debug|Win32
 		{8E2D2C5D-AC70-4C3F-B8AD-D639683F2CB5}.Release|x86.ActiveCfg = Release|Win32
 		{8E2D2C5D-AC70-4C3F-B8AD-D639683F2CB5}.Release|x86.Build.0 = Release|Win32
+		{10889378-46FC-46B0-9124-0CFB9F376369}.Debug|x86.ActiveCfg = Debug|Win32
+		{10889378-46FC-46B0-9124-0CFB9F376369}.Debug|x86.Build.0 = Debug|Win32
+		{10889378-46FC-46B0-9124-0CFB9F376369}.Release|x86.ActiveCfg = Release|Win32
+		{10889378-46FC-46B0-9124-0CFB9F376369}.Release|x86.Build.0 = Release|Win32
+		{F93AC9E7-428C-4E2F-A2F1-531F30E908F8}.Debug|x86.ActiveCfg = Debug|Win32
+		{F93AC9E7-428C-4E2F-A2F1-531F30E908F8}.Debug|x86.Build.0 = Debug|Win32
+		{F93AC9E7-428C-4E2F-A2F1-531F30E908F8}.Release|x86.ActiveCfg = Release|Win32
+		{F93AC9E7-428C-4E2F-A2F1-531F30E908F8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
