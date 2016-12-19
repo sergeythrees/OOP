@@ -9,7 +9,7 @@ void ParseURLsFromStream(istream& input, ostream& output)
 	string urlString;
 	while (!input.eof())
 	{
-		output << "URL: ";
+		output << "   > ";
 		getline(input, urlString);
 		if (urlString.empty())
 		{
@@ -18,9 +18,11 @@ void ParseURLsFromStream(istream& input, ostream& output)
 		try 
 		{
 			CHttpUrl url(urlString);
-			output << "HOST: " << url.GetDomain() << endl;
-			output << "PORT: " << url.GetPort() << endl;
-			output << "DOC: " << url.GetDocument() << endl;
+			output
+				<< "URL: " << url.GetURL() << endl
+				<< "HOST: " << url.GetDomain() << endl
+				<< "PORT: " << url.GetPort() << endl
+				<< "DOC: " << url.GetDocument() << endl;
 		}
 		catch (const invalid_argument &ex)
 		{
