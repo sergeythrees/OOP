@@ -11,7 +11,7 @@
 static const int MAX_PORT_VALUE = 65535;
 static const int MIN_PORT_VALUE = 1;
 static const unsigned int REGEX_ELEMENTS_COUNT = 6;
-static const std::string regexLine("(http|https|ftp)://([^/: \\t\\\\]+)(:([0-9]+))*(/[^ ]*)*");
+static const std::string regexLine("(http|https|ftp)://([^/:]*)(:([^/]*))*(/[^\\0]*)*");
 
 static const boost::bimap<Protocol, std::string> protocolStringMap 
 	= boost::assign::list_of<boost::bimap<Protocol, std::string>::relation >
@@ -34,8 +34,8 @@ CHttpUrl::CHttpUrl(std::string const & url)
 	if (result.size() == REGEX_ELEMENTS_COUNT)
 	{
 		m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
-		m_domain = string(result[2].first, result[2].second);
-		m_port = GetPortFromStr(string(result[4].first, result[4].second));
+		m_domain = VerifiedDomain(string(result[2].first, result[2].second));
+		m_port = VerifiedPort(GetPortFromStr(string(result[4].first, result[4].second)));
 		m_document = VerifiedDocument(string(result[5].first, result[5].second));
 	}
 	else
@@ -120,27 +120,30 @@ std::string CHttpUrl::VerifiedDocument(std::string const & document) const
 	return result;
 }
 
-unsigned short CHttpUrl::VerifiedPort(int const port) const
+unsigned short CHttpUrl::VerifiedPort(int port) const
 {
-	if ((port <= MAX_PORT_VALUE) && (port >= MIN_PORT_VALUE))
+	if (port < MIN_PORT_VALUE || port > MAX_PORT_VALUE)
 	{
-		return static_cast<unsigned short>(port);
+		stringstream mess;
+		mess << "Port value is out of port allow range (" << MIN_PORT_VALUE << ".." << MAX_PORT_VALUE << ")";
+		throw CUrlParsingError(mess.str());
 	}
-	stringstream mess;
-	mess << "Port value is out of port allow range (" << MIN_PORT_VALUE << ".." << MAX_PORT_VALUE << ")";
-	throw CUrlParsingError(mess.str());
+	return static_cast<unsigned short>(port);
 }
 
-unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
+int CHttpUrl::GetPortFromStr(string const & portStr) const
 {
 	int port = 0;
 	if (portStr.empty())
 	{
-		return static_cast<unsigned short>(m_protocol);
+		return static_cast<int>(m_protocol);
 	}
 	else try
 	{
-		port = stoi(portStr);
+		if (portStr.find_first_not_of("0123456789") != portStr.npos)
+			throw invalid_argument("");
+		else
+			port = stoi(portStr);
 	}
 	catch (const out_of_range&)
 	{
@@ -148,10 +151,10 @@ unsigned short CHttpUrl::GetPortFromStr(string const & portStr) const
 	}
 	catch (const invalid_argument&)
 	{
-		throw CUrlParsingError("Port value is not integer");
+		throw CUrlParsingError("Port value is not a number");
 	}
 
-	return VerifiedPort(port);
+	return port;
 }
 
 Protocol CHttpUrl::GetProtocolFromStr(const std::string& protocol) const
