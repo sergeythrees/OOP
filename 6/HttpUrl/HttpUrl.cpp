@@ -10,8 +10,8 @@
 
 static const int MAX_PORT_VALUE = 65535;
 static const int MIN_PORT_VALUE = 1;
-static const unsigned int REGEX_ELEMENTS_COUNT = 5;
-static const std::string regexLine("(http|https|ftp)://([^/ :]+):?([^/ ]*)([^ ]*)");
+static const unsigned int REGEX_ELEMENTS_COUNT = 6;
+static const std::string regexLine("(http|https|ftp)://([^/: \\t\\\\]+)(:([0-9]+))*(/[^ ]*)*");
 
 static const boost::bimap<Protocol, std::string> protocolStringMap 
 	= boost::assign::list_of<boost::bimap<Protocol, std::string>::relation >
@@ -19,29 +19,24 @@ static const boost::bimap<Protocol, std::string> protocolStringMap
 		(Protocol::HTTPS, "https")
 		( Protocol::FTP, "ftp");
 
-//{
-//	{ Protocol::HTTP, "http"},
-//	{ Protocol::HTTPS, "https"},
-//	{ Protocol::FTP, "ftp"}
-//};
-
 using namespace std;
 
-CHttpUrl::CHttpUrl(std::string const & url)
+CHttpUrl::CHttpUrl(std::string const & url) 
 {
-	regex urlRegex(regexLine);
+	regex urlRegex(regexLine.c_str());
 	match_results<const char *> result;
 	string urlLowerCase(boost::to_lower_copy(url));
-	if (!(regex_search(urlLowerCase.c_str(), result, urlRegex)))
+	if (!regex_match(urlLowerCase, urlRegex))
 	{
 		throw CUrlParsingError("Invalid URL line");
 	}
+	regex_search(urlLowerCase.c_str(), result, urlRegex);
 	if (result.size() == REGEX_ELEMENTS_COUNT)
 	{
-		m_domain = VerifiedDomain(string(result[2].first, result[2].second));
-		m_document = VerifiedDocument(string(result[4].first, result[4].second));
 		m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
-		m_port = GetPortFromStr(string(result[3].first, result[3].second));
+		m_domain = string(result[2].first, result[2].second);
+		m_port = GetPortFromStr(string(result[4].first, result[4].second));
+		m_document = VerifiedDocument(string(result[5].first, result[5].second));
 	}
 	else
 	{
@@ -105,14 +100,23 @@ std::string CHttpUrl::VerifiedDomain(std::string const & domain) const
 {
 	if (domain.empty())
 		throw invalid_argument("Domain must not be empty");
+	else if (domain.find_first_of(" \t/\\") != domain.npos)
+	{
+		throw invalid_argument("Domain should not contains any spaces, tabulations or slashes");
+	}
 	return domain;
 }
 
 std::string CHttpUrl::VerifiedDocument(std::string const & document) const
 {
 	string result(document);
-	if (document[0] != '/' && !document.empty())
+	if (document.find_first_of(" \t") != document.npos)
+	{
+		throw invalid_argument("Document should not contains spaces or tabulations");
+	}
+	if (document[0] != '/')
 		result = "/" + document;
+
 	return result;
 }
 

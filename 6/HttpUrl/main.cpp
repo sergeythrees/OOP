@@ -10,7 +10,7 @@ void ParseURLsFromStream(istream& input, ostream& output)
 	while (!input.eof())
 	{
 		output << "URL: ";
-		input >> urlString;
+		getline(input, urlString);
 		if (urlString.empty())
 		{
 			continue;

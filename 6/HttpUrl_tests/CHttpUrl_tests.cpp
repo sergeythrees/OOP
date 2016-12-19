@@ -56,13 +56,13 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				"http://www.mysite.com:90";			
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"www.mysite.com", "", Protocol::HTTP, 90);
+				"www.mysite.com", "/", Protocol::HTTP, 90);
 
 			urlLine =
 				"http://www.mysite.com";
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"www.mysite.com", "", Protocol::HTTP, 80);
+				"www.mysite.com", "/", Protocol::HTTP, 80);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_constructed_when_domain_have_not_dot)
 		{
@@ -70,13 +70,19 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				"http://www.mysite:90";
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"www.mysite", "", Protocol::HTTP, 90);
+				"www.mysite", "/", Protocol::HTTP, 90);
 
 			urlLine =
 				"http://mysite";
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"mysite", "", Protocol::HTTP, 80);
+				"mysite", "/", Protocol::HTTP, 80);
+
+			urlLine =
+				"http://mysite/";
+			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
+			VerifyUrl(CHttpUrl(urlLine),
+				"mysite", "/", Protocol::HTTP, 80);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_constructed_from_url_line_with_other_protocols)
 		{
@@ -93,7 +99,7 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				"www.mysite.com", "/docs/document1.html?page=30&lang=en#title", Protocol::FTP, 21);
 		}
 		BOOST_AUTO_TEST_SUITE(should_throw_approppriate_exceptions)
-			BOOST_AUTO_TEST_CASE(when_can_not_parse_URL_line)
+			BOOST_AUTO_TEST_CASE(when_URL_line_is_incorrect)
 			{
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl(""); },
@@ -104,6 +110,15 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl("http:///"); },
 					"Invalid URL line");
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("http:// /"); },
+					"Invalid URL line");
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("http://ur.ru:a/"); },
+					"Invalid URL line");
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("http://\\"); },
+					"Invalid URL line");
 			}
 			BOOST_AUTO_TEST_CASE(when_port_value_is_out_of_integer_range)
 			{
@@ -113,9 +128,6 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			}
 			BOOST_AUTO_TEST_CASE(when_port_value_is_out_of_port_allow_range)
 			{
-				VerifyException<invalid_argument>([]() {
-					CHttpUrl("http://ur.ru:-1/"); },
-					"Port value is out of port allow range (1..65535)");
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl("http://ur.ru:0/"); },
 					"Port value is out of port allow range (1..65535)");
@@ -170,6 +182,20 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl("mysite.com", "/index.html", Protocol::HTTP, 0); },
 					"Port value is out of port allow range (1..65535)");
+			}
+			BOOST_AUTO_TEST_CASE(when_domain_is_incorrect)
+			{
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("mysite/com", "/index.html"); },
+					"Domain name must not contains any spaces, tabulations or slashes");
+
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("mysite\\com", "/index.html"); },
+					"Domain name must not contains any spaces, tabulations or slashes");
+
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("mysite com", "/index.html"); },
+					"Domain name must not contains any spaces, tabulations or slashes");
 			}
 		BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE_END()
