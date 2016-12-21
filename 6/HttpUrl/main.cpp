@@ -7,7 +7,7 @@ using namespace std;
 void ParseURLsFromStream(istream& input, ostream& output)
 {
 	string urlString;
-	while (!input.eof())
+	while (!input.eof() && !input.fail())
 	{
 		output << "   > ";
 		getline(input, urlString);

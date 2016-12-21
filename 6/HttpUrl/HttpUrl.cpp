@@ -51,7 +51,7 @@ CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Pro
 	, m_document(VerifiedDocument(document))
 	, m_protocol(protocol)
 	, m_port(VerifiedPort(port)) 
-{
+{ 
 }
 
 CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Protocol protocol)
