@@ -2,6 +2,7 @@
 #include <map>
 #include <regex>
 #include <sstream>
+#include <assert.h>
 #include <boost/assign.hpp>
 #include <boost/bimap.hpp>
 #include <boost/algorithm/string.hpp>
@@ -31,17 +32,11 @@ CHttpUrl::CHttpUrl(std::string const & url)
 		throw CUrlParsingError("Invalid URL line");
 	}
 	regex_search(urlLowerCase.c_str(), result, urlRegex);
-	if (result.size() == REGEX_ELEMENTS_COUNT)
-	{
-		m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
-		m_domain = VerifiedDomain(string(result[2].first, result[2].second));
-		m_port = VerifiedPort(GetPortFromStr(string(result[4].first, result[4].second)));
-		m_document = VerifiedDocument(string(result[5].first, result[5].second));
-	}
-	else
-	{
-		throw CUrlParsingError("Invalid regex");
-	}
+	assert(result.size() == REGEX_ELEMENTS_COUNT);
+	m_protocol = GetProtocolFromStr(std::string(result[1].first, result[1].second));
+	m_domain = VerifiedDomain(string(result[2].first, result[2].second));
+	m_port = VerifiedPort(GetPortFromStr(string(result[4].first, result[4].second)));
+	m_document = VerifiedDocument(string(result[5].first, result[5].second));
 	
 }
 
@@ -149,7 +144,7 @@ int CHttpUrl::GetPortFromStr(string const & portStr) const
 	{
 		throw CUrlParsingError("Port value is out of integer range");
 	}
-	catch (const invalid_argument&)
+	catch (const invalid_argument& ex)
 	{
 		throw CUrlParsingError("Port value is not a number");
 	}
@@ -162,14 +157,7 @@ Protocol CHttpUrl::GetProtocolFromStr(const std::string& protocol) const
 	Protocol result = Protocol::HTTP;
 	if (!protocol.empty())
 	{
-		try
-		{
-			result = protocolStringMap.right.at(protocol);
-		}
-		catch (const out_of_range&)
-		{
-			throw CUrlParsingError("Protocol string is not found in protocolMap");
-		}
+		result = protocolStringMap.right.at(protocol);
 	}
 
 	return result;
@@ -177,15 +165,7 @@ Protocol CHttpUrl::GetProtocolFromStr(const std::string& protocol) const
 
 std::string CHttpUrl::ConvertProtocol(Protocol const protocol) const
 {
-	string result;
-	try
-	{
-		result = protocolStringMap.left.at(protocol);
-	}
-	catch (const out_of_range&)
-	{
-		throw CUrlParsingError("Protocol value is not found in protocolMap");
-	}
+	string result = protocolStringMap.left.at(protocol);
 
 	return result;
 }
