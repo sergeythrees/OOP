@@ -144,7 +144,7 @@ int CHttpUrl::GetPortFromStr(string const & portStr) const
 	{
 		throw CUrlParsingError("Port value is out of integer range");
 	}
-	catch (const invalid_argument& ex)
+	catch (const invalid_argument&)
 	{
 		throw CUrlParsingError("Port value is not a number");
 	}
