@@ -55,13 +55,13 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				"http://www.mysite.com:90";
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"www.mysite.com", "", Protocol::HTTP, 90);
+				"www.mysite.com", "/", Protocol::HTTP, 90);
 
 			urlLine =
 				"http://www.mysite.com";
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"www.mysite.com", "", Protocol::HTTP, 80);
+				"www.mysite.com", "/", Protocol::HTTP, 80);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_constructed_when_domain_have_not_dot)
 		{
@@ -69,13 +69,19 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				"http://www.mysite:90";
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"www.mysite", "", Protocol::HTTP, 90);
+				"www.mysite", "/", Protocol::HTTP, 90);
 
 			urlLine =
 				"http://mysite";
 			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
 			VerifyUrl(CHttpUrl(urlLine),
-				"mysite", "", Protocol::HTTP, 80);
+				"mysite", "/", Protocol::HTTP, 80);
+
+			urlLine =
+				"http://mysite/";
+			BOOST_CHECK_NO_THROW(CHttpUrl(urlLine.c_str()));
+			VerifyUrl(CHttpUrl(urlLine),
+				"mysite", "/", Protocol::HTTP, 80);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_constructed_from_url_line_with_other_protocols)
 		{
@@ -96,8 +102,9 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 			BOOST_CHECK_NO_THROW(CHttpUrl url(
 				"hTTp://www.mysite.cOm:80/docs/document1.html?page=30&lang=en#title"));
 		}
+
 		BOOST_AUTO_TEST_SUITE(should_throw_approppriate_exceptions)
-			BOOST_AUTO_TEST_CASE(when_can_not_parse_URL_line)
+			BOOST_AUTO_TEST_CASE(when_URL_line_is_incorrect)
 			{
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl(""); },
@@ -105,21 +112,24 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl("http:/ur"); },
 					"Invalid URL line");
+			}
+			BOOST_AUTO_TEST_CASE(when_domain_is_incorrect)
+			{
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("http:// /"); },
+					"Domain should not contains any spaces, tabulations or slashes");
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl("http:///"); },
-					"Invalid URL line");
+					"Domain must not be empty");
 			}
 			BOOST_AUTO_TEST_CASE(when_port_value_is_out_of_integer_range)
 			{
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl("http://ur.ru:2222222222/"); },
-					"Port value is out of integer range");
+					"Could not convert port value to integer");
 			}
 			BOOST_AUTO_TEST_CASE(when_port_value_is_out_of_port_allow_range)
 			{
-				VerifyException<invalid_argument>([]() {
-					CHttpUrl("http://ur.ru:-1/"); },
-					"Port value is out of port allow range (1..65535)");
 				VerifyException<invalid_argument>([]() {
 					CHttpUrl("http://ur.ru:0/"); },
 					"Port value is out of port allow range (1..65535)");
@@ -127,18 +137,25 @@ BOOST_AUTO_TEST_SUITE(HttpUrl_class)
 					CHttpUrl("http://ur.ru:65536/"); },
 					"Port value is out of port allow range (1..65535)");
 			}
-		BOOST_AUTO_TEST_SUITE_END()
+			BOOST_AUTO_TEST_CASE(when_port_value_is_not_number)
+			{
+				VerifyException<invalid_argument>([]() {
+					CHttpUrl("http://ur.ru:12a/"); },
+					"Port value is not a number");
+			}
+			BOOST_AUTO_TEST_SUITE_END()
+
 	BOOST_AUTO_TEST_SUITE_END()
 
-	BOOST_AUTO_TEST_SUITE(after_construction)
-		BOOST_AUTO_TEST_CASE(can_get_itself_data)
-		{
-			CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
-			BOOST_CHECK_EQUAL(url.GetDomain(), "www.mysite.com");
-			BOOST_CHECK_EQUAL(url.GetDocument(), "/docs/document1.html?page=30&lang=en#title");
-			BOOST_CHECK(url.GetProtocol() == Protocol::HTTP);
-			BOOST_CHECK_EQUAL(url.GetPort(), 100);
-		}
-	BOOST_AUTO_TEST_SUITE_END()
+		BOOST_AUTO_TEST_SUITE(after_construction)
+			BOOST_AUTO_TEST_CASE(can_get_itself_data)
+			{
+				CHttpUrl url("http://www.mysite.com:100/docs/document1.html?page=30&lang=en#title");
+				BOOST_CHECK_EQUAL(url.GetDomain(), "www.mysite.com");
+				BOOST_CHECK_EQUAL(url.GetDocument(), "/docs/document1.html?page=30&lang=en#title");
+				BOOST_CHECK(url.GetProtocol() == Protocol::HTTP);
+				BOOST_CHECK_EQUAL(url.GetPort(), 100);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()
