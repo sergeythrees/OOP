@@ -8,7 +8,7 @@ bool FindMaxEx(std::vector<T>const & arr, T & maxValue, Less const & less)
 		return false;
 	}
 	const T* lastMax = &arr[0];
-	for (unsigned i=0; i < arr.size(); ++i)
+	for (size_t i=0; i < arr.size(); ++i)
 	{
 		if (less(*lastMax, arr[i]))
 		{
