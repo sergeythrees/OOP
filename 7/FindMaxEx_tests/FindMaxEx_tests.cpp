@@ -18,6 +18,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		BOOST_AUTO_TEST_CASE(should_not_find_if_vector_is_empty)
 		{
 			BOOST_CHECK(!FindMaxEx(numbers, max, less<int>()));
+			BOOST_CHECK_EQUAL(max, 0);
 		}
 		BOOST_AUTO_TEST_CASE(should_find_if_vector_is_singleton)
 		{
@@ -49,6 +50,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		BOOST_AUTO_TEST_CASE(should_not_find_if_vector_is_empty)
 		{
 			BOOST_CHECK(!FindMaxEx(strings, max, less<string>()));
+			BOOST_CHECK(max.empty());
 		}
 		BOOST_AUTO_TEST_CASE(should_find_if_vector_is_singleton)
 		{
@@ -78,6 +80,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		BOOST_AUTO_TEST_CASE(should_not_find_if_vector_is_empty)
 		{
 			BOOST_CHECK(!FindMaxEx(athletes, max, lessHeight));
+			BOOST_CHECK(max == CAthlete());
 		}
 		BOOST_AUTO_TEST_CASE(should_find_if_vector_is_singleton)
 		{
