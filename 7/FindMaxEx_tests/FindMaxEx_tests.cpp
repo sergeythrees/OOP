@@ -28,8 +28,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		}
 		BOOST_AUTO_TEST_CASE(can_find_max_number)
 		{
-			numbers.push_back(-3);
-			numbers.push_back(-8);
+			numbers.assign({ -3, -8 });
 			BOOST_CHECK(FindMaxEx(numbers, max, less<int>()));
 			BOOST_CHECK_EQUAL(max, -3);
 
@@ -105,8 +104,26 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 
 			BOOST_CHECK(FindMaxEx(athletes, max, lessWeight));
 			BOOST_CHECK_EQUAL(max.Name(), "Jonah Hill");
-
 		}
 	BOOST_AUTO_TEST_SUITE_END()
+	
+	BOOST_AUTO_TEST_CASE(should_not_change_the_max_variable_if_any_exception_thrown)
+	{
+		iWillBeThrown max(false, "unique");
+
+		vector<iWillBeThrown> dangerousVector;
+		dangerousVector.assign(
+			{ 
+				iWillBeThrown(false, "one"),  
+				iWillBeThrown(false, "two"), 
+				iWillBeThrown(true, "three")
+			});
+
+		std::function<bool(iWillBeThrown a, iWillBeThrown b)> lessName
+			= [](iWillBeThrown a, iWillBeThrown b) { return a.Name() < b.Name(); };
+
+		BOOST_CHECK_THROW(FindMaxEx(dangerousVector, max, lessName), exception);
+		BOOST_CHECK(max.Name() == "unique");
+	}
 
 BOOST_AUTO_TEST_SUITE_END()

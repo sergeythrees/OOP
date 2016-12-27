@@ -20,7 +20,7 @@ bool FindMaxEx(std::vector<T>const & arr, T & maxValue, Less const & less)
 		}
 		maxValue = *lastMax;
 	}
-	catch (const std::exception &ex)
+	catch (const std::exception& ex)
 	{
 		maxValue = maxValueBackup;
 		throw ex;
