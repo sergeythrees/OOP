@@ -117,25 +117,23 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 	{
 		struct iWillBeThrown
 		{
-			iWillBeThrown(bool switcher, std::string name)
-				: enableThrowing(switcher),
+			iWillBeThrown(bool enabled, std::string name)
+				: enabledThrowing(enabled),
 				Name(name) {}
 
 			void operator=(const iWillBeThrown& b)
 			{
-				if (enableThrowing || b.enableThrowing)
+				if (enabledThrowing || b.enabledThrowing)
 					throw std::exception("I warned.");
 				Name = b.Name;
 			}
 			bool operator<(const iWillBeThrown& b) const
 			{
-				if (enableThrowing || b.enableThrowing)
-					throw std::exception("I warned.");
 				return Name < b.Name;
 			}
 			std::string Name;
 
-			bool enableThrowing = false;
+			bool enabledThrowing = false;
 		}typedef iWillBeThrown;
 
 		iWillBeThrown max(false, "unique");
@@ -156,7 +154,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		BOOST_CHECK_THROW(FindMaxEx(dangerousVector, max), exception);
 		BOOST_CHECK(max.Name == "unique");
 
-		dangerousVector[2].enableThrowing = false;
+		dangerousVector[2].enabledThrowing = false;
 		BOOST_CHECK_NO_THROW(FindMaxEx(dangerousVector, max, lessName));
 		BOOST_CHECK(max.Name == "3three");
 
