@@ -69,10 +69,10 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 	{
 		std::vector<CAthlete> athletes;
 		CAthlete max;
-		std::function<bool(CAthlete a, CAthlete b)> lessHeight 
-			= [](CAthlete a, CAthlete b) { return a.Height() < b.Height(); };
-		std::function<bool(CAthlete a, CAthlete b)> lessWeight
-			= [](CAthlete a, CAthlete b) { return a.Weight() < b.Weight(); };
+		std::function<bool(CAthlete, CAthlete)> lessHeight 
+			= [&](const CAthlete& a, const CAthlete& b) { return a.Height() < b.Height(); };
+		std::function<bool(CAthlete, CAthlete)> lessWeight
+			= [&](const CAthlete& a, const CAthlete& b) { return a.Weight() < b.Weight(); };
 	};
 
 	BOOST_FIXTURE_TEST_SUITE(when_work_with_vector_of_classes, AthletesFixture)
@@ -112,24 +112,21 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		struct iWillBeThrown
 		{
 			iWillBeThrown(bool switcher, std::string name)
-				: TurnedOnExceptionThrow(switcher),
-				Name(name) {
-				TurnedOnExceptionThrow = switcher;
-				Name = name;
-			}
+				: enableThrowing(switcher),
+				Name(name) {}
 
 			void operator=(const iWillBeThrown& b)
 			{
-				if (b.TurnedOnExceptionThrow)
+				if (enableThrowing || b.enableThrowing)
 					throw std::exception("I warned.");
 				Name = b.Name;
 			}
 			std::string Name;
 
-			bool TurnedOnExceptionThrow;
+			bool enableThrowing = false;
 		}typedef iWillBeThrown;
 
-		iWillBeThrown max(true, "unique");
+		iWillBeThrown max(false, "unique");
 		
 		vector<iWillBeThrown> dangerousVector;
 		dangerousVector.assign(
@@ -140,12 +137,12 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 			});
 
 		auto lessName
-			= [](iWillBeThrown a, iWillBeThrown b) { return a.Name < b.Name; };
+			= [](const iWillBeThrown& a, const iWillBeThrown& b) { return a.Name < b.Name; };
 	
 		BOOST_CHECK_THROW(FindMaxEx(dangerousVector, max, lessName), exception);
 		BOOST_CHECK(max.Name == "unique");
 
-		dangerousVector[2].TurnedOnExceptionThrow = false;
+		dangerousVector[2].enableThrowing = false;
 		BOOST_CHECK_NO_THROW(FindMaxEx(dangerousVector, max, lessName));
 		BOOST_CHECK(max.Name == "3three");
 	}
