@@ -22,3 +22,8 @@ bool operator ==(const CAthlete& a, const CAthlete& b)
 {
 	return (a.Name() == b.Name() && a.Height() == b.Height() && a.Weight() == b.Weight());
 }
+
+bool operator < (const CAthlete& a, const CAthlete& b)
+{
+	return (a.Weight()*a.Height() < b.Weight()*b.Height());
+}

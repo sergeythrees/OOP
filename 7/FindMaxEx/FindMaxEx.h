@@ -28,3 +28,32 @@ bool FindMaxEx(std::vector<T>const & arr, T & maxValue, Less const & less)
 
 	return true;
 }
+
+template<typename T>
+bool FindMaxEx(std::vector<T>const & arr, T & maxValue)
+{
+	if (arr.empty())
+	{
+		return false;
+	}
+	const T maxValueBackup = maxValue;
+	try
+	{
+		const T* lastMax = &arr.front();
+		for (size_t i = 0; i < arr.size(); ++i)
+		{
+			if (*lastMax < arr[i])
+			{
+				lastMax = &arr[i];
+			}
+		}
+		maxValue = *lastMax;
+	}
+	catch (const std::exception& ex)
+	{
+		maxValue = maxValueBackup;
+		throw ex;
+	}
+
+	return true;
+}

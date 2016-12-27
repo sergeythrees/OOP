@@ -19,6 +19,9 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		{
 			BOOST_CHECK(!FindMaxEx(numbers, max, less<int>()));
 			BOOST_CHECK_EQUAL(max, 0);
+
+			BOOST_CHECK(!FindMaxEx(numbers, max));
+			BOOST_CHECK_EQUAL(max, 0);
 		}
 		BOOST_AUTO_TEST_CASE(should_find_if_vector_is_singleton)
 		{
@@ -34,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 
 			numbers.push_back(0);
 			numbers.push_back(5);
-			BOOST_CHECK(FindMaxEx(numbers, max, less<int>()));
+			BOOST_CHECK(FindMaxEx(numbers, max));
 			BOOST_CHECK_EQUAL(max, 5);
 		}
 	BOOST_AUTO_TEST_SUITE_END()
@@ -99,10 +102,13 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 				{ "Jonah Hill", 170, 105 }
 			});
 
+			BOOST_CHECK(FindMaxEx(athletes, max, lessWeight));
+			BOOST_CHECK_EQUAL(max.Name(), "Jonah Hill");
+
 			BOOST_CHECK(FindMaxEx(athletes, max, lessHeight));
 			BOOST_CHECK_EQUAL(max.Name(), "Ronaldinho");
 
-			BOOST_CHECK(FindMaxEx(athletes, max, lessWeight));
+			BOOST_CHECK(FindMaxEx(athletes, max));
 			BOOST_CHECK_EQUAL(max.Name(), "Jonah Hill");
 		}
 	BOOST_AUTO_TEST_SUITE_END()
@@ -120,6 +126,12 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 				if (enableThrowing || b.enableThrowing)
 					throw std::exception("I warned.");
 				Name = b.Name;
+			}
+			bool operator<(const iWillBeThrown& b) const
+			{
+				if (enableThrowing || b.enableThrowing)
+					throw std::exception("I warned.");
+				return Name < b.Name;
 			}
 			std::string Name;
 
@@ -141,10 +153,17 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 	
 		BOOST_CHECK_THROW(FindMaxEx(dangerousVector, max, lessName), exception);
 		BOOST_CHECK(max.Name == "unique");
+		BOOST_CHECK_THROW(FindMaxEx(dangerousVector, max), exception);
+		BOOST_CHECK(max.Name == "unique");
 
 		dangerousVector[2].enableThrowing = false;
 		BOOST_CHECK_NO_THROW(FindMaxEx(dangerousVector, max, lessName));
 		BOOST_CHECK(max.Name == "3three");
+
+
+		dangerousVector[2].Name = "0zero";
+		BOOST_CHECK_NO_THROW(FindMaxEx(dangerousVector, max));
+		BOOST_CHECK(max.Name == "2two");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
