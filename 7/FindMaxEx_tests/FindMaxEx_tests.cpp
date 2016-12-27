@@ -109,21 +109,45 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 	
 	BOOST_AUTO_TEST_CASE(should_not_change_the_max_variable_if_any_exception_thrown)
 	{
-		iWillBeThrown max(false, "unique");
+		struct iWillBeThrown
+		{
+			iWillBeThrown(bool switcher, std::string name)
+				: TurnedOnExceptionThrow(switcher),
+				Name(name) {
+				TurnedOnExceptionThrow = switcher;
+				Name = name;
+			}
 
+			void operator=(const iWillBeThrown& b)
+			{
+				if (b.TurnedOnExceptionThrow)
+					throw std::exception("I warned.");
+				Name = b.Name;
+			}
+			std::string Name;
+
+			bool TurnedOnExceptionThrow;
+		}typedef iWillBeThrown;
+
+		iWillBeThrown max(true, "unique");
+		
 		vector<iWillBeThrown> dangerousVector;
 		dangerousVector.assign(
 			{ 
-				iWillBeThrown(false, "one"),  
-				iWillBeThrown(false, "two"), 
-				iWillBeThrown(true, "three")
+				iWillBeThrown(false, "1one"),  
+				iWillBeThrown(false, "2two"), 
+				iWillBeThrown(true, "3three")
 			});
 
-		std::function<bool(iWillBeThrown a, iWillBeThrown b)> lessName
-			= [](iWillBeThrown a, iWillBeThrown b) { return a.Name() < b.Name(); };
-
+		auto lessName
+			= [](iWillBeThrown a, iWillBeThrown b) { return a.Name < b.Name; };
+	
 		BOOST_CHECK_THROW(FindMaxEx(dangerousVector, max, lessName), exception);
-		BOOST_CHECK(max.Name() == "unique");
+		BOOST_CHECK(max.Name == "unique");
+
+		dangerousVector[2].TurnedOnExceptionThrow = false;
+		BOOST_CHECK_NO_THROW(FindMaxEx(dangerousVector, max, lessName));
+		BOOST_CHECK(max.Name == "3three");
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

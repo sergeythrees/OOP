@@ -22,24 +22,3 @@ bool operator ==(const CAthlete& a, const CAthlete& b)
 {
 	return (a.Name() == b.Name() && a.Height() == b.Height() && a.Weight() == b.Weight());
 }
-
-class iWillBeThrown
-{
-public:
-	iWillBeThrown(bool switcher, std::string name)
-		: m_TurnOnExceptionThrow(switcher),
-		m_name(name) {}
-
-	void operator=(const iWillBeThrown& b)
-	{
-		if (!m_TurnOnExceptionThrow)
-			throw std::exception("I warned.");
-		else
-			m_name = b.m_name;
-	}
-
-	std::string Name() { return m_name; }
-private:
-	bool m_TurnOnExceptionThrow = false;
-	std::string m_name;
-};
