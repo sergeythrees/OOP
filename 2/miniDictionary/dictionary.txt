@@ -6,3 +6,9 @@ dark
 темный
 dark
 черный
+p
+а
+pine
+сосна
+yolka
+елка
