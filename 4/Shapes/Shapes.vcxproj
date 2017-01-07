@@ -86,7 +86,10 @@
     <ClInclude Include="CLineSegment.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="CRectarangle.h" />
-    <ClInclude Include="CTriangle.h" />
+    <ClInclude Include="CTriangle.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="IShape.h" />
     <ClInclude Include="ISolidShape.h" />
     <ClInclude Include="ShapeTypes.h">
@@ -100,7 +103,10 @@
     <ClCompile Include="CCircle.cpp" />
     <ClCompile Include="CLineSegment.cpp" />
     <ClCompile Include="CRectarangle.cpp" />
-    <ClCompile Include="CTriangle.cpp" />
+    <ClCompile Include="CTriangle.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="IShape.cpp" />
     <ClCompile Include="ISolidShape.cpp" />
     <ClCompile Include="stdafx.cpp">

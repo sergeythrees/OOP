@@ -19,19 +19,9 @@ Point const& CLineSegment::GetEndPoint() const
 	return m_endPoint;
 }
 
-double CLineSegment::CalculateArea() const
-{
-	return 0;
-}
-
 double CLineSegment::CalculatePerimeter() const
 {
 	return std::hypot(
 		m_startPoint.x - m_endPoint.x, 
 		m_startPoint.y - m_endPoint.y);
 };
-
-std::string  CLineSegment::UniqueProperties() const
-{
-	return std::string();
-}

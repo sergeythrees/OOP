@@ -10,9 +10,9 @@ public:
 
 	std::string ToString();
 protected:
-	virtual double CalculateArea() const = 0;
-	virtual double CalculatePerimeter() const = 0;
-	virtual std::string UniqueProperties() const = 0;
+	virtual double CalculateArea() const { return 0; };
+	virtual double CalculatePerimeter() const { return 0; };
+	virtual std::string UniqueProperties() const { return ""; };
 
 private:
 	std::string m_type;

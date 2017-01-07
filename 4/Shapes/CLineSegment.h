@@ -9,11 +9,10 @@ public:
 
 	Point const& GetStartPoint() const;
 	Point const& GetEndPoint() const;
-protected:
-	virtual double CalculateArea() const override;
-	virtual double CalculatePerimeter() const override;
-	std::string UniqueProperties() const override;
+	
 private:
+	virtual double CalculatePerimeter() const override;
+
 	Point m_startPoint;
 	Point m_endPoint;
 };
