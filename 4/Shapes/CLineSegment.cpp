@@ -2,26 +2,37 @@
 #include "IShape.h"
 #include "CLineSegment.h"
 
-CLineSegment::CLineSegment(Point const & startPoint, Point const & endPoint, std::string const & outlineColor)
+CLineSegment::CLineSegment(Point const & pointA, Point const & pointB, std::string const & outlineColor)
 	:IShape("Line", outlineColor),
-	m_startPoint(startPoint),
-	m_endPoint(endPoint)
+	m_pointA(pointA),
+	m_pointB(pointB)
 {
 }
 
-Point const& CLineSegment::GetStartPoint() const
+Point const& CLineSegment::GetPointA() const
 {
-	return m_startPoint;
+	return m_pointA;
 }
 
-Point const& CLineSegment::GetEndPoint() const
+Point const& CLineSegment::GetPointB() const
 {
-	return m_endPoint;
+	return m_pointB;
 }
 
 double CLineSegment::CalculatePerimeter() const
 {
 	return std::hypot(
-		m_startPoint.x - m_endPoint.x, 
-		m_startPoint.y - m_endPoint.y);
-};
+		m_pointA.x - m_pointB.x, 
+		m_pointA.y - m_pointB.y);
+}
+std::string CLineSegment::UniqueProperties() const
+{
+	std::stringstream strm;
+	strm << " {(" << m_pointA.x 
+		<< ";" << m_pointA.y 
+		<< "),(" << m_pointB.x 
+		<< ";" << m_pointB.y << ")}";
+
+	return strm.str();
+}
+;
