@@ -26,9 +26,9 @@ double CLineSegment::CalculateArea() const
 
 double CLineSegment::CalculatePerimeter() const
 {
-	double dx = m_startPoint.x - m_endPoint.x;
-	double dy = m_startPoint.y - m_endPoint.y;
-	return std::hypot(dx, dy);
+	return std::hypot(
+		m_startPoint.x - m_endPoint.x, 
+		m_startPoint.y - m_endPoint.y);
 };
 
 std::string  CLineSegment::UniqueProperties() const

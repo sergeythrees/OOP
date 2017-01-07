@@ -19,5 +19,6 @@ private:
 	double m_area;
 	double m_perimeter;
 	std::string m_outlineColor;
-	bool m_wasChanged;
+	bool m_wasAreaCalculated;
+	bool m_wasPerimeterCalculated;
 };

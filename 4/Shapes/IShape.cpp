@@ -6,21 +6,29 @@ IShape::IShape(const std::string & type, std::string outlineColor)
 	m_area(0),
 	m_perimeter(0), 
 	m_outlineColor(outlineColor),
-	m_wasChanged(true)
+	m_wasAreaCalculated(false),
+	m_wasPerimeterCalculated(false)
 {
 }
 
 double IShape::GetArea()
 {
-	if (m_wasChanged)
-		CalculateArea();
+	if (!m_wasAreaCalculated)
+	{
+		m_area = CalculateArea();
+		m_wasAreaCalculated = true;
+	}
+
 	return m_area;
 }
 
 double IShape::GetPerimeter()
 {
-	if (m_wasChanged)
+	if (!m_wasPerimeterCalculated)
+	{
 		m_perimeter = CalculatePerimeter();
+		m_wasPerimeterCalculated = true;
+	}
 	return m_perimeter;
 }
 
