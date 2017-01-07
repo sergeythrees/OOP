@@ -1,6 +1,9 @@
 #pragma once
-struct Point
+#include "stdafx.h"
+typedef struct
 {
 	double x;
 	double y;
-};
+} Point;
+
+typedef std::vector<Point> Vertices;

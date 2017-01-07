@@ -29,8 +29,8 @@ double CTriangle::CalculateArea() const
 {
 	double p = CalculatePerimeter() / 2;
 	double a = CalculateLineLenght(m_vertexA, m_vertexB);
-	double b = CalculateLineLenght(m_vertexA, m_vertexB);
-	double c = CalculateLineLenght(m_vertexA, m_vertexB);
+	double b = CalculateLineLenght(m_vertexB, m_vertexC);
+	double c = CalculateLineLenght(m_vertexC, m_vertexA);
 
 	return sqrt(p*(p - a)*(p - b)*(p - c));
 }
@@ -38,8 +38,8 @@ double CTriangle::CalculateArea() const
 double CTriangle::CalculatePerimeter() const
 {
 	double a = CalculateLineLenght(m_vertexA, m_vertexB);
-	double b = CalculateLineLenght(m_vertexA, m_vertexB);
-	double c = CalculateLineLenght(m_vertexA, m_vertexB);
+	double b = CalculateLineLenght(m_vertexB, m_vertexC);
+	double c = CalculateLineLenght(m_vertexC, m_vertexA);
 
 	return a + b + c;
 }
@@ -47,7 +47,7 @@ double CTriangle::CalculatePerimeter() const
 std::string CTriangle::UniqueProperties() const
 {
 	std::stringstream strm;
-	strm << ", Coordinates: {(" << m_vertexA.x
+	strm << ", Vertices: {(" << m_vertexA.x
 		<< ";" << m_vertexA.y
 		<< "),(" << m_vertexB.x
 		<< ";" << m_vertexB.y
