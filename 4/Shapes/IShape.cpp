@@ -42,8 +42,8 @@ std::string IShape::ToString()
 	std::ostringstream strm;
 	strm << m_type + ": "
 		<< "  S: " << GetArea()
-		<< "  P: " << GetPerimeter()
-		<< "  OutlineColor: " << GetOutlineColor()
+		<< ",  P: " << GetPerimeter()
+		<< ",  OutlineColor: " << GetOutlineColor()
 		<< UniqueProperties();
 	return strm.str();
 }

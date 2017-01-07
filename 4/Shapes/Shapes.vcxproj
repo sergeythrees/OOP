@@ -84,11 +84,14 @@
   <ItemGroup>
     <ClInclude Include="CCirlcle.h" />
     <ClInclude Include="CLineSegment.h" />
+    <ClInclude Include="GeometricFunctions.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="CRectarangle.h" />
     <ClInclude Include="CTriangle.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="IShape.h" />
     <ClInclude Include="ISolidShape.h" />
@@ -104,8 +107,10 @@
     <ClCompile Include="CLineSegment.cpp" />
     <ClCompile Include="CRectarangle.cpp" />
     <ClCompile Include="CTriangle.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="IShape.cpp" />
     <ClCompile Include="ISolidShape.cpp" />
