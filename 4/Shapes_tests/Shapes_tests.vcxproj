@@ -90,16 +90,29 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Shapes\CCircle.h" />
+    <ClInclude Include="..\Shapes\CLineSegment.h" />
+    <ClInclude Include="..\Shapes\CRectarangle.h" />
+    <ClInclude Include="..\Shapes\CTriangle.h" />
+    <ClInclude Include="..\Shapes\IShape.h" />
+    <ClInclude Include="..\Shapes\ISolidShape.h" />
+    <ClInclude Include="..\Shapes\Point.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Shapes\CCircle.cpp" />
+    <ClCompile Include="..\Shapes\CLineSegment.cpp" />
+    <ClCompile Include="..\Shapes\CRectarangle.cpp" />
+    <ClCompile Include="..\Shapes\CTriangle.cpp" />
+    <ClCompile Include="..\Shapes\IShape.cpp" />
+    <ClCompile Include="..\Shapes\ISolidShape.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Shapes_tests.cpp" />
+    <ClCompile Include="IShapes_realisations_tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

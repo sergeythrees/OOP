@@ -4,9 +4,6 @@
     <ClCompile Include="IShape.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="CCircle.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="CLineSegment.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -21,13 +18,12 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="CCirlcle.cpp" />
+    <ClCompile Include="CCircle.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IShape.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="CCirlcle.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="CLineSegment.h">
@@ -47,10 +43,10 @@
     <ClInclude Include="Point.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="ShapeTypes.h">
+    <ClInclude Include="GeometricFunctions.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="GeometricFunctions.h">
+    <ClInclude Include="CCircle.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

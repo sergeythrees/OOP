@@ -4,11 +4,29 @@
     <ClCompile Include="main.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="Shapes_tests.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="IShapes_realisations_tests.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\CCircle.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\CLineSegment.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\CRectarangle.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\CTriangle.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\IShape.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\ISolidShape.cpp">
+      <Filter>Existing files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -17,6 +35,27 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\CCircle.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\CLineSegment.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\CRectarangle.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\CTriangle.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\IShape.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\ISolidShape.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\Point.h">
+      <Filter>Existing files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +67,9 @@
     </Filter>
     <Filter Include="Header files">
       <UniqueIdentifier>{ccbebd46-c7bd-498f-aa3e-9d252170c49d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Existing files">
+      <UniqueIdentifier>{5bfa9e06-970a-4b7c-8be9-e075bb9009c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

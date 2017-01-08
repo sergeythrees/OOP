@@ -1,8 +1,0 @@
-﻿#include "stdafx.h"
-
-BOOST_AUTO_TEST_SUITE(___)
-	BOOST_AUTO_TEST_CASE(___)
-	{
-
-	}
-BOOST_AUTO_TEST_SUITE_END()

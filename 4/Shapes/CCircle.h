@@ -1,5 +1,4 @@
 #pragma once
-
 #include "ISolidShape.h"
 #include "Point.h"
 

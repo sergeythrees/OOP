@@ -82,7 +82,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCirlcle.h" />
+    <ClInclude Include="CCircle.h" />
     <ClInclude Include="CLineSegment.h" />
     <ClInclude Include="GeometricFunctions.h" />
     <ClInclude Include="Point.h" />
@@ -95,16 +95,11 @@
     </ClInclude>
     <ClInclude Include="IShape.h" />
     <ClInclude Include="ISolidShape.h" />
-    <ClInclude Include="ShapeTypes.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCircle.cpp" />
-    <ClCompile Include="CCirlcle.cpp" />
     <ClCompile Include="CLineSegment.cpp" />
     <ClCompile Include="CRectarangle.cpp" />
     <ClCompile Include="CTriangle.cpp">
