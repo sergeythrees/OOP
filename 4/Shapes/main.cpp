@@ -20,35 +20,3 @@ int main()
 	control.PrintInfo(cout);
 	return 0;
 }
-
-//IShape * CShapesController::FindMaxArea() const
-//{
-//	return FindMaxEx(*m_shapes,
-//		[&](const IShape& a, const IShape& b)
-//	{return a.GetArea() > b.GetArea(); });
-//}
-//
-//size_t CShapesController::FindMaxPerimeter() const
-//{
-//	return FindMaxEx(*m_shapes,
-//		[&](const IShape& a, const IShape& b)
-//	{return a.GetPerimeter() > b.GetPerimeter(); });
-//}
-
-//void CShapesController::PrintInfo(std::ostream & output)
-//{
-//	if (m_shapes->empty())
-//		cerr << "Array is empty" << endl;
-//	IShape* maxArea = FindMaxArea();
-//	IShape* maxPerimeter = FindMaxPerimeter();
-//	if (maxArea && maxPerimeter)
-//	{
-//		output << "Shape with max area:"
-//			<< (*maxArea).ToString() << endl
-//			<< "Shape with max perimeter:"
-//			<< (*maxPerimeter).ToString() << endl;
-//	}
-//	else
-//		cerr << "Error! Can'not search in array" << endl;
-//
-//}

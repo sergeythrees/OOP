@@ -11,7 +11,7 @@ class CShapesController : boost::noncopyable
 public:
 	CShapesController(std::vector<std::shared_ptr<IShape>>& shapes);
 	void HandleCommand(std::string commandLine) const;
-	void PrintInfo(std::ostream & output);
+	void PrintInfo(std::ostream & output) const;
 private:
 	void CreateLine(std::istream & args);
 	void CreateTriangle(std::istream & args);

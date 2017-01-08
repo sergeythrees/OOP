@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ISolidShape.h"
 
-ISolidShape::ISolidShape(const std::string & type, std::string outlineColor, const std::string & fillColor)
+ISolidShape::ISolidShape(const std::string & type, const std::string& outlineColor, const std::string & fillColor)
 	:IShape(type, outlineColor),
 	m_fillColor(fillColor)
 {

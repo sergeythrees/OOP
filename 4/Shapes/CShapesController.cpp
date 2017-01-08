@@ -34,12 +34,35 @@ void CShapesController::HandleCommand(std::string commandLine) const
 	}
 }
 
-void CShapesController::PrintInfo(std::ostream & output)
+void CShapesController::PrintInfo(std::ostream & output) const
 {
+	if (m_shapes->empty())
+	{
+		cerr << "Array is empty" << endl;
+		return;
+	}
+
 	for (auto current : *m_shapes)
 	{
 		output << current->ToString() << endl;
 	}
+
+	auto maxArea = FindMaxEx(*m_shapes,
+				[&](const shared_ptr<IShape>& a, const shared_ptr<IShape>& b)
+			{return a->GetArea() < b->GetArea(); });
+	auto maxPerimeter = FindMaxEx(*m_shapes,
+				[&](const shared_ptr<IShape>& a, const shared_ptr<IShape>& b)
+			{return a->GetPerimeter() < b->GetPerimeter(); });
+
+	if (maxArea && maxPerimeter)
+	{
+		output << "Shape with max area:"
+			<< (*maxArea)->ToString() << endl
+			<< "Shape with max perimeter:"
+			<< (*maxPerimeter)->ToString() << endl;
+	}
+	else
+		cerr << "Error! Can'not search in array" << endl;
 }
 
 void CShapesController::CreateLine(std::istream & args)

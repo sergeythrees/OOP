@@ -4,7 +4,7 @@
 class ISolidShape : public IShape
 {
 public:
-	ISolidShape(const std::string & type, std::string outlineColor, const std::string & fillColor);
+	ISolidShape(const std::string & type, const std::string& outlineColor, const std::string & fillColor);
 	std::string GetFillColor() const;
 protected:
 	virtual std::string UniqueProperties() const override;
