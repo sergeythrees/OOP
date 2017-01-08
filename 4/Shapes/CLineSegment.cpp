@@ -19,12 +19,13 @@ Point const& CLineSegment::GetPointB() const
 	return m_pointB;
 }
 
-double CLineSegment::CalculatePerimeter() const
+double CLineSegment::GetPerimeter() const
 {
 	return std::hypot(
 		m_pointA.x - m_pointB.x,
 		m_pointA.y - m_pointB.y);
 }
+
 std::string CLineSegment::UniqueProperties() const
 {
 	std::stringstream strm;

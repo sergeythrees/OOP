@@ -13,12 +13,14 @@ public:
 
 	const Point& GetLeftTop() const;
 	const Point& GetRightBottom() const;
+	double GetWidth() const;
+	double GetHeight() const;
+	double GetArea() const override;
+	double GetPerimeter() const override;
 private:
-	double CalculateArea() const override;
-	double CalculatePerimeter() const override;
 	std::string UniqueProperties() const override;
 
-	double CalculateSideLenght(const Point & A1, const Point & B1) const
+	double GetSideLenght(const Point & A1, const Point & B1) const
 	{
 		return hypot(
 			A1.x - B1.x,

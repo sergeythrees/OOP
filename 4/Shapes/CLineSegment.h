@@ -9,9 +9,9 @@ public:
 
 	Point const& GetPointA() const;
 	Point const& GetPointB() const;
+	double GetPerimeter() const override;
 	
 private:
-	double CalculatePerimeter() const override;
 	std::string UniqueProperties() const override;
 
 	Point m_pointA;

@@ -20,29 +20,30 @@ const Point & CRectarangle::GetRightBottom() const
 	return m_vertices[3];
 }
 
-double CRectarangle::CalculateArea() const
+double CRectarangle::GetWidth() const
 {
-	double a = CalculateSideLenght(m_vertices[0], m_vertices[1]);
-	double b = CalculateSideLenght(m_vertices[1], m_vertices[2]);
-
-	return a*b;
+	return GetSideLenght(m_vertices[0], m_vertices[1]);
 }
 
-double CRectarangle::CalculatePerimeter() const
+double CRectarangle::GetHeight() const
 {
-	double a = CalculateSideLenght(m_vertices[0], m_vertices[1]);
-	double b = CalculateSideLenght(m_vertices[1], m_vertices[2]);
+	return GetSideLenght(m_vertices[1], m_vertices[2]);
+}
 
-	return (a+b)*2;
+double CRectarangle::GetArea() const
+{
+	return GetWidth() * GetHeight();
+}
+
+double CRectarangle::GetPerimeter() const
+{
+	return (GetWidth() + GetHeight()) *2;
 }
 
 std::string CRectarangle::UniqueProperties() const
 {
 	std::stringstream strm;
-	strm << ", Vertices: {(" << m_vertices[1].x
-		<< ";" << m_vertices[1].y
-		<< "),(" << m_vertices[3].x
-		<< ";" << m_vertices[3].y
-		<< ")" << ")}";
+	strm << ", W: " << GetWidth()
+		<< ", H:" << GetHeight();
 	return ISolidShape::UniqueProperties() + strm.str();
 }

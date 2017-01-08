@@ -25,21 +25,21 @@ const Point & CTriangle::GetVertexC() const
 	return m_vertexC;
 }
 
-double CTriangle::CalculateArea() const
+double CTriangle::GetArea() const
 {
-	double p = CalculatePerimeter() / 2;
-	double a = CalculateLineLenght(m_vertexA, m_vertexB);
-	double b = CalculateLineLenght(m_vertexB, m_vertexC);
-	double c = CalculateLineLenght(m_vertexC, m_vertexA);
+	double p = GetPerimeter() / 2;
+	double a = GetLineLenght(m_vertexA, m_vertexB);
+	double b = GetLineLenght(m_vertexB, m_vertexC);
+	double c = GetLineLenght(m_vertexC, m_vertexA);
 
 	return sqrt(p*(p - a)*(p - b)*(p - c));
 }
 
-double CTriangle::CalculatePerimeter() const
+double CTriangle::GetPerimeter() const
 {
-	double a = CalculateLineLenght(m_vertexA, m_vertexB);
-	double b = CalculateLineLenght(m_vertexB, m_vertexC);
-	double c = CalculateLineLenght(m_vertexC, m_vertexA);
+	double a = GetLineLenght(m_vertexA, m_vertexB);
+	double b = GetLineLenght(m_vertexB, m_vertexC);
+	double c = GetLineLenght(m_vertexC, m_vertexA);
 
 	return a + b + c;
 }

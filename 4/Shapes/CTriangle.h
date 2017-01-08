@@ -15,9 +15,10 @@ public:
 	const Point& GetVertexA() const;
 	const Point& GetVertexB() const;
 	const Point& GetVertexC() const;
+	double GetArea() const override;
+	double GetPerimeter() const override;
+
 private:
-	double CalculateArea() const override;
-	double CalculatePerimeter() const override;
 	std::string UniqueProperties() const override;
 
 	Point m_vertexA;
