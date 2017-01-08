@@ -46,6 +46,8 @@ void CShapesController::PrintInfo(std::ostream & output) const
 	{
 		output << current->ToString() << endl;
 	}
+	
+	output << endl;
 
 	auto maxArea = FindMaxEx(*m_shapes,
 				[&](const shared_ptr<IShape>& a, const shared_ptr<IShape>& b)
@@ -67,7 +69,10 @@ void CShapesController::PrintInfo(std::ostream & output) const
 
 void CShapesController::CreateLine(std::istream & args)
 {
-	double Ax, Ay, Bx, By;
+	double Ax;
+	double Ay;
+	double Bx;
+	double By;
 	string outlineColor;
 	if (
 		args >> Ax &&
@@ -80,19 +85,58 @@ void CShapesController::CreateLine(std::istream & args)
 	}
 	else
 		cerr << "Invalid arguments." << endl
-			 << "Use: <x1> <y1> <x2> <y2> <colorOutline>" << endl;
+			 << "Use: <Ax> <Ay> <Bx> <By> <outlineColor>" << endl;
 }
 
 void CShapesController::CreateTriangle(std::istream & args)
 {
-	string kek;
-	getline(args, kek);
+	double Ax;
+	double Ay;
+	double Bx;
+	double By;
+	double Cx;
+	double Cy;
+
+	string outlineColor;
+	string fillColor;
+	if (
+		args >> Ax &&
+		args >> Ay &&
+		args >> Bx &&
+		args >> By &&
+		args >> Cx &&
+		args >> Cy &&
+		args >> outlineColor&&
+		args >> fillColor)
+	{
+		m_shapes->push_back(make_shared<CTriangle>(CTriangle({ Ax,Ay }, { Bx, By }, { Cx, Cy }, outlineColor, fillColor)));
+	}
+	else
+		cerr << "Invalid arguments." << endl
+		<< "Use: <Ax> <Ay> <Bx> <By> <Cx> <Cy> <outlineColor> <fillColor>" << endl;
 }
 
 void CShapesController::CreateRectangle(std::istream & args)
 {
-	string kek;
-	getline(args, kek);
+	double Ax;
+	double Ay;
+	double width;
+	double height;
+	string outlineColor;
+	string fillColor;
+	if (
+		args >> Ax &&
+		args >> Ay &&
+		args >> width &&
+		args >> height &&
+		args >> outlineColor&&
+		args >> fillColor)
+	{
+		m_shapes->push_back(make_shared<CRectangle>(CRectangle({ Ax,Ay }, width, height, outlineColor, fillColor)));
+	}
+	else
+		cerr << "Invalid arguments." << endl
+		<< "Use: <Ax> <Ay> <Bx> <By> <Cx> <Cy> <outlineColor> <fillColor>" << endl;
 }
 
 void CShapesController::CreateCircle(std::istream & args)

@@ -7,7 +7,8 @@ class CRectangle : public ISolidShape
 public:
 	CRectangle(
 		const Point& leftTop,
-		const Point& rightBottom,
+		double width,
+		double height,
 		const std::string& outlineColor,
 		const std::string & fillColor);
 
@@ -19,14 +20,10 @@ public:
 	double GetPerimeter() const override;
 private:
 	std::string UniqueProperties() const override;
-
-	double GetSideLenght(const Point & A1, const Point & B1) const
-	{
-		return hypot(
-			A1.x - B1.x,
-			A1.y - B1.y);
-	}
-
-	Vertices m_vertices;
+	
+	Point m_leftTop;
+	Point m_rightBottom;
+	double m_width;
+	double m_height;
 };
 

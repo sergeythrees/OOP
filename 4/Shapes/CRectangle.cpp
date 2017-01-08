@@ -1,43 +1,44 @@
 #include "stdafx.h"
 #include "CRectangle.h"
 
-CRectangle::CRectangle(const Point & leftTop, const Point & rightBottom, const std::string & outlineColor, const std::string & fillColor)
-	:ISolidShape("Rectangle", outlineColor, fillColor)
+CRectangle::CRectangle(const Point & leftTop, double width, double height, 
+	const std::string & outlineColor, const std::string & fillColor)
+	:ISolidShape("Rectangle", outlineColor, fillColor),
+	m_leftTop(leftTop),
+	m_rightBottom({ leftTop.x + width,  leftTop.y - height }),
+	m_width(width),
+	m_height(height)
 {
-	Point LeftBottom { leftTop.x,  rightBottom.y };
-	Point RightTop { rightBottom.x,  leftTop.y };
-	m_vertices.assign({ 
-		LeftBottom, leftTop , RightTop, rightBottom });
 }
 
 const Point & CRectangle::GetLeftTop() const
 {
-	return m_vertices[1];
+	return m_leftTop;
 }
 
 const Point & CRectangle::GetRightBottom() const
 {
-	return m_vertices[3];
+	return m_rightBottom;
 }
 
 double CRectangle::GetWidth() const
 {
-	return GetSideLenght(m_vertices[0], m_vertices[1]);
+	return m_width;
 }
 
 double CRectangle::GetHeight() const
 {
-	return GetSideLenght(m_vertices[1], m_vertices[2]);
+	return m_height;
 }
 
 double CRectangle::GetArea() const
 {
-	return GetWidth() * GetHeight();
+	return m_width * m_height;
 }
 
 double CRectangle::GetPerimeter() const
 {
-	return (GetWidth() + GetHeight()) *2;
+	return (m_width + m_height) *2;
 }
 
 std::string CRectangle::UniqueProperties() const

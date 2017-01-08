@@ -5,9 +5,10 @@
 #include "../Shapes/CRectangle.h"
 #include "../Shapes/CCircle.h"
 
-bool  ArePointsEqual(const Point& a, const Point& b)
+void  ArePointsEqual(const Point& a, const Point& b)
 {
-	return (a.x == b.x && a.y == b.y);
+	BOOST_CHECK_CLOSE(a.x, b.x, 0.1);
+	BOOST_CHECK_CLOSE(a.y, b.y, 0.1);
 }
 
 struct LineFixture
@@ -30,8 +31,8 @@ BOOST_FIXTURE_TEST_SUITE(CLineSegment_, LineFixture)
 	}
 	BOOST_AUTO_TEST_CASE(can_get_endpoints)
 	{
-		BOOST_CHECK(ArePointsEqual(shape.GetPointA(), Point{ 0,0 }));
-		BOOST_CHECK(ArePointsEqual(shape.GetPointB(), Point{ 2,2 }));
+		ArePointsEqual(shape.GetPointA(), Point{ 0,0 });
+		ArePointsEqual(shape.GetPointB(), Point{ 2,2 });
 	}
 	BOOST_AUTO_TEST_CASE(can_get_outline_color)
 	{
@@ -63,9 +64,9 @@ BOOST_FIXTURE_TEST_SUITE(CTriangle_, TriangleFixture)
 	}
 	BOOST_AUTO_TEST_CASE(can_get_vertices)
 	{
-		BOOST_CHECK(ArePointsEqual(shape.GetVertexA(), Point{ 0,0 }));
-		BOOST_CHECK(ArePointsEqual(shape.GetVertexB(), Point{ 2,2 }));
-		BOOST_CHECK(ArePointsEqual(shape.GetVertexC(), Point{ 2,0 }));
+		ArePointsEqual(shape.GetVertexA(), Point{ 0,0 });
+		ArePointsEqual(shape.GetVertexB(), Point{ 2,2 });
+		ArePointsEqual(shape.GetVertexC(), Point{ 2,0 });
 	}
 	BOOST_AUTO_TEST_CASE(can_get_outline_color)
 	{
@@ -87,7 +88,7 @@ struct RectangleFixture
 {
 	CRectangle shape;
 	RectangleFixture()
-		:shape({ 0,3 }, { 4,0 }, "green", "white")
+		:shape({ 0,3 }, 3, 4, "green", "white")
 	{}
 
 };
@@ -103,8 +104,8 @@ BOOST_FIXTURE_TEST_SUITE(CRectangle_, RectangleFixture)
 	}
 	BOOST_AUTO_TEST_CASE(can_get_vertices)
 	{
-		BOOST_CHECK(ArePointsEqual(shape.GetLeftTop(), Point{ 0,3 }));
-		BOOST_CHECK(ArePointsEqual(shape.GetRightBottom(), Point{ 4,0 }));
+		ArePointsEqual(shape.GetLeftTop(), Point{ 0,3 });
+		ArePointsEqual(shape.GetRightBottom(), Point{ 3,-1 });
 	}
 	BOOST_AUTO_TEST_CASE(can_get_height_and_width)
 	{
@@ -147,7 +148,7 @@ BOOST_FIXTURE_TEST_SUITE(CCircle_, CircleFixture)
 	}
 	BOOST_AUTO_TEST_CASE(can_get_center_and_radius)
 	{
-		BOOST_CHECK(ArePointsEqual(shape.GetCenter(), Point{ 0,0 }));
+		ArePointsEqual(shape.GetCenter(), Point{ 0,0 });
 		BOOST_CHECK_CLOSE(shape.GetRadius(), 5, 0.1);
 	}
 	BOOST_AUTO_TEST_CASE(can_get_outline_color)
