@@ -2,7 +2,7 @@
 #include "../Shapes/Point.h"
 #include "../Shapes/CLineSegment.h"
 #include "../Shapes/CTriangle.h"
-#include "../Shapes/CRectarangle.h"
+#include "../Shapes/CRectangle.h"
 #include "../Shapes/CCircle.h"
 
 bool  ArePointsEqual(const Point& a, const Point& b)
@@ -83,15 +83,15 @@ OutlineColor: blue, FillColor: white, Vertices: {(0;0),(2;2),(2;0)}");
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
-struct RectarangleFixture
+struct RectangleFixture
 {
-	CRectarangle shape;
-	RectarangleFixture()
+	CRectangle shape;
+	RectangleFixture()
 		:shape({ 0,3 }, { 4,0 }, "green", "white")
 	{}
 
 };
-BOOST_FIXTURE_TEST_SUITE(CRectarangle_, RectarangleFixture)
+BOOST_FIXTURE_TEST_SUITE(CRectangle_, RectangleFixture)
 
 	BOOST_AUTO_TEST_CASE(can_get_perimeter)
 	{
@@ -122,7 +122,7 @@ BOOST_FIXTURE_TEST_SUITE(CRectarangle_, RectarangleFixture)
 	BOOST_AUTO_TEST_CASE(can_be_converted_to_string_correctly)
 	{
 		BOOST_CHECK_EQUAL(shape.ToString(),
-			"Rectarangle:   S: 12,  P: 14,  OutlineColor: green, \
+			"Rectangle:   S: 12,  P: 14,  OutlineColor: green, \
 FillColor: white, W: 3, H:4");
 	}
 BOOST_AUTO_TEST_SUITE_END()

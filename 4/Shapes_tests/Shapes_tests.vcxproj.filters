@@ -7,16 +7,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="IShapes_realisations_tests.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Shapes\CCircle.cpp">
       <Filter>Existing files</Filter>
     </ClCompile>
     <ClCompile Include="..\Shapes\CLineSegment.cpp">
-      <Filter>Existing files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shapes\CRectarangle.cpp">
       <Filter>Existing files</Filter>
     </ClCompile>
     <ClCompile Include="..\Shapes\CTriangle.cpp">
@@ -26,6 +20,12 @@
       <Filter>Existing files</Filter>
     </ClCompile>
     <ClCompile Include="..\Shapes\ISolidShape.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="IShape_realisations_tests.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\CRectangle.cpp">
       <Filter>Existing files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,9 +42,6 @@
     <ClInclude Include="..\Shapes\CLineSegment.h">
       <Filter>Existing files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Shapes\CRectarangle.h">
-      <Filter>Existing files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Shapes\CTriangle.h">
       <Filter>Existing files</Filter>
     </ClInclude>
@@ -55,6 +52,9 @@
       <Filter>Existing files</Filter>
     </ClInclude>
     <ClInclude Include="..\Shapes\Point.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\CRectangle.h">
       <Filter>Existing files</Filter>
     </ClInclude>
   </ItemGroup>

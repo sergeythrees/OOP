@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "CRectarangle.h"
+#include "CRectangle.h"
 
-CRectarangle::CRectarangle(const Point & leftTop, const Point & rightBottom, const std::string & outlineColor, const std::string & fillColor)
-	:ISolidShape("Rectarangle", outlineColor, fillColor)
+CRectangle::CRectangle(const Point & leftTop, const Point & rightBottom, const std::string & outlineColor, const std::string & fillColor)
+	:ISolidShape("Rectangle", outlineColor, fillColor)
 {
 	Point LeftBottom { leftTop.x,  rightBottom.y };
 	Point RightTop { rightBottom.x,  leftTop.y };
@@ -10,37 +10,37 @@ CRectarangle::CRectarangle(const Point & leftTop, const Point & rightBottom, con
 		LeftBottom, leftTop , RightTop, rightBottom });
 }
 
-const Point & CRectarangle::GetLeftTop() const
+const Point & CRectangle::GetLeftTop() const
 {
 	return m_vertices[1];
 }
 
-const Point & CRectarangle::GetRightBottom() const
+const Point & CRectangle::GetRightBottom() const
 {
 	return m_vertices[3];
 }
 
-double CRectarangle::GetWidth() const
+double CRectangle::GetWidth() const
 {
 	return GetSideLenght(m_vertices[0], m_vertices[1]);
 }
 
-double CRectarangle::GetHeight() const
+double CRectangle::GetHeight() const
 {
 	return GetSideLenght(m_vertices[1], m_vertices[2]);
 }
 
-double CRectarangle::GetArea() const
+double CRectangle::GetArea() const
 {
 	return GetWidth() * GetHeight();
 }
 
-double CRectarangle::GetPerimeter() const
+double CRectangle::GetPerimeter() const
 {
 	return (GetWidth() + GetHeight()) *2;
 }
 
-std::string CRectarangle::UniqueProperties() const
+std::string CRectangle::UniqueProperties() const
 {
 	std::stringstream strm;
 	strm << ", W: " << GetWidth()

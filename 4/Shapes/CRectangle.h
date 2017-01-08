@@ -2,10 +2,10 @@
 #include "ISolidShape.h"
 #include "Point.h"
 
-class CRectarangle : public ISolidShape
+class CRectangle : public ISolidShape
 {
 public:
-	CRectarangle(
+	CRectangle(
 		const Point& leftTop,
 		const Point& rightBottom,
 		const std::string& outlineColor,

@@ -84,9 +84,11 @@
   <ItemGroup>
     <ClInclude Include="CCircle.h" />
     <ClInclude Include="CLineSegment.h" />
+    <ClInclude Include="CShapesController.h" />
+    <ClInclude Include="FindMaxEx.h" />
     <ClInclude Include="GeometricFunctions.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="CRectarangle.h" />
+    <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CTriangle.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>
@@ -101,7 +103,8 @@
   <ItemGroup>
     <ClCompile Include="CCircle.cpp" />
     <ClCompile Include="CLineSegment.cpp" />
-    <ClCompile Include="CRectarangle.cpp" />
+    <ClCompile Include="CRectangle.cpp" />
+    <ClCompile Include="CShapesController.cpp" />
     <ClCompile Include="CTriangle.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>
