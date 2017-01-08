@@ -2,6 +2,7 @@
 #include "CLineSegment.h"
 #include "CTriangle.h"
 #include "CRectarangle.h"
+#include "CCirlcle.h"
 
 using namespace std;
 
@@ -15,6 +16,9 @@ int main()
 
 	CRectarangle rect({ 1,1 }, { 2,0 }, "red", "white");
 	cout << rect.ToString() << endl;
+
+	CCircle circ({ 0,0 }, 5, "blue", "grey");
+	cout << circ.ToString() << endl;
 	return 0;
 }
 

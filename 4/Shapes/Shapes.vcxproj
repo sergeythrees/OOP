@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCircle.cpp" />
+    <ClCompile Include="CCirlcle.cpp" />
     <ClCompile Include="CLineSegment.cpp" />
     <ClCompile Include="CRectarangle.cpp" />
     <ClCompile Include="CTriangle.cpp">

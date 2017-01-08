@@ -21,6 +21,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="CCirlcle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IShape.h">
