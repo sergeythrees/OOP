@@ -69,19 +69,10 @@ void CShapesController::PrintInfo(std::ostream & output) const
 
 void CShapesController::CreateLine(std::istream & args)
 {
-	double Ax;
-	double Ay;
-	double Bx;
-	double By;
-	string outlineColor;
-	if (
-		args >> Ax &&
-		args >> Ay &&
-		args >> Bx &&
-		args >> By &&
-		args >> outlineColor)
+	std::shared_ptr<CLineSegment> line;
+	if (args >> line )
 	{
-		m_shapes->push_back(make_shared<CLineSegment>( CLineSegment({ Ax,Ay }, { Bx, By }, outlineColor)));
+		m_shapes->push_back(line);
 	}
 	else
 		cerr << "Invalid arguments." << endl
@@ -145,3 +136,107 @@ void CShapesController::CreateCircle(std::istream & args)
 	getline(args, kek);
 }
 
+std::istream & operator >> (std::istream & stream, shared_ptr<CLineSegment> & line)
+{
+	double Ax;
+	double Ay;
+	double Bx;
+	double By;
+	std::string outlineColor;
+	if (
+		stream >> Ax &&
+		stream >> Ay &&
+		stream >> Bx &&
+		stream >> By &&
+		stream >> outlineColor)
+	{
+		line = make_shared<CLineSegment>(CLineSegment({ Ax,Ay }, { Bx, By }, outlineColor));
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit);
+	}
+
+	return stream;
+}
+
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CTriangle> & triangle)
+{
+	double Ax;
+	double Ay;
+	double Bx;
+	double By;
+	double Cx;
+	double Cy;
+
+	string outlineColor;
+	string fillColor;
+	if (
+		stream >> Ax &&
+		stream >> Ay &&
+		stream >> Bx &&
+		stream >> By &&
+		stream >> Cx &&
+		stream >> Cy &&
+		stream >> outlineColor&&
+		stream >> fillColor)
+	{
+		triangle = make_shared<CTriangle>(CTriangle({ Ax,Ay }, { Bx, By }, { Cx, Cy }, outlineColor, fillColor));
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit);
+	}
+
+	return stream;
+}
+
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CRectangle> & rectangle)
+{
+	double Ax;
+	double Ay;
+	double width;
+	double height;
+	string outlineColor;
+	string fillColor;
+	if (
+		stream >> Ax &&
+		stream >> Ay &&
+		stream >> width &&
+		stream >> height &&
+		stream >> outlineColor&&
+		stream >> fillColor)
+	{
+		rectangle = make_shared<CRectangle>(CRectangle({ Ax,Ay }, width, height, outlineColor, fillColor));
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit);
+	}
+
+	return stream;
+}
+
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CCircle> & circle)
+{
+	double Ax;
+	double Ay;
+	double radius;
+	std::string outlineColor;
+	string fillColor;
+	if (
+		stream >> Ax &&
+		stream >> Ay &&
+		stream >> radius &&
+		stream >> outlineColor&&
+		stream >> fillColor)
+	{
+		circle = make_shared<CCircle>(CCircle({ Ax, Ay}, radius, outlineColor, fillColor));
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit);
+	}
+
+	return stream;
+}

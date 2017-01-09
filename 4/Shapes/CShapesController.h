@@ -22,3 +22,8 @@ private:
 	std::vector<std::shared_ptr<IShape>>* m_shapes;
 	const ActionMap m_actionMap;
 };
+
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CLineSegment> & line);
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CTriangle> & triangle);
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CRectangle> & rectangle);
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CCircle> & circle);

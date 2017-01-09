@@ -1,15 +1,4 @@
 ﻿#include "stdafx.h"
-#include "../Shapes/Point.h"
-#include "../Shapes/CLineSegment.h"
-#include "../Shapes/CTriangle.h"
-#include "../Shapes/CRectangle.h"
-#include "../Shapes/CCircle.h"
-
-void  ArePointsEqual(const Point& a, const Point& b)
-{
-	BOOST_CHECK_CLOSE(a.x, b.x, 0.1);
-	BOOST_CHECK_CLOSE(a.y, b.y, 0.1);
-}
 
 struct LineFixture
 {
