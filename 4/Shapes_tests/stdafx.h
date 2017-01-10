@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <memory>
+
 #include "../Shapes/Point.h"
 #include "../Shapes/CLineSegment.h"
 #include "../Shapes/CTriangle.h"

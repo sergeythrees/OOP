@@ -7,16 +7,26 @@
 
 using namespace std;
 
-int main()
+int main()try
 {
 	std::vector<std::shared_ptr<IShape>>  shapes;
-	CShapesController control(shapes);
-	while (!cin.eof() && !cin.fail())
+	CShapesController control(shapes, cin);
+
+	while (!cin.eof() && !cin.fail()) try
 	{
-		string commandLine;
-		getline(cin, commandLine);
-		control.HandleCommand(commandLine);
+		control.HandleCommand();		
 	}
+	catch (const exception& ex)
+	{
+		cerr << ex.what() << endl;
+	}
+
 	control.PrintInfo(cout);
-	return 0;
+
+	return EXIT_SUCCESS;
+}
+catch (const exception& ex)
+{
+	cerr << ex.what() << endl;
+	return EXIT_FAILURE;
 }

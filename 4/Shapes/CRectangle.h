@@ -27,3 +27,5 @@ private:
 	double m_height;
 };
 
+
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CRectangle> & rectangle);

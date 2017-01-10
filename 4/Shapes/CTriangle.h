@@ -25,3 +25,5 @@ private:
 	Point m_vertexB;
 	Point m_vertexC;
 };
+
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CTriangle> & triangle);

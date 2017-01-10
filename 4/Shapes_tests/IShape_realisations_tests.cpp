@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "VerifyShapeFunctions.h"
 
 struct LineFixture
 {
@@ -115,6 +116,16 @@ BOOST_FIXTURE_TEST_SUITE(CRectangle_, RectangleFixture)
 			"Rectangle:   S: 12,  P: 14,  OutlineColor: green, \
 FillColor: white, W: 3, H:4");
 	}
+	BOOST_AUTO_TEST_CASE(should_throw_appropriate_exception_when_width_or_height_value_is_not_positive)
+	{
+		VerifyException<std::out_of_range>(
+			[]() {CRectangle(Point{ 0,0 }, -1, 1, "red", "red"); },
+			"Width and height value should be positive");
+
+		VerifyException<std::out_of_range>(
+			[]() {CRectangle(Point{ 0,0 }, 1, -1, "red", "red"); },
+			"Width and height value should be positive");
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 struct CircleFixture
@@ -123,7 +134,6 @@ struct CircleFixture
 	CircleFixture()
 		:shape({ 0,0 }, 5, "grey", "white")
 	{}
-
 };
 BOOST_FIXTURE_TEST_SUITE(CCircle_, CircleFixture)
 
@@ -153,5 +163,11 @@ BOOST_FIXTURE_TEST_SUITE(CCircle_, CircleFixture)
 		BOOST_CHECK_EQUAL(shape.ToString(),
 			"Circle:   S: 78.5398,  P: 31.4159,  OutlineColor: grey, \
 FillColor: white, Center: (0;0), R:5");
+	}
+	BOOST_AUTO_TEST_CASE(should_throw_appropriate_exception_when_radius_value_is_not_positive)
+	{
+		VerifyException<std::out_of_range>(
+			[]() {CCircle(Point{ 0,0 }, -1, "red", "red"); },
+			"Radius value should be positive");
 	}
 BOOST_AUTO_TEST_SUITE_END()

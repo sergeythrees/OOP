@@ -17,3 +17,5 @@ private:
 	Point m_pointA;
 	Point m_pointB;
 };
+
+std::istream & operator >> (std::istream & stream, std::shared_ptr<CLineSegment> & line);
