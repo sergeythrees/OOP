@@ -1,11 +1,12 @@
 #include "stdafx.h"
+#include "Point.h"
 #include "CRectangle.h"
 
 using namespace std;
 
 CRectangle::CRectangle(const Point & leftTop, double width, double height, 
 	const std::string & outlineColor, const std::string & fillColor)
-	:ISolidShape("Rectangle", outlineColor, fillColor),
+	:CSolidShape("Rectangle", outlineColor, fillColor),
 	m_leftTop(leftTop),
 	m_rightBottom({ leftTop.x + width,  leftTop.y - height }),
 	m_width(width),
@@ -50,6 +51,6 @@ std::string CRectangle::UniqueProperties() const
 	std::stringstream strm;
 	strm << ", W: " << GetWidth()
 		<< ", H:" << GetHeight();
-	return ISolidShape::UniqueProperties() + strm.str();
+	return CSolidShape::UniqueProperties() + strm.str();
 }
 

@@ -1,11 +1,12 @@
 #include "stdafx.h"
+#include "Point.h"
 #include "GeometricFunctions.h"
 #include "CTriangle.h"
 
 using namespace std;
 
 CTriangle::CTriangle(const Point & vertexA, const Point & vertexB, const Point & vertexC, const std::string & outlineColor, const std::string & fillColor)
-	:ISolidShape("Triangle", outlineColor, fillColor),
+	:CSolidShape("Triangle", outlineColor, fillColor),
 	m_vertexA(vertexA),
 	m_vertexB(vertexB),
 	m_vertexC(vertexC)
@@ -55,6 +56,6 @@ std::string CTriangle::UniqueProperties() const
 		<< ";" << m_vertexB.y
 		<< "),(" << m_vertexC.x
 		<< ";" << m_vertexC.y << ")}";
-	return ISolidShape::UniqueProperties() + strm.str();
+	return CSolidShape::UniqueProperties() + strm.str();
 }
 

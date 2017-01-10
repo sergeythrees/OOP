@@ -1,8 +1,8 @@
 #pragma once
-#include "IShape.h"
 #include "Point.h"
+#include "CShape.h"
 
-class CLineSegment : public IShape
+class CLineSegment : public CShape
 {
 public:
 	CLineSegment(Point const& pointA, Point const& pointB, 

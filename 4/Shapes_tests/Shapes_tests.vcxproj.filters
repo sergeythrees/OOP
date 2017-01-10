@@ -19,9 +19,6 @@
     <ClCompile Include="..\Shapes\IShape.cpp">
       <Filter>Existing files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shapes\ISolidShape.cpp">
-      <Filter>Existing files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Shapes\CRectangle.cpp">
       <Filter>Existing files</Filter>
     </ClCompile>
@@ -43,6 +40,12 @@
     <ClCompile Include="CCircle_tests.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Shapes\CSolidShape.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shapes\СShape.cpp">
+      <Filter>Existing files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -63,9 +66,6 @@
     <ClInclude Include="..\Shapes\IShape.h">
       <Filter>Existing files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Shapes\ISolidShape.h">
-      <Filter>Existing files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Shapes\Point.h">
       <Filter>Existing files</Filter>
     </ClInclude>
@@ -77,6 +77,12 @@
     </ClInclude>
     <ClInclude Include="VerifyShapeFunctions.h">
       <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\CShape.h">
+      <Filter>Existing files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shapes\CSolidShape.h">
+      <Filter>Existing files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

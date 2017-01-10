@@ -10,9 +10,6 @@
     <ClCompile Include="CTriangle.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="ISolidShape.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="CCircle.cpp">
@@ -24,6 +21,12 @@
     <ClCompile Include="CRectangle.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="СShape.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSolidShape.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IShape.h">
@@ -33,9 +36,6 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="CTriangle.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="ISolidShape.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
@@ -56,6 +56,12 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="FindMaxEx.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="CShape.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSolidShape.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

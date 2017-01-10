@@ -1,11 +1,10 @@
 #include "stdafx.h"
-#include "IShape.h"
 #include "CLineSegment.h"
 
 using namespace std;
 
 CLineSegment::CLineSegment(Point const & pointA, Point const & pointB, std::string const & outlineColor)
-	:IShape("Line", outlineColor),
+	:CShape("Line", outlineColor),
 	m_pointA(pointA),
 	m_pointB(pointB)
 {

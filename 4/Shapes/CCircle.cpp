@@ -1,10 +1,11 @@
 #include "stdafx.h"
+#include "Point.h"
 #include "CCircle.h"
 
 using namespace std;
 
 CCircle::CCircle(const Point & center, const double & radius, const std::string & outlineColor, const std::string & fillColor)
-	:ISolidShape("Circle", outlineColor, fillColor),
+	:CSolidShape("Circle", outlineColor, fillColor),
 	m_center(center),
 	m_radius(radius)
 {
@@ -38,5 +39,5 @@ std::string CCircle::UniqueProperties() const
 	strm << ", Center: " << "(" << GetCenter().x
 		<< ";" << GetCenter().y << ")"
 		<< ", R:" << GetRadius();
-	return ISolidShape::UniqueProperties() + strm.str();
+	return CSolidShape::UniqueProperties() + strm.str();
 }

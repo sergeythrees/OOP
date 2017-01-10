@@ -1,8 +1,7 @@
 #pragma once
-#include "ISolidShape.h"
-#include "Point.h"
+#include "CSolidShape.h"
 
-class CCircle : public ISolidShape
+class CCircle : public CSolidShape
 {
 public:
 	CCircle(

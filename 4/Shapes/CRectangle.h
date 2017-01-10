@@ -1,8 +1,7 @@
 #pragma once
-#include "ISolidShape.h"
-#include "Point.h"
+#include "CSolidShape.h"
 
-class CRectangle : public ISolidShape
+class CRectangle : public CSolidShape
 {
 public:
 	CRectangle(

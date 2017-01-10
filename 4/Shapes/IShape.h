@@ -3,18 +3,15 @@
 class IShape
 {
 public:
-	IShape(const std::string & type, const std::string& outlineColor);
+	IShape() = default;
+
 	virtual ~IShape() = default;
 
-	virtual double GetArea() const { return 0; };
-	virtual double GetPerimeter() const { return 0; };
-	virtual std::string GetOutlineColor() const;
+	virtual double GetArea() const = 0;
+	virtual double GetPerimeter() const = 0;
+	virtual std::string GetOutlineColor() const = 0;
+	virtual std::string ToString() const = 0;
 
-	std::string ToString() const;
 protected:
-	virtual std::string UniqueProperties() const { return ""; };
-
-private:
-	std::string m_type;
-	std::string m_outlineColor;
+	virtual std::string UniqueProperties() const = 0;
 };
