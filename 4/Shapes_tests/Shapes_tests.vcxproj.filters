@@ -22,9 +22,6 @@
     <ClCompile Include="..\Shapes\ISolidShape.cpp">
       <Filter>Existing files</Filter>
     </ClCompile>
-    <ClCompile Include="IShape_realisations_tests.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Shapes\CRectangle.cpp">
       <Filter>Existing files</Filter>
     </ClCompile>
@@ -33,6 +30,18 @@
     </ClCompile>
     <ClCompile Include="..\Shapes\CShapesController.cpp">
       <Filter>Existing files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLineSegment_tests.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTriangle_tests.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CRectangle_tests.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CCircle_tests.cpp">
+      <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

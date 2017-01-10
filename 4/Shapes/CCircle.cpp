@@ -40,31 +40,3 @@ std::string CCircle::UniqueProperties() const
 		<< ", R:" << GetRadius();
 	return ISolidShape::UniqueProperties() + strm.str();
 }
-
-std::istream & operator >> (std::istream & stream, std::shared_ptr<CCircle> & circle)
-{
-	double Ax;
-	double Ay;
-	double radius;
-	std::string outlineColor;
-	string fillColor;
-	if (
-		stream >> Ax &&
-		stream >> Ay &&
-		stream >> radius &&
-		stream >> outlineColor&&
-		stream >> fillColor)
-	{
-		circle = make_shared<CCircle>(CCircle({ Ax, Ay }, radius, outlineColor, fillColor));
-	}
-	else
-	{
-		stream.setstate(std::ios_base::failbit);
-		stringstream mess;
-		mess << "Invalid arguments." << endl
-			<< "Use: <Ox> <Oy> <radius> <outlineColor> <fillColor>" << endl;
-		throw(invalid_argument(mess.str()));
-	}
-
-	return stream;
-}

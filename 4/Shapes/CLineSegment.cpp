@@ -38,32 +38,3 @@ std::string CLineSegment::UniqueProperties() const
 
 	return strm.str();
 }
-
-std::istream & operator >> (std::istream & stream, shared_ptr<CLineSegment> & line)
-{
-	double Ax;
-	double Ay;
-	double Bx;
-	double By;
-	std::string outlineColor;
-	if (
-		stream >> Ax &&
-		stream >> Ay &&
-		stream >> Bx &&
-		stream >> By &&
-		stream >> outlineColor)
-	{
-		line = make_shared<CLineSegment>(CLineSegment({ Ax,Ay }, { Bx, By }, outlineColor));
-	}
-	else
-	{
-
-		stream.setstate(std::ios_base::failbit);
-		stringstream mess;
-		mess << "Invalid arguments." << endl
-			<< "Use: <Ax> <Ay> <Bx> <By> <outlineColor>" << endl;
-		throw(invalid_argument(mess.str()));
-	}
-
-	return stream;
-}

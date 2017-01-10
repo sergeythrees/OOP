@@ -53,32 +53,3 @@ std::string CRectangle::UniqueProperties() const
 	return ISolidShape::UniqueProperties() + strm.str();
 }
 
-std::istream & operator >> (std::istream & stream, std::shared_ptr<CRectangle> & rectangle)
-{
-	double Ax;
-	double Ay;
-	double width;
-	double height;
-	string outlineColor;
-	string fillColor;
-	if (
-		stream >> Ax &&
-		stream >> Ay &&
-		stream >> width &&
-		stream >> height &&
-		stream >> outlineColor&&
-		stream >> fillColor)
-	{
-		rectangle = make_shared<CRectangle>(CRectangle({ Ax,Ay }, width, height, outlineColor, fillColor));
-	}
-	else
-	{
-		stream.setstate(std::ios_base::failbit);
-		stringstream mess;
-		mess << "Invalid arguments." << endl
-			<< "Use: <LeftBottom.x> <LeftBottom.y> <width> <height> <outlineColor> <fillColor>" << endl;
-		throw(invalid_argument(mess.str()));
-	}
-
-	return stream;
-}

@@ -58,37 +58,3 @@ std::string CTriangle::UniqueProperties() const
 	return ISolidShape::UniqueProperties() + strm.str();
 }
 
-std::istream & operator >> (std::istream & stream, std::shared_ptr<CTriangle> & triangle)
-{
-	double Ax;
-	double Ay;
-	double Bx;
-	double By;
-	double Cx;
-	double Cy;
-
-	string outlineColor;
-	string fillColor;
-	if (
-		stream >> Ax &&
-		stream >> Ay &&
-		stream >> Bx &&
-		stream >> By &&
-		stream >> Cx &&
-		stream >> Cy &&
-		stream >> outlineColor&&
-		stream >> fillColor)
-	{
-		triangle = make_shared<CTriangle>(CTriangle({ Ax,Ay }, { Bx, By }, { Cx, Cy }, outlineColor, fillColor));
-	}
-	else
-	{
-		stream.setstate(std::ios_base::failbit);
-		stringstream mess;
-		mess << "Invalid arguments." << endl
-			<< "Use: <Ax> <Ay> <Bx> <By> <Cx> <Cy> <outlineColor> <fillColor>" << endl;
-		throw(invalid_argument(mess.str()));
-	}
-
-	return stream;
-}

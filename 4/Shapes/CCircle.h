@@ -23,6 +23,3 @@ private:
 	Point m_center;
 	double m_radius;
 };
-
-
-std::istream & operator >> (std::istream & stream, std::shared_ptr<CCircle> & circle);
