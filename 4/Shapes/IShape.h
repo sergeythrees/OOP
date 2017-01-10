@@ -4,6 +4,8 @@ class IShape
 {
 public:
 	IShape(const std::string & type, const std::string& outlineColor);
+	virtual ~IShape() = default;
+
 	virtual double GetArea() const { return 0; };
 	virtual double GetPerimeter() const { return 0; };
 	virtual std::string GetOutlineColor() const;

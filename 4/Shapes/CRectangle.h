@@ -11,6 +11,7 @@ public:
 		double height,
 		const std::string& outlineColor,
 		const std::string & fillColor);
+	~CRectangle() = default;
 
 	const Point& GetLeftTop() const;
 	const Point& GetRightBottom() const;

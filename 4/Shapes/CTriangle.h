@@ -11,6 +11,7 @@ public:
 		const Point& vertexC, 
 		const std::string& outlineColor, 
 		const std::string & fillColor);
+	~CTriangle() = default;
 
 	const Point& GetVertexA() const;
 	const Point& GetVertexB() const;

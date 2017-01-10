@@ -5,7 +5,9 @@
 class CLineSegment : public IShape
 {
 public:
-	CLineSegment(Point const& pointA, Point const& pointB, std::string const& outlineColor);
+	CLineSegment(Point const& pointA, Point const& pointB, 
+		std::string const& outlineColor);
+	~CLineSegment() = default;
 
 	Point const& GetPointA() const;
 	Point const& GetPointB() const;

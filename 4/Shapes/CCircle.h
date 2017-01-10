@@ -10,6 +10,7 @@ public:
 		const double& radius,
 		const std::string& outlineColor,
 		const std::string & fillColor);
+	~CCircle() = default;
 
 	const Point& GetCenter() const;
 	const double& GetRadius() const;

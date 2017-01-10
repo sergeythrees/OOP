@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "VerifyShapeFunctions.h"
 
+using namespace std;
+
 struct LineFixture
 {
 	CLineSegment shape;
