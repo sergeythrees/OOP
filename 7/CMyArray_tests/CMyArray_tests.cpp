@@ -70,4 +70,32 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			BOOST_CHECK_EQUAL(copy.GetCapacity(), arr.GetSize());
 		}
 	BOOST_AUTO_TEST_SUITE_END()
+
+	struct FilledArray
+	{
+		CMyArray<ArrayItem> arr;
+		FilledArray()
+			:arr(CMyArray<ArrayItem>())
+		{
+			for (auto i = 0; i < 6; ++i)
+			{
+				arr.Append(i);
+			}
+		}
+	};
+
+	BOOST_FIXTURE_TEST_SUITE(when_filled, FilledArray)
+		BOOST_AUTO_TEST_SUITE(indexing_operator)
+			BOOST_AUTO_TEST_CASE(can_return_reference_to_appropriate_element)
+			{
+				BOOST_CHECK_EQUAL(arr[4].value, 4);
+				arr[4].value = 365;
+				BOOST_CHECK_EQUAL(arr[4].value, 365);
+			}
+			BOOST_AUTO_TEST_CASE(should_throw_out_of_range_if_index_exceeds_array_size)
+			{
+				BOOST_CHECK_THROW(arr[10], std::out_of_range);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

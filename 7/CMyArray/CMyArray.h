@@ -15,6 +15,8 @@ public:
 	const T & GetBack()const;
 	size_t GetSize()const;
 	size_t GetCapacity()const;
+	T & operator [](size_t index);
+	const T & operator [](size_t index) const;
 
 	~CMyArray();
 private:
@@ -110,6 +112,24 @@ template<typename T>
 size_t CMyArray<T>::GetCapacity() const
 {
 	return m_endOfCapacity - m_begin;
+}
+
+template<typename T>
+T & CMyArray<T>::operator[](size_t index)
+{
+	if (index >= GetSize())
+		throw std::out_of_range("index is out of array range");
+
+	return *(m_begin + index);
+}
+
+template<typename T>
+const T & CMyArray<T>::operator[](size_t index) const
+{
+	if (index >= GetSize())
+		throw std::out_of_range("index is out of array range");
+
+	return *(m_begin + index);
 }
 
 template<typename T>
