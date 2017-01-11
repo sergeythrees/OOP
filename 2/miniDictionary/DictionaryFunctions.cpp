@@ -3,6 +3,19 @@
 
 using namespace std;
 
+namespace
+{
+	static const map<char, char> toLowerRussianLettersMap({ 
+		{ 'À', 'à' },{ 'Á', 'á' },{ 'Â', 'â' },{ 'Ã', 'ã' },{ 'Ä', 'ä' },
+		{ 'Å', 'å' },{ '¨', '¸' },{ 'Æ', 'æ' },{ 'Ç', 'ç' },{ 'È', 'è' },
+		{ 'É', 'é' },{ 'Ê', 'ê' },{ 'Ë', 'ë' },{ 'Ì', 'ì' },{ 'Í', 'í' },
+		{ 'Î', 'î' },{ 'Ï', 'ï' },{ 'Ð', 'ð' },{ 'Ñ', 'ñ' },{ 'Ò', 'ò' },
+		{ 'Ó', 'ó' },{ 'Ô', 'ô' },{ 'Õ', 'õ' },{ 'Ö', 'ö' },{ '×', '÷' },
+		{ 'Ø', 'ø' },{ 'Ù', 'ù' },{ 'Ú', 'ú' },{ 'Û', 'û' },{ 'Ü', 'ü' },
+		{ 'Ý', 'ý' },{ 'Þ', 'þ' },{ 'ß', 'ÿ' }
+	});
+}
+
 void FillDictionaryFromInputStream(istream &input, Dictionary &dictionary)
 {
 	string word, translation;
@@ -85,8 +98,8 @@ string ToLower(const string &line)
 	string result;
 	for (auto symbol : line)
 	{
-		if (symbol >= 'À' && symbol <= 'ß')
-			result += symbol + 32;
+		if (toLowerRussianLettersMap.count(symbol) > 0)
+			result += toLowerRussianLettersMap.at(symbol);
 		else
 			result += tolower(symbol);
 	}

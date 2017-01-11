@@ -1,8 +1,4 @@
 #pragma once
-#include "stdafx.h"
-#include <string>
-#include <vector>
-#include <map>
 
 typedef std::multimap <std::string, std::string> Dictionary;
 void FillDictionaryFromInputStream(std::istream &input, Dictionary &dictionary);

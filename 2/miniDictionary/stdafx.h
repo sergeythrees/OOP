@@ -10,5 +10,9 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include <string>
+#include <vector>
+#include <map>
+
 
 // TODO: reference additional headers your program requires here
