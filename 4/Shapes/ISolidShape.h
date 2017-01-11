@@ -10,6 +10,4 @@ public:
 	virtual double GetPerimeter() const = 0;
 
 	virtual std::string GetFillColor() const = 0;
-protected:
-	virtual std::string UniqueProperties() const = 0;
 };

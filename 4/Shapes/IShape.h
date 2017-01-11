@@ -11,7 +11,4 @@ public:
 	virtual double GetPerimeter() const = 0;
 	virtual std::string GetOutlineColor() const = 0;
 	virtual std::string ToString() const = 0;
-
-protected:
-	virtual std::string UniqueProperties() const = 0;
 };
