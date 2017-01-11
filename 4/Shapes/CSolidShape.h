@@ -7,8 +7,8 @@ class CSolidShape : public CShape, public ISolidShape
 public:
 	CSolidShape(const std::string & type, const std::string& outlineColor, const std::string & fillColor);
 	virtual ~CSolidShape() = default;
-	virtual double GetArea() const { return 0; };
-	virtual double GetPerimeter() const { return 0; };
+	virtual double GetArea() const = 0;
+	virtual double GetPerimeter() const = 0;
 
 	std::string GetFillColor() const final;
 

@@ -7,8 +7,8 @@ public:
 	CShape(const std::string & type, const std::string& outlineColor);
 	virtual ~CShape() = default;
 
-	virtual double GetArea() const { return 0; };
-	virtual double GetPerimeter() const { return 0; };
+	virtual double GetArea() const = 0;
+	virtual double GetPerimeter() const = 0;
 
 protected:
 	std::string ToStringImpl() const;

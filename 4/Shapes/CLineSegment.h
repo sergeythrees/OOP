@@ -11,6 +11,7 @@ public:
 
 	Point const& GetPointA() const;
 	Point const& GetPointB() const;
+	double GetArea() const override { return 0; };
 	double GetPerimeter() const override;
 	virtual std::string ToString() const final;
 	virtual std::string GetOutlineColor() const final;
