@@ -2,7 +2,8 @@
 #include "CSolidShape.h"
 
 CSolidShape::CSolidShape(const std::string & type, const std::string& outlineColor, const std::string & fillColor)
-	:CShape(type, outlineColor),
+	:ISolidShape(),
+	CShape(type, outlineColor),
 	m_fillColor(fillColor)
 {
 }

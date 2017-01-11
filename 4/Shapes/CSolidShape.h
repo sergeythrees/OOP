@@ -1,7 +1,8 @@
 #pragma once
+#include "ISolidShape.h"
 #include "CShape.h"
 
-class CSolidShape : public CShape
+class CSolidShape : public CShape, public ISolidShape
 {
 public:
 	CSolidShape(const std::string & type, const std::string& outlineColor, const std::string & fillColor);

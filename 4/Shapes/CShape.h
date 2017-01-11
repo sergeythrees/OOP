@@ -1,7 +1,7 @@
 #pragma once
 #include "IShape.h"
 
-class CShape : public IShape
+class CShape : public virtual IShape
 {
 public:
 	CShape(const std::string & type, const std::string& outlineColor);
@@ -9,8 +9,8 @@ public:
 
 	virtual double GetArea() const { return 0; };
 	virtual double GetPerimeter() const { return 0; };
-	std::string GetOutlineColor() const;
 
+	std::string GetOutlineColor() const final;
 	std::string ToString() const final;
 protected:
 	virtual std::string UniqueProperties() const { return ""; };
