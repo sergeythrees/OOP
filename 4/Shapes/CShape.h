@@ -1,18 +1,18 @@
 #pragma once
 #include "IShape.h"
 
-class CShape : public IShape
+class CShape : public virtual IShape
 {
 public:
 	CShape(const std::string & type, const std::string& outlineColor);
 	virtual ~CShape() = default;
 
-	virtual double GetArea() const { return 0; };
-	virtual double GetPerimeter() const { return 0; };
-	std::string GetOutlineColor() const;
+	virtual double GetArea() const = 0;
+	virtual double GetPerimeter() const = 0;
 
-	std::string ToString() const final;
 protected:
+	std::string ToStringImpl() const;
+	std::string GetOutlineColorImpl() const;
 	virtual std::string UniqueProperties() const { return ""; };
 
 private:

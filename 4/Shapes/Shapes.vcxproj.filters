@@ -27,6 +27,9 @@
     <ClCompile Include="CSolidShape.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="ISolidShape.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IShape.h">
@@ -62,6 +65,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="CSolidShape.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISolidShape.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

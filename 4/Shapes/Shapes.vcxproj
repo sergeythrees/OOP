@@ -88,6 +88,7 @@
     <ClInclude Include="CShapesController.h" />
     <ClInclude Include="FindMaxEx.h" />
     <ClInclude Include="GeometricFunctions.h" />
+    <ClInclude Include="ISolidShape.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CTriangle.h">
@@ -114,6 +115,7 @@
     </ClCompile>
     <ClCompile Include="IShape.cpp" />
     <ClCompile Include="CSolidShape.cpp" />
+    <ClCompile Include="ISolidShape.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
