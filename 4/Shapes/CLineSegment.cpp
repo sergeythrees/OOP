@@ -27,6 +27,16 @@ double CLineSegment::GetPerimeter() const
 		m_pointA.y - m_pointB.y);
 }
 
+std::string CLineSegment::ToString() const
+{
+	return ToStringImpl();
+}
+
+std::string CLineSegment::GetOutlineColor() const
+{
+	return GetOutlineColorImpl();
+}
+
 std::string CLineSegment::UniqueProperties() const
 {
 	std::stringstream strm;

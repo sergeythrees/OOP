@@ -13,7 +13,7 @@ std::string CShape::GetOutlineColorImpl() const
 	return m_outlineColor;
 }
 
-std::string CShape::ToString() const
+std::string CShape::ToStringImpl() const
 {
 	std::ostringstream strm;
 	strm << m_type + ": "

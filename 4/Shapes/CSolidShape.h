@@ -10,8 +10,9 @@ public:
 	virtual double GetArea() const { return 0; };
 	virtual double GetPerimeter() const { return 0; };
 
-	std::string GetFillColor() const;
+	std::string GetFillColor() const final;
 
+	virtual std::string ToString() const final;
 	virtual std::string GetOutlineColor() const final;
 
 protected:
