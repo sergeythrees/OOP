@@ -13,6 +13,11 @@ std::string CSolidShape::GetFillColor() const
 	return m_fillColor;
 }
 
+std::string CSolidShape::GetOutlineColor() const
+{
+	return GetOutlineColorImpl();
+}
+
 std::string CSolidShape::UniqueProperties() const
 {
 	return ", FillColor: " + m_fillColor;

@@ -3,13 +3,12 @@
 #include "CShape.h"
 
 CShape::CShape(const std::string & type, const std::string& outlineColor)
-	:IShape(),
-	m_type(type),
-	m_outlineColor(outlineColor)
+	:m_type(type)
+	,m_outlineColor(outlineColor)
 {
 }
 
-std::string CShape::GetOutlineColor() const
+std::string CShape::GetOutlineColorImpl() const
 {
 	return m_outlineColor;
 }

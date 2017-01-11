@@ -11,6 +11,9 @@ public:
 	virtual double GetPerimeter() const { return 0; };
 
 	std::string GetFillColor() const;
+
+	virtual std::string GetOutlineColor() const final;
+
 protected:
 	virtual std::string UniqueProperties() const override;
 private:
