@@ -13,7 +13,6 @@ struct ArrayItem
 void CheckArraysEquality(CMyArray<ArrayItem>& a, CMyArray<ArrayItem>& b)
 {
 	BOOST_CHECK(a.GetSize() == b.GetSize());
-	BOOST_CHECK_EQUAL(a.GetCapacity(), b.GetSize());
 	for (size_t i = 0; i < a.GetSize(); ++i)
 	{
 		BOOST_CHECK(a[i].value == b[i].value);
@@ -163,5 +162,19 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			CheckArraysEquality(movedArray, arrBackup);
 			BOOST_CHECK(arr.GetSize() == 0);
 		}
+		BOOST_AUTO_TEST_CASE(can_be_correctly_assigned_or_moved_to_itself)
+		{
+			auto arrBackup = arr;
+
+			arr = arr;
+			CheckArraysEquality(arrBackup, arr);
+
+			arr = move(arr);
+			CheckArraysEquality(arrBackup, arr);
+
+			arr = CMyArray<ArrayItem>(arr);
+			CheckArraysEquality(arrBackup, arr);
+		}
+
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -61,7 +61,7 @@ template<typename T>
 CMyArray<T>::CMyArray(CMyArray && arr)
 	:m_begin(arr.m_begin),
 	m_end(arr.m_end),
-	m_endOfCapacity(m_end)
+	m_endOfCapacity(arr.m_endOfCapacity)
 {
 	arr.m_begin = nullptr;
 	arr.m_end = nullptr;
@@ -175,20 +175,23 @@ const T & CMyArray<T>::operator[](size_t index) const
 template<typename T>
 CMyArray<T>& CMyArray<T>::operator=(const CMyArray<T>& arr)
 {
-	Clear();
-	const auto size = arr.GetSize();
-	if (size != 0)
+	if (&arr != this)
 	{
-		m_begin = RawAlloc(size);
-		try
+		Clear();
+		const auto size = arr.GetCapacity();
+		if (size != 0)
 		{
-			CopyItems(arr.m_begin, arr.m_end, m_begin, m_end);
-			m_endOfCapacity = m_end;
-		}
-		catch (...)
-		{
-			Clear();
-			throw;
+			m_begin = RawAlloc(size);
+			try
+			{
+				CopyItems(arr.m_begin, arr.m_end, m_begin, m_end);
+				m_endOfCapacity = m_end;
+			}
+			catch (...)
+			{
+				Clear();
+				throw;
+			}
 		}
 	}
 	
@@ -204,7 +207,7 @@ CMyArray<T>& CMyArray<T>::operator=(CMyArray<T>&& arr)
 
 		m_begin = arr.m_begin;
 		m_end = arr.m_end;
-		m_endOfCapacity = m_end;
+		m_endOfCapacity = arr.m_endOfCapacity;
 
 		arr.m_begin = nullptr;
 		arr.m_end = nullptr;
