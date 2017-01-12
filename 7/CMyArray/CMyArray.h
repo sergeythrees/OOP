@@ -9,6 +9,7 @@ class CMyArray
 public:
 	CMyArray() = default;
 	CMyArray(const CMyArray& arr);
+	CMyArray(CMyArray&& arr);
 
 	void Append(const T & value);
 	T & GetBack();
@@ -56,6 +57,17 @@ CMyArray<T>::CMyArray(const CMyArray& arr)
 			throw;
 		}
 	}
+}
+
+template<typename T>
+CMyArray<T>::CMyArray(CMyArray && arr)
+	:m_begin(arr.m_begin),
+	m_end(arr.m_end),
+	m_endOfCapacity(m_end)
+{
+	arr.m_begin = nullptr;
+	arr.m_end = nullptr;
+	arr.m_endOfCapacity = nullptr;
 }
 
 template <typename T>
@@ -134,7 +146,7 @@ void CMyArray<T>::Resize(size_t newSize)
 }
 
 template<typename T>
-inline void CMyArray<T>::Clear()
+void CMyArray<T>::Clear()
 {
 	DeleteItems(m_begin, m_end);
 	m_begin = nullptr;
@@ -184,6 +196,7 @@ T & CMyArray<T>::operator=(const T && arr) const
 
 	m_begin = arr.m_begin;
 	m_end = arr.m_end;
+	m_endOfCapacity = m_end
 
 	DeleteItems(oldBegin, oldEnd);
 
