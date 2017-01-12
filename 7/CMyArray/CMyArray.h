@@ -19,12 +19,15 @@ public:
 	void Clear();
 	T & operator [](size_t index);
 	const T & operator [](size_t index) const;
+	T & operator =(const T& arr) const;
+	T & operator =(const T&& arr) const;
 
 	~CMyArray();
 private:
 	static void DeleteItems(T *begin, T *end);
 	// Копирует элементы из текущего вектора в to, возвращает newEnd
 	static void CopyItems(const T *srcBegin, T *srcEnd, T * const dstBegin, T * & dstEnd);
+	static void AssignItems(const T *srcBegin, T *srcEnd, T * const dstBegin, T * & dstEnd);
 	static void DestroyItems(T *from, T *to);
 	static T *RawAlloc(size_t n);
 	static void RawDealloc(T *p);
@@ -157,6 +160,29 @@ const T & CMyArray<T>::operator[](size_t index) const
 }
 
 template<typename T>
+T & CMyArray<T>::operator=(const T & arr) const
+{
+	const auto oldSize = GetSize();
+	Resize(arr.GetSize);
+	try
+	{
+		AssignItems(arr.m_begin, arr.m_end, m_begin, m_end);
+	}
+	catch (...)
+	{
+		Resize(oldSize);
+		throw;
+	}
+	return *this;
+}
+
+template<typename T>
+T & CMyArray<T>::operator=(const T && arr) const
+{
+	return *this;
+}
+
+template<typename T>
 CMyArray<T>::~CMyArray()
 {
 	DeleteItems(m_begin, m_end);
@@ -178,6 +204,15 @@ void CMyArray<T>::CopyItems(const T * srcBegin, T * srcEnd, T * const dstBegin, 
 	{
 		// Construct "T" at "dstEnd" as a copy of "*begin"
 		new (dstEnd)T(*srcBegin);
+	}
+}
+
+template<typename T>
+void CMyArray<T>::AssignItems(const T * srcBegin, T * srcEnd, T * const dstBegin, T *& dstEnd)
+{
+	for (dstEnd = dstBegin; srcBegin != srcEnd; ++srcBegin, ++dstEnd)
+	{
+		*dstEnd = *srcBegin;
 	}
 }
 

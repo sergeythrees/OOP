@@ -119,5 +119,14 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			BOOST_CHECK(arr.GetSize() == 0);
 			BOOST_CHECK_THROW(arr[0], std::out_of_range);
 		}
+		BOOST_AUTO_TEST_CASE(can_be_assigned)
+		{
+			CMyArray<ArrayItem> forCopyArray = arr;
+			BOOST_CHECK(forCopyArray.GetSize() == arr.GetSize());
+			for (size_t i = 0; i < arr.GetSize(); ++i)
+			{
+				BOOST_CHECK(forCopyArray[i].value == forCopyArray[i].value);
+			}
+		}
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
