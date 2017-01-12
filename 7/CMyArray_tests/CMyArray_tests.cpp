@@ -165,14 +165,14 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 		BOOST_AUTO_TEST_CASE(can_be_correctly_assigned_or_moved_to_itself)
 		{
 			auto arrBackup = arr;
+			auto oldCapacity = arr.GetCapacity();
 
 			arr = arr;
+			BOOST_CHECK_EQUAL(oldCapacity, arr.GetCapacity());
 			CheckArraysEquality(arrBackup, arr);
 
 			arr = move(arr);
-			CheckArraysEquality(arrBackup, arr);
-
-			arr = CMyArray<ArrayItem>(arr);
+			BOOST_CHECK_EQUAL(oldCapacity, arr.GetCapacity());
 			CheckArraysEquality(arrBackup, arr);
 		}
 
