@@ -85,16 +85,31 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 	};
 
 	BOOST_FIXTURE_TEST_SUITE(when_filled, FilledArray)
-		BOOST_AUTO_TEST_SUITE(indexing_operator)
-			BOOST_AUTO_TEST_CASE(can_return_reference_to_appropriate_element)
+		BOOST_AUTO_TEST_SUITE(has_indexed_access)
+			BOOST_AUTO_TEST_CASE(that_returns_reference_to_appropriate_element)
 			{
 				BOOST_CHECK_EQUAL(arr[4].value, 4);
 				arr[4].value = 365;
 				BOOST_CHECK_EQUAL(arr[4].value, 365);
 			}
-			BOOST_AUTO_TEST_CASE(should_throw_out_of_range_if_index_exceeds_array_size)
+			BOOST_AUTO_TEST_CASE(and_should_throw_out_of_range_if_index_exceeds_array_size)
 			{
 				BOOST_CHECK_THROW(arr[10], std::out_of_range);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+
+		BOOST_AUTO_TEST_SUITE(has_resize_method)
+			BOOST_AUTO_TEST_CASE(that_can_increases_or_decreases_array_size)
+			{
+				arr.Resize(2);
+				BOOST_CHECK(arr.GetSize() == 2);
+
+				arr.Resize(10);
+				BOOST_CHECK(arr.GetSize() == 10);
+				for (size_t i = 2; i < 9; ++i)
+				{
+					BOOST_CHECK(arr[i].value == 0);
+				}
 			}
 		BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE_END()

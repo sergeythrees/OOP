@@ -15,6 +15,7 @@ public:
 	const T & GetBack()const;
 	size_t GetSize()const;
 	size_t GetCapacity()const;
+	void Resize(size_t newSize);
 	T & operator [](size_t index);
 	const T & operator [](size_t index) const;
 
@@ -112,6 +113,20 @@ template<typename T>
 size_t CMyArray<T>::GetCapacity() const
 {
 	return m_endOfCapacity - m_begin;
+}
+
+template<typename T>
+void CMyArray<T>::Resize(size_t newSize)
+{
+	size_t currentSize = GetSize();
+	for (; newSize < currentSize; --m_end, --currentSize)
+	{
+		m_end->~T();
+	}
+	for (; newSize > currentSize; ++currentSize)
+	{
+		Append(T());
+	}
 }
 
 template<typename T>
