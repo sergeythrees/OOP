@@ -112,5 +112,12 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 				}
 			}
 		BOOST_AUTO_TEST_SUITE_END()
+
+		BOOST_AUTO_TEST_CASE(can_be_cleared)
+		{
+			arr.Clear();
+			BOOST_CHECK(arr.GetSize() == 0);
+			BOOST_CHECK_THROW(arr[0], std::out_of_range);
+		}
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

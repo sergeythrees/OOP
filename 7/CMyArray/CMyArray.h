@@ -16,6 +16,7 @@ public:
 	size_t GetSize()const;
 	size_t GetCapacity()const;
 	void Resize(size_t newSize);
+	void Clear();
 	T & operator [](size_t index);
 	const T & operator [](size_t index) const;
 
@@ -127,6 +128,14 @@ void CMyArray<T>::Resize(size_t newSize)
 	{
 		Append(T());
 	}
+}
+
+template<typename T>
+inline void CMyArray<T>::Clear()
+{
+	DeleteItems(m_begin, m_end);
+	m_begin = nullptr;
+	m_end = nullptr;
 }
 
 template<typename T>
