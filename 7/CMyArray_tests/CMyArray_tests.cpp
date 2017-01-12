@@ -10,6 +10,15 @@ struct ArrayItem
 	int value;
 };
 
+void CheckArraysEquality(CMyArray<ArrayItem>& a, CMyArray<ArrayItem>& b)
+{
+	BOOST_CHECK(a.GetSize() == b.GetSize());
+	for (size_t i = 0; i < a.GetSize(); ++i)
+	{
+		BOOST_CHECK(a[i].value == b[i].value);
+	}
+}
+
 struct EmptyStringArray
 {
 	CMyArray<ArrayItem> arr;
@@ -122,11 +131,14 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 		BOOST_AUTO_TEST_CASE(can_be_assigned)
 		{
 			CMyArray<ArrayItem> forCopyArray = arr;
-			BOOST_CHECK(forCopyArray.GetSize() == arr.GetSize());
-			for (size_t i = 0; i < arr.GetSize(); ++i)
-			{
-				BOOST_CHECK(forCopyArray[i].value == forCopyArray[i].value);
-			}
+			
+			CheckArraysEquality(forCopyArray, arr);
+		}
+		BOOST_AUTO_TEST_CASE(can_be_moved)
+		{
+			CMyArray<ArrayItem> forMoveArray = CMyArray<ArrayItem>(arr);
+
+			CheckArraysEquality(forMoveArray, arr);
 		}
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
