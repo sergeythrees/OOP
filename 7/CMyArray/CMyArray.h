@@ -26,7 +26,6 @@ public:
 	~CMyArray();
 private:
 	static void DeleteItems(T *begin, T *end);
-	// Копирует элементы из текущего вектора в to, возвращает newEnd
 	static void CopyItems(const T *srcBegin, T *srcEnd, T * const dstBegin, T * & dstEnd);
 	static void AssignItems(const T *srcBegin, T *srcEnd, T * const dstBegin, T * & dstEnd);
 	static void DestroyItems(T *from, T *to);
@@ -157,7 +156,7 @@ template<typename T>
 T & CMyArray<T>::operator[](size_t index)
 {
 	if (index >= GetSize())
-		throw std::out_of_range("index is out of array range");
+		throw std::out_of_range("Index exceeds array size!");
 
 	return *(m_begin + index);
 }
@@ -166,7 +165,7 @@ template<typename T>
 const T & CMyArray<T>::operator[](size_t index) const
 {
 	if (index >= GetSize())
-		throw std::out_of_range("index is out of array range");
+		throw std::out_of_range("Index exceeds array size!");
 
 	return *(m_begin + index);
 }
