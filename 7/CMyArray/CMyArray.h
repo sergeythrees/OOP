@@ -25,6 +25,8 @@ public:
 	CMyArray& operator =(CMyArray&& arr);
 	CMyArrayIterator<T, false> begin();
 	CMyArrayIterator<T, false> end();
+	CMyArrayIterator<T, true> rbegin();
+	CMyArrayIterator<T, true> rend();
 
 	~CMyArray();
 private:
@@ -215,6 +217,18 @@ template<typename T>
 CMyArrayIterator<T, false> CMyArray<T>::end()
 {
 	return CMyArrayIterator<T, false>(m_end - 1);
+}
+
+template<typename T>
+CMyArrayIterator<T, true> CMyArray<T>::rbegin()
+{
+	return CMyArrayIterator<T, true>(m_end - 1);
+}
+
+template<typename T>
+CMyArrayIterator<T, true> CMyArray<T>::rend()
+{
+	return CMyArrayIterator<T, true>(m_begin);
 }
 
 

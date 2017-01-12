@@ -183,12 +183,12 @@ BOOST_AUTO_TEST_SUITE_END()
 			BOOST_AUTO_TEST_CASE(with_the_begin_method)
 			{
 				auto it = arr.begin();
-				BOOST_CHECK((*it).value == 0);
+				BOOST_CHECK_EQUAL((*it).value, 0);
 				++it;
 				++it;
-				BOOST_CHECK((*it).value == 2);
+				BOOST_CHECK_EQUAL((*it).value, 2);
 				--it;
-				BOOST_CHECK((*it).value == 1);
+				BOOST_CHECK_EQUAL((*it).value, 1);
 			}
 			BOOST_AUTO_TEST_CASE(with_the_end_method)
 			{
@@ -196,31 +196,31 @@ BOOST_AUTO_TEST_SUITE_END()
 				BOOST_CHECK_EQUAL((*it).value, 6);
 				--it;
 				--it;
-				BOOST_CHECK((*it).value == 4);
+				BOOST_CHECK_EQUAL((*it).value, 4);
 				++it;
-				BOOST_CHECK((*it).value == 5);
+				BOOST_CHECK_EQUAL((*it).value, 5);
 			}
 		BOOST_AUTO_TEST_SUITE_END()
 		BOOST_AUTO_TEST_SUITE(has_a_recursive_iterative_access)
 			BOOST_AUTO_TEST_CASE(with_the_rbegin_method)
 			{
-				auto it = arr.begin();
-				BOOST_CHECK((*it).value == 0);
+				auto it = arr.rbegin();
+				BOOST_CHECK_EQUAL((*it).value, 6);
 				++it;
 				++it;
-				BOOST_CHECK((*it).value == 2);
+				BOOST_CHECK_EQUAL((*it).value, 4);
 				--it;
-				BOOST_CHECK((*it).value == 1);
+				BOOST_CHECK_EQUAL((*it).value, 5);
 			}
 			BOOST_AUTO_TEST_CASE(with_the_rend_method)
 			{
-				auto it = arr.end();
-				BOOST_CHECK_EQUAL((*it).value, 6);
+				auto it = arr.rend();
+				BOOST_CHECK_EQUAL((*it).value, 0);
 				--it;
 				--it;
-				BOOST_CHECK((*it).value == 4);
+				BOOST_CHECK_EQUAL((*it).value, 2);
 				++it;
-				BOOST_CHECK((*it).value == 5);
+				BOOST_CHECK_EQUAL((*it).value, 1);
 			}
 		BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE_END()
