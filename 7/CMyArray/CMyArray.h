@@ -21,7 +21,7 @@ public:
 	T & operator [](size_t index);
 	const T & operator [](size_t index) const;
 	T & operator =(const T& arr) const;
-	T & operator =(const T&& arr) const;
+	T & operator =(T&& arr) const;
 
 	~CMyArray();
 private:
@@ -189,16 +189,20 @@ T & CMyArray<T>::operator=(const T & arr) const
 }
 
 template<typename T>
-T & CMyArray<T>::operator=(const T && arr) const
+T & CMyArray<T>::operator=(T && arr) const
 {
-	oldBegin = m_begin;
-	oldEnd = m_end;
+	if (&arr != this)
+	{
+		DeleteItems(m_begin, m_end);
 
-	m_begin = arr.m_begin;
-	m_end = arr.m_end;
-	m_endOfCapacity = m_end
+		m_begin = arr.m_begin;
+		m_end = arr.m_end;
+		m_endOfCapacity = m_end;
 
-	DeleteItems(oldBegin, oldEnd);
+		arr.m_begin = nullptr;
+		arr.m_end = nullptr;
+		arr.m_endOfCapacity = nullptr;
+	}
 
 	return *this;
 }

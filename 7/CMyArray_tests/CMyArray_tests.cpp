@@ -80,8 +80,8 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			BOOST_CHECK_EQUAL(copy.GetCapacity(), arr.GetSize());
 		}
 	BOOST_AUTO_TEST_SUITE_END()
-	BOOST_AUTO_TEST_SUITE(after_move_construction)
-		BOOST_AUTO_TEST_CASE(has_size_capacity_equal_to_size_of_original_array)
+	BOOST_AUTO_TEST_SUITE(move_construction)
+		BOOST_AUTO_TEST_CASE(get_original_array_data_and_makes_its_empty)
 		{
 			CMyArray<ArrayItem> arrBackup;
 			for (auto i = 0; i < 6; ++i)
@@ -91,9 +91,9 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			}
 			BOOST_CHECK_NE(arr.GetSize(), arr.GetCapacity());
 
-			CMyArray<ArrayItem> copy(move(arr));
+			CMyArray<ArrayItem> movedArray(move(arr));
 
-			CheckArraysEquality(copy, arrBackup);
+			CheckArraysEquality(movedArray, arrBackup);
 			BOOST_CHECK(arr.GetSize() == 0);
 		}
 	BOOST_AUTO_TEST_SUITE_END()
@@ -148,15 +148,18 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 		}
 		BOOST_AUTO_TEST_CASE(can_be_assigned)
 		{
-			CMyArray<ArrayItem> forCopyArray = arr;
+			CMyArray<ArrayItem> copiedArray = arr;
 			
-			CheckArraysEquality(forCopyArray, arr);
+			CheckArraysEquality(copiedArray, arr);
 		}
 		BOOST_AUTO_TEST_CASE(can_be_moved)
 		{
-			CMyArray<ArrayItem> forMoveArray = CMyArray<ArrayItem>(arr);
+			CMyArray<ArrayItem> arrBackup(arr);
 
-			CheckArraysEquality(forMoveArray, arr);
+			CMyArray<ArrayItem> movedArray = move(arr);
+
+			CheckArraysEquality(movedArray, arrBackup);
+			BOOST_CHECK(arr.GetSize() == 0);
 		}
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
