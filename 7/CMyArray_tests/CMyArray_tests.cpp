@@ -79,6 +79,7 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			BOOST_CHECK_EQUAL(copy.GetCapacity(), arr.GetSize());
 		}
 	BOOST_AUTO_TEST_SUITE_END()
+
 	BOOST_AUTO_TEST_SUITE(move_construction)
 		BOOST_AUTO_TEST_CASE(get_original_array_data_and_makes_its_empty)
 		{
@@ -96,6 +97,8 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			BOOST_CHECK(arr.GetSize() == 0);
 		}
 	BOOST_AUTO_TEST_SUITE_END()
+	
+BOOST_AUTO_TEST_SUITE_END()
 
 	struct FilledArray
 	{
@@ -103,7 +106,7 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 		FilledArray()
 			:arr(CMyArray<ArrayItem>())
 		{
-			for (auto i = 0; i < 6; ++i)
+			for (auto i = 0; i <= 6; ++i)
 			{
 				arr.Append(i);
 			}
@@ -176,5 +179,48 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			CheckArraysEquality(arrBackup, arr);
 		}
 
+		BOOST_AUTO_TEST_SUITE(has_a_iterative_access)
+			BOOST_AUTO_TEST_CASE(with_the_begin_method)
+			{
+				auto it = arr.begin();
+				BOOST_CHECK((*it).value == 0);
+				++it;
+				++it;
+				BOOST_CHECK((*it).value == 2);
+				--it;
+				BOOST_CHECK((*it).value == 1);
+			}
+			BOOST_AUTO_TEST_CASE(with_the_end_method)
+			{
+				auto it = arr.end();
+				BOOST_CHECK_EQUAL((*it).value, 6);
+				--it;
+				--it;
+				BOOST_CHECK((*it).value == 4);
+				++it;
+				BOOST_CHECK((*it).value == 5);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+		BOOST_AUTO_TEST_SUITE(has_a_recursive_iterative_access)
+			BOOST_AUTO_TEST_CASE(with_the_rbegin_method)
+			{
+				auto it = arr.begin();
+				BOOST_CHECK((*it).value == 0);
+				++it;
+				++it;
+				BOOST_CHECK((*it).value == 2);
+				--it;
+				BOOST_CHECK((*it).value == 1);
+			}
+			BOOST_AUTO_TEST_CASE(with_the_rend_method)
+			{
+				auto it = arr.end();
+				BOOST_CHECK_EQUAL((*it).value, 6);
+				--it;
+				--it;
+				BOOST_CHECK((*it).value == 4);
+				++it;
+				BOOST_CHECK((*it).value == 5);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()

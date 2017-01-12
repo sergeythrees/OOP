@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "CMyArrayIterator.h"
 #include <new>
 #include <algorithm>
 
@@ -22,6 +23,8 @@ public:
 	const T & operator [](size_t index) const;
 	CMyArray& operator =(const CMyArray& arr);
 	CMyArray& operator =(CMyArray&& arr);
+	CMyArrayIterator<T, false> begin();
+	CMyArrayIterator<T, false> end();
 
 	~CMyArray();
 private:
@@ -201,6 +204,19 @@ CMyArray<T>& CMyArray<T>::operator=(CMyArray<T>&& arr)
 
 	return *this;
 }
+
+template<typename T>
+CMyArrayIterator<T, false> CMyArray<T>::begin()
+{
+	return CMyArrayIterator<T, false>(m_begin);
+}
+
+template<typename T>
+CMyArrayIterator<T, false> CMyArray<T>::end()
+{
+	return CMyArrayIterator<T, false>(m_end - 1);
+}
+
 
 template<typename T>
 CMyArray<T>::~CMyArray()
