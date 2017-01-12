@@ -177,22 +177,7 @@ CMyArray<T>& CMyArray<T>::operator=(const CMyArray<T>& arr)
 {
 	if (&arr != this)
 	{
-		Clear();
-		const auto size = arr.GetCapacity();
-		if (size != 0)
-		{
-			m_begin = RawAlloc(size);
-			try
-			{
-				CopyItems(arr.m_begin, arr.m_end, m_begin, m_end);
-				m_endOfCapacity = m_end;
-			}
-			catch (...)
-			{
-				Clear();
-				throw;
-			}
-		}
+		*this = move(CMyArray<T>(arr));
 	}
 	
 	return *this;
