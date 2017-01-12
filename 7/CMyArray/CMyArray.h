@@ -20,14 +20,13 @@ public:
 	void Clear();
 	T & operator [](size_t index);
 	const T & operator [](size_t index) const;
-	T & operator =(const T& arr) const;
-	T & operator =(T&& arr) const;
+	CMyArray& operator =(const CMyArray& arr);
+	CMyArray& operator =(CMyArray&& arr);
 
 	~CMyArray();
 private:
 	static void DeleteItems(T *begin, T *end);
 	static void CopyItems(const T *srcBegin, T *srcEnd, T * const dstBegin, T * & dstEnd);
-	static void AssignItems(const T *srcBegin, T *srcEnd, T * const dstBegin, T * & dstEnd);
 	static void DestroyItems(T *from, T *to);
 	static T *RawAlloc(size_t n);
 	static void RawDealloc(T *p);
@@ -152,6 +151,7 @@ void CMyArray<T>::Clear()
 	DeleteItems(m_begin, m_end);
 	m_begin = nullptr;
 	m_end = nullptr;
+	m_endOfCapacity = nullptr;
 }
 
 template<typename T>
@@ -173,28 +173,34 @@ const T & CMyArray<T>::operator[](size_t index) const
 }
 
 template<typename T>
-T & CMyArray<T>::operator=(const T & arr) const
+CMyArray<T>& CMyArray<T>::operator=(const CMyArray<T>& arr)
 {
-	const auto oldSize = GetSize();
-	Resize(arr.GetSize);
-	try
+	Clear();
+	const auto size = arr.GetSize();
+	if (size != 0)
 	{
-		AssignItems(arr.m_begin, arr.m_end, m_begin, m_end);
+		m_begin = RawAlloc(size);
+		try
+		{
+			CopyItems(arr.m_begin, arr.m_end, m_begin, m_end);
+			m_endOfCapacity = m_end;
+		}
+		catch (...)
+		{
+			Clear();
+			throw;
+		}
 	}
-	catch (...)
-	{
-		Resize(oldSize);
-		throw;
-	}
+	
 	return *this;
 }
 
 template<typename T>
-T & CMyArray<T>::operator=(T && arr) const
+CMyArray<T>& CMyArray<T>::operator=(CMyArray<T>&& arr)
 {
 	if (&arr != this)
 	{
-		DeleteItems(m_begin, m_end);
+		Clear();
 
 		m_begin = arr.m_begin;
 		m_end = arr.m_end;
@@ -234,15 +240,6 @@ void CMyArray<T>::CopyItems(const T * srcBegin, T * srcEnd, T * const dstBegin, 
 }
 
 template<typename T>
-void CMyArray<T>::AssignItems(const T * srcBegin, T * srcEnd, T * const dstBegin, T *& dstEnd)
-{
-	for (dstEnd = dstBegin; srcBegin != srcEnd; ++srcBegin, ++dstEnd)
-	{
-		*dstEnd = *srcBegin;
-	}
-}
-
-template<typename T>
 void CMyArray<T>::DestroyItems(T * from, T * to)
 {
 	// dst - адрес объект, при конструирование которого было выброшено исключение
@@ -272,3 +269,4 @@ void CMyArray<T>::RawDealloc(T * p)
 {
 	free(p);
 }
+

@@ -148,7 +148,8 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 		}
 		BOOST_AUTO_TEST_CASE(can_be_assigned)
 		{
-			CMyArray<ArrayItem> copiedArray = arr;
+			CMyArray<ArrayItem> copiedArray;
+			copiedArray = arr;
 			
 			CheckArraysEquality(copiedArray, arr);
 		}
@@ -156,7 +157,8 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 		{
 			CMyArray<ArrayItem> arrBackup(arr);
 
-			CMyArray<ArrayItem> movedArray = move(arr);
+			CMyArray<ArrayItem> movedArray;
+			movedArray = move(arr);
 
 			CheckArraysEquality(movedArray, arrBackup);
 			BOOST_CHECK(arr.GetSize() == 0);
