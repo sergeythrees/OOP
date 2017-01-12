@@ -134,13 +134,15 @@ template<typename T>
 void CMyArray<T>::Resize(size_t newSize)
 {
 	size_t currentSize = GetSize();
-	for (; newSize < currentSize; --m_end, --currentSize)
+	if (newSize < currentSize)
 	{
-		m_end->~T();
+		DestroyItems(m_begin + newSize, m_end);
+		m_end = m_begin + newSize;
 	}
-	for (; newSize > currentSize; ++currentSize)
+	while (newSize > currentSize)
 	{
 		Append(T());
+		currentSize++;
 	}
 }
 
