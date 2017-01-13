@@ -193,6 +193,7 @@ BOOST_AUTO_TEST_SUITE_END()
 			BOOST_AUTO_TEST_CASE(with_the_end_method)
 			{
 				auto it = arr.end();
+				--it;
 				BOOST_CHECK_EQUAL((*it).value, 6);
 				--it;
 				--it;
@@ -215,6 +216,7 @@ BOOST_AUTO_TEST_SUITE_END()
 			BOOST_AUTO_TEST_CASE(with_the_rend_method)
 			{
 				auto it = arr.rend();
+				--it;
 				BOOST_CHECK_EQUAL((*it).value, 0);
 				--it;
 				--it;
