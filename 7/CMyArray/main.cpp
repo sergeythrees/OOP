@@ -16,7 +16,7 @@ int main()
 		cout << *it << endl;
 	}
 	cout << endl;
-	for (auto it = --stringArray.rbegin(); it != stringArray.rend(); --it)
+	for (auto it = stringArray.rbegin(); it != stringArray.rend(); ++it)
 	{
 		cout << *it << endl;
 	}

@@ -46,19 +46,19 @@ public:
 	}
 	const_reverse_iterator rbegin() const
 	{
-		return const_reverse_iterator(m_end);
+		return const_reverse_iterator(m_end -1);
 	}
 	const_reverse_iterator rend() const
 	{
-		return const_reverse_iterator(m_begin);
+		return const_reverse_iterator(m_begin-1);
 	}
 	reverse_iterator rbegin()
 	{
-		return reverse_iterator(m_end);
+		return reverse_iterator(m_end-1);
 	}
 	reverse_iterator rend()
 	{
-		return reverse_iterator(m_begin);
+		return reverse_iterator(m_begin-1);
 	}
 
 	~CMyArray();
@@ -70,6 +70,7 @@ private:
 	static void RawDealloc(T *p);
 
 private:
+	T *m_rbegin = nullptr;
 	T *m_begin = nullptr;
 	T *m_end = nullptr;
 	T *m_endOfCapacity = nullptr;
