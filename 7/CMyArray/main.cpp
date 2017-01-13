@@ -12,32 +12,68 @@ int main()
 	{
 		stringArray.Append(inputLine);
 	}
-	for (auto it = stringArray.begin(); it != stringArray.end(); ++it)
+
+	cout << endl << "Print by means of - range based for:" << endl;
+	for (auto current:stringArray)
 	{
-		cout << *it << endl;
+		cout << current << endl;
 	}
-	cout << endl;
+
+	cout << endl << "Print by means of - std::for_each algorythm:" << endl;
+	for_each(stringArray.begin(), stringArray.end(), 
+		[&](const auto& current)
+		{
+		cout << current << endl;
+		});
+
+	cout << endl << "Print by means of - range based for(recursive):" << endl;
 	for (auto it = stringArray.rbegin(); it != stringArray.rend(); ++it)
 	{
 		cout << *it << endl;
 	}
+
+	cout << endl << "Print by means of - std::for_each algorythm(recursive):" << endl;
+	for_each(stringArray.rbegin(), stringArray.rend(),
+		[&](const auto& current)
+	{
+		cout << current << endl;
+	});
 	cin.clear();
+
 	double inputNumber;
 	CMyArray<double> numbersArray;
-	cout << "Please input numbers (Ctrl-Z to finish):" << endl;
+	cout << endl << "Please input numbers (Ctrl-Z to finish):" << endl;
 	while (cin >> inputNumber)
 	{
 		numbersArray.Append(inputNumber);
 	}
-	for (auto it = numbersArray.begin(); it != numbersArray.end(); ++it)
+	
+	cout << endl << "Print by means of - range based for:" << endl;
+	for (auto current : numbersArray)
 	{
-		cout << *it << endl;
+		cout << current << endl;
 	}
-	cout << endl;
+
+	cout << endl << "Print by means of - std::for_each algorythm:" << endl;
+	for_each(numbersArray.begin(), numbersArray.end(),
+		[&](const auto& current)
+	{
+		cout << current << endl;
+	});
+
+	cout << endl << "Print by means of - range based for(recursive):" << endl;
 	for (auto it = numbersArray.rbegin(); it != numbersArray.rend(); ++it)
 	{
 		cout << *it << endl;
 	}
+
+	cout << endl << "Print by means of - std::for_each algorythm(recursive):" << endl;
+	for_each(numbersArray.rbegin(), numbersArray.rend(),
+		[&](const auto& current)
+	{
+		cout << current << endl;
+	});
+	cin.clear();
 	return 0;
 }
 
