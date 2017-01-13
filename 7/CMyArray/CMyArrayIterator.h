@@ -13,6 +13,10 @@ public:
 	T& operator *()const;
 	CMyArrayIterator& operator++();
 	CMyArrayIterator& operator--();
+	bool operator !=(const CMyArrayIterator& it)
+	{
+		return (*this).m_elementPtr != it.m_elementPtr;
+	}
 private:
 	T* m_elementPtr;
 };

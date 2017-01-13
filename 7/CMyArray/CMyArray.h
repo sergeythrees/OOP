@@ -8,6 +8,11 @@ template <typename T>
 class CMyArray
 {
 public:
+	typedef CMyArrayIterator<T, false> iterator;
+	typedef CMyArrayIterator<const T, false> const_iterator;
+	typedef CMyArrayIterator<T, true> reverse_iterator;
+	typedef CMyArrayIterator<const T, true> const_reverse_iterator;
+
 	CMyArray() = default;
 	CMyArray(const CMyArray& arr);
 	CMyArray(CMyArray&& arr);
@@ -23,10 +28,38 @@ public:
 	const T & operator [](size_t index) const;
 	CMyArray& operator =(const CMyArray& arr);
 	CMyArray& operator =(CMyArray&& arr);
-	CMyArrayIterator<T, false> begin();
-	CMyArrayIterator<T, false> end();
-	CMyArrayIterator<T, true> rbegin();
-	CMyArrayIterator<T, true> rend();
+	const_iterator begin() const
+	{
+		return const_iterator(m_begin);
+	}
+	const_iterator end() const
+	{
+		return const_iterator(m_end);
+	}
+	iterator begin()
+	{
+		return iterator(m_begin);
+	}
+	iterator end()
+	{
+		return iterator(m_end);
+	}
+	const_reverse_iterator rbegin() const
+	{
+		return const_reverse_iterator(m_end);
+	}
+	const_reverse_iterator rend() const
+	{
+		return const_reverse_iterator(m_begin);
+	}
+	reverse_iterator rbegin()
+	{
+		return reverse_iterator(m_end);
+	}
+	reverse_iterator rend()
+	{
+		return reverse_iterator(m_begin);
+	}
 
 	~CMyArray();
 private:
@@ -205,30 +238,6 @@ CMyArray<T>& CMyArray<T>::operator=(CMyArray<T>&& arr)
 	}
 
 	return *this;
-}
-
-template<typename T>
-CMyArrayIterator<T, false> CMyArray<T>::begin()
-{
-	return CMyArrayIterator<T, false>(m_begin);
-}
-
-template<typename T>
-CMyArrayIterator<T, false> CMyArray<T>::end()
-{
-	return CMyArrayIterator<T, false>(m_end - 1);
-}
-
-template<typename T>
-CMyArrayIterator<T, true> CMyArray<T>::rbegin()
-{
-	return CMyArrayIterator<T, true>(m_end - 1);
-}
-
-template<typename T>
-CMyArrayIterator<T, true> CMyArray<T>::rend()
-{
-	return CMyArrayIterator<T, true>(m_begin);
 }
 
 
