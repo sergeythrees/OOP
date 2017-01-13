@@ -28,38 +28,23 @@ public:
 	const T & operator [](size_t index) const;
 	CMyArray& operator =(const CMyArray& arr);
 	CMyArray& operator =(CMyArray&& arr);
+	
 	const_iterator begin() const
-	{
-		return const_iterator(m_begin);
-	}
+		{	return const_iterator(m_begin);}
 	const_iterator end() const
-	{
-		return const_iterator(m_end);
-	}
+		{	return const_iterator(m_end);}
 	iterator begin()
-	{
-		return iterator(m_begin);
-	}
+		{	return iterator(m_begin);}
 	iterator end()
-	{
-		return iterator(m_end);
-	}
+		{	return iterator(m_end);}
 	const_reverse_iterator rbegin() const
-	{
-		return const_reverse_iterator(m_end -1);
-	}
+		{	return const_reverse_iterator(m_end -1);}
 	const_reverse_iterator rend() const
-	{
-		return const_reverse_iterator(m_begin-1);
-	}
+		{	return const_reverse_iterator(m_begin-1);}
 	reverse_iterator rbegin()
-	{
-		return reverse_iterator(m_end-1);
-	}
+		{	return reverse_iterator(m_end-1);}
 	reverse_iterator rend()
-	{
-		return reverse_iterator(m_begin-1);
-	}
+		{	return reverse_iterator(m_begin-1);}
 
 	~CMyArray();
 private:
