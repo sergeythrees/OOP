@@ -171,8 +171,12 @@ void CMyArray<T>::Resize(size_t newSize)
 		}
 		catch (...)
 		{
-			DestroyItems(m_end, endBackup + (currentSize - GetSize()));
-			m_end = endBackup;
+			if (m_end < (endBackup + (currentSize - GetSize())))
+			{
+				DeleteItems(m_end, endBackup + (currentSize - GetSize()));
+				m_end = endBackup;
+			}
+			
 			throw;
 		}
 		currentSize++;

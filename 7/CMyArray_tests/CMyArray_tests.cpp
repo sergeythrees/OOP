@@ -34,35 +34,7 @@ struct EmptyStringArray
 	CMyArray<ArrayItem> arr;
 };
 
-class IamTheDanger 
-{
-public:
-	IamTheDanger()
-		: data(""),
-		m_isThrowingEnabled(false)
-	{
-		throw exception("default constructor");
-	};
-	IamTheDanger(string data, bool isThrowingEnabled)
-		:data(data),
-		m_isThrowingEnabled(isThrowingEnabled) {}
 
-	IamTheDanger(const IamTheDanger& copy)
-		:data(copy.data),
-		m_isThrowingEnabled(copy.m_isThrowingEnabled)
-	{
-		if (copy.m_isThrowingEnabled)
-			throw exception("from copy constructor");
-	}
-	void EnableThrowing(bool enable) 
-	{
-		m_isThrowingEnabled = enable;
-	}
-
-	string data;
-private:
-	bool m_isThrowingEnabled;
-};
 BOOST_AUTO_TEST_SUITE(CMyArray_)
 	BOOST_FIXTURE_TEST_SUITE(after_construction, EmptyStringArray)
 		BOOST_AUTO_TEST_SUITE(by_default)
@@ -256,38 +228,81 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 					BOOST_CHECK_EQUAL((*it).data, 1);
 				}
 			BOOST_AUTO_TEST_SUITE_END()
-
-			BOOST_AUTO_TEST_SUITE(hard_safety_exceptions_guaranteed)
-				BOOST_AUTO_TEST_CASE(with_the_rbegin_method)
-				{
-					CMyArray<IamTheDanger> original;
-					CMyArray<IamTheDanger> backup;
-					original.Append(IamTheDanger("one", false));
-					original.Append(IamTheDanger("two", false));
-					original.Append(IamTheDanger("three", false));
-					original.Append(IamTheDanger("boom", false));
-					original[3].EnableThrowing(true);
-					backup.Append(IamTheDanger("one", false));
-					backup.Append(IamTheDanger("two", false));
-					backup.Append(IamTheDanger("three", false));
-					backup.Append(IamTheDanger("boom", false));
-
-					VerifyException<exception>([&]() {auto copy(original); }, 
-						"from copy constructor");
-					CheckArraysEquality(original, backup);
-					BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
-
-					VerifyException<exception>([&]() {original.Append(IamTheDanger("boom", true)); },
-						"from copy constructor");
-					CheckArraysEquality(original, backup);
-					BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
-
-					VerifyException<exception>([&]() {original.Resize(20); },
-						"default constructor");
-					CheckArraysEquality(original, backup);
-					BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
-				}
-			
-			BOOST_AUTO_TEST_SUITE_END()
 		BOOST_AUTO_TEST_SUITE_END()
+
+		struct throwable
+		{
+			class IamTheDanger
+			{
+			public:
+				IamTheDanger()
+					: data(""),
+					m_isThrowingEnabled(false)
+				{
+					throw exception("default constructor");
+				};
+				IamTheDanger(string data, bool isThrowingEnabled)
+					:data(data),
+					m_isThrowingEnabled(isThrowingEnabled) {}
+
+				IamTheDanger(const IamTheDanger& copy)
+					:data(copy.data),
+					m_isThrowingEnabled(copy.m_isThrowingEnabled)
+				{
+					if (copy.m_isThrowingEnabled)
+						throw exception("from copy constructor");
+				}
+				void EnableThrowing(bool enable)
+				{
+					m_isThrowingEnabled = enable;
+				}
+
+				string data;
+			private:
+				bool m_isThrowingEnabled;
+			};
+
+			CMyArray<IamTheDanger> original;
+			CMyArray<IamTheDanger> backup;
+			throwable()
+			{
+				original.Append(IamTheDanger("one", false));
+				original.Append(IamTheDanger("two", false));
+				original.Append(IamTheDanger("three", false));
+				original.Append(IamTheDanger("boom", false));
+				original[3].EnableThrowing(true);
+				backup.Append(IamTheDanger("one", false));
+				backup.Append(IamTheDanger("two", false));
+				backup.Append(IamTheDanger("three", false));
+				backup.Append(IamTheDanger("boom", false));
+			}
+		};
+		BOOST_FIXTURE_TEST_SUITE(should_use_commit_or_rollback_semantics, throwable)
+			BOOST_AUTO_TEST_CASE(when_assigning)
+			{
+				CMyArray<IamTheDanger> forCopy;
+				forCopy.Append(IamTheDanger("", false));
+				forCopy[0].EnableThrowing(true);
+
+				VerifyException<exception>([&](){original = forCopy;},	
+					"from copy constructor");
+				CheckArraysEquality(original, backup);
+				BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
+			}
+			BOOST_AUTO_TEST_CASE(in_Resize_method)
+			{
+				VerifyException<exception>([&]() {original.Resize(20); },
+					"default constructor");
+				CheckArraysEquality(original, backup);
+				BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
+			}
+			BOOST_AUTO_TEST_CASE(in_Append_method)
+			{
+				VerifyException<exception>([&]() {original.Append(IamTheDanger("boom", true)); },
+					"from copy constructor");
+				CheckArraysEquality(original, backup);
+				BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
+			}
+
+			BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE_END()
