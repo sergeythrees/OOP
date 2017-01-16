@@ -3,25 +3,65 @@
 
 using namespace std;
 
+template <typename Ex, typename Fn>
+void VerifyException(Fn && fn, const string & expectedDescription)
+{
+	BOOST_CHECK_EXCEPTION(fn(), Ex, [&](const Ex& e) {
+		BOOST_CHECK_EQUAL(e.what(), expectedDescription);
+		return e.what() == expectedDescription;
+	});
+}
+
 struct ArrayItem
 {
-	ArrayItem(int value = 0) : value(value)
+	ArrayItem(int data = 0) : data(data)
 	{}
-	int value;
+	int data;
 };
 
-void CheckArraysEquality(CMyArray<ArrayItem>& a, CMyArray<ArrayItem>& b)
+template <typename T = default>
+void CheckArraysEquality(CMyArray<T>& a, CMyArray<T>& b)
 {
 	BOOST_CHECK(a.GetSize() == b.GetSize());
 	for (size_t i = 0; i < a.GetSize(); ++i)
 	{
-		BOOST_CHECK(a[i].value == b[i].value);
+		BOOST_CHECK(a[i].data == b[i].data);
 	}
 }
 
 struct EmptyStringArray
 {
 	CMyArray<ArrayItem> arr;
+};
+
+class IamTheDanger 
+{
+public:
+	IamTheDanger()
+		: data(""),
+		m_isThrowingEnabled(false)
+	{
+		throw exception("default constructor");
+	};
+	IamTheDanger(string data, bool isThrowingEnabled)
+		:data(data),
+		m_isThrowingEnabled(isThrowingEnabled) {}
+
+	IamTheDanger(const IamTheDanger& copy)
+		:data(copy.data),
+		m_isThrowingEnabled(copy.m_isThrowingEnabled)
+	{
+		if (copy.m_isThrowingEnabled)
+			throw exception("from copy constructor");
+	}
+	void EnableThrowing(bool enable) 
+	{
+		m_isThrowingEnabled = enable;
+	}
+
+	string data;
+private:
+	bool m_isThrowingEnabled;
 };
 BOOST_AUTO_TEST_SUITE(CMyArray_)
 	BOOST_FIXTURE_TEST_SUITE(after_construction, EmptyStringArray)
@@ -55,13 +95,13 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 			BOOST_AUTO_TEST_CASE(it_becomes_available_at_the_back)
 			{
 				arr.Append(1);
-				BOOST_CHECK_EQUAL(arr.GetBack().value, 1);
+				BOOST_CHECK_EQUAL(arr.GetBack().data, 1);
 				arr.Append(2);
-				BOOST_CHECK_EQUAL(arr.GetBack().value, 2);
+				BOOST_CHECK_EQUAL(arr.GetBack().data, 2);
 				arr.Append(3);
-				BOOST_CHECK_EQUAL(arr.GetBack().value, 3);
+				BOOST_CHECK_EQUAL(arr.GetBack().data, 3);
 				arr.Append(4);
-				BOOST_CHECK_EQUAL(arr.GetBack().value, 4);
+				BOOST_CHECK_EQUAL(arr.GetBack().data, 4);
 			}
 		BOOST_AUTO_TEST_SUITE_END()
 	
@@ -108,9 +148,9 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 			BOOST_AUTO_TEST_SUITE(has_indexed_access)
 				BOOST_AUTO_TEST_CASE(that_returns_reference_to_appropriate_element)
 				{
-					BOOST_CHECK_EQUAL(arr[4].value, 4);
-					arr[4].value = 365;
-					BOOST_CHECK_EQUAL(arr[4].value, 365);
+					BOOST_CHECK_EQUAL(arr[4].data, 4);
+					arr[4].data = 365;
+					BOOST_CHECK_EQUAL(arr[4].data, 365);
 				}
 				BOOST_AUTO_TEST_CASE(and_should_throw_out_of_range_if_index_exceeds_array_size)
 				{
@@ -128,7 +168,7 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 					BOOST_CHECK(arr.GetSize() == 10);
 					for (size_t i = 2; i < 9; ++i)
 					{
-						BOOST_CHECK(arr[i].value == 0);
+						BOOST_CHECK(arr[i].data == 0);
 					}
 				}
 			BOOST_AUTO_TEST_SUITE_END()
@@ -174,47 +214,80 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 				BOOST_AUTO_TEST_CASE(with_the_begin_method)
 				{
 					auto it = arr.begin();
-					BOOST_CHECK_EQUAL((*it).value, 0);
+					BOOST_CHECK_EQUAL((*it).data, 0);
 					++it;
 					++it;
-					BOOST_CHECK_EQUAL((*it).value, 2);
+					BOOST_CHECK_EQUAL((*it).data, 2);
 					--it;
-					BOOST_CHECK_EQUAL((*it).value, 1);
+					BOOST_CHECK_EQUAL((*it).data, 1);
 				}
 				BOOST_AUTO_TEST_CASE(with_the_end_method)
 				{
 					auto it = arr.end();
 					--it;
-					BOOST_CHECK_EQUAL((*it).value, 6);
+					BOOST_CHECK_EQUAL((*it).data, 6);
 					--it;
 					--it;
-					BOOST_CHECK_EQUAL((*it).value, 4);
+					BOOST_CHECK_EQUAL((*it).data, 4);
 					++it;
-					BOOST_CHECK_EQUAL((*it).value, 5);
+					BOOST_CHECK_EQUAL((*it).data, 5);
 				}
 			BOOST_AUTO_TEST_SUITE_END()
 			BOOST_AUTO_TEST_SUITE(has_a_recursive_iterative_access)
 				BOOST_AUTO_TEST_CASE(with_the_rbegin_method)
 				{
 					auto it = arr.rbegin();
-					BOOST_CHECK_EQUAL((*it).value, 6);
+					BOOST_CHECK_EQUAL((*it).data, 6);
 					++it;
 					++it;
-					BOOST_CHECK_EQUAL((*it).value, 4);
+					BOOST_CHECK_EQUAL((*it).data, 4);
 					--it;
-					BOOST_CHECK_EQUAL((*it).value, 5);
+					BOOST_CHECK_EQUAL((*it).data, 5);
 				}
 				BOOST_AUTO_TEST_CASE(with_the_rend_method)
 				{
 					auto it = arr.rend();
 					--it;
-					BOOST_CHECK_EQUAL((*it).value, 0);
+					BOOST_CHECK_EQUAL((*it).data, 0);
 					--it;
 					--it;
-					BOOST_CHECK_EQUAL((*it).value, 2);
+					BOOST_CHECK_EQUAL((*it).data, 2);
 					++it;
-					BOOST_CHECK_EQUAL((*it).value, 1);
+					BOOST_CHECK_EQUAL((*it).data, 1);
 				}
+			BOOST_AUTO_TEST_SUITE_END()
+
+			BOOST_AUTO_TEST_SUITE(hard_safety_exceptions_guaranteed)
+				BOOST_AUTO_TEST_CASE(with_the_rbegin_method)
+				{
+					CMyArray<IamTheDanger> original;
+					CMyArray<IamTheDanger> backup;
+					original.Append(IamTheDanger("one", false));
+					original.Append(IamTheDanger("two", false));
+					original.Append(IamTheDanger("three", false));
+					original.Append(IamTheDanger("boom", false));
+					original[3].EnableThrowing(true);
+					backup.Append(IamTheDanger("one", false));
+					backup.Append(IamTheDanger("two", false));
+					backup.Append(IamTheDanger("three", false));
+					backup.Append(IamTheDanger("boom", false));
+
+					VerifyException<exception>([&]() {auto copy(original); }, 
+						"from copy constructor");
+					CheckArraysEquality(original, backup);
+					BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
+
+					VerifyException<exception>([&]() {original.Append(IamTheDanger("boom", true)); },
+						"from copy constructor");
+					CheckArraysEquality(original, backup);
+					BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
+
+					VerifyException<exception>([&]() {original.Resize(20); },
+						"default constructor");
+					CheckArraysEquality(original, backup);
+					BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
+				}
+			
 			BOOST_AUTO_TEST_SUITE_END()
 		BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE_END()

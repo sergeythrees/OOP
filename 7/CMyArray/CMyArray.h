@@ -157,6 +157,7 @@ template<typename T>
 void CMyArray<T>::Resize(size_t newSize)
 {
 	size_t currentSize = GetSize();
+	auto endBackup = m_end;
 	if (newSize < currentSize)
 	{
 		DestroyItems(m_begin + newSize, m_end);
@@ -164,7 +165,16 @@ void CMyArray<T>::Resize(size_t newSize)
 	}
 	while (newSize > currentSize)
 	{
-		Append(T());
+		try
+		{
+			Append(T());
+		}
+		catch (...)
+		{
+			DestroyItems(m_end, endBackup + (currentSize - GetSize()));
+			m_end = endBackup;
+			throw;
+		}
 		currentSize++;
 	}
 }
