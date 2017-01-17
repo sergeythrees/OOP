@@ -228,6 +228,33 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 					BOOST_CHECK_EQUAL((*it).data, 1);
 				}
 			BOOST_AUTO_TEST_SUITE_END()
+
+			BOOST_AUTO_TEST_SUITE(is_friendly_for_stl_algorythm)
+				BOOST_AUTO_TEST_CASE(for_each)
+				{
+					stringstream strm;
+					std::for_each(arr.begin(), arr.end(),
+						[&](const auto& current)
+						{
+							strm << current.data;
+						});
+
+					BOOST_CHECK_EQUAL(strm.str(), "0123456");
+				}
+				BOOST_AUTO_TEST_CASE(transform)
+				{
+					std::transform(arr.begin(), arr.end(), arr.begin(),
+							[&](auto & current)
+						{return current.data - 1; });
+
+					CMyArray<ArrayItem> expectedArray;
+					for (int i=-1; i <= 5; ++i)
+						expectedArray.Append(i);
+
+					CheckArraysEquality(arr, expectedArray);
+					
+				}
+			BOOST_AUTO_TEST_SUITE_END()
 		BOOST_AUTO_TEST_SUITE_END()
 
 		struct throwable

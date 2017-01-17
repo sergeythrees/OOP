@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #include "CMyArrayIterator.h"
 #include <new>
-#include <algorithm>
 
 template <typename T>
 class CMyArray

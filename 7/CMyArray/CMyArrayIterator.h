@@ -11,20 +11,25 @@ public:
 	CMyArrayIterator(T * elementPtr) :m_elementPtr(elementPtr) {}
 
 	T& operator *()const;
+	T& operator ->()const;
 	CMyArrayIterator& operator++();
 	CMyArrayIterator& operator--();
-	bool operator !=(const CMyArrayIterator& it)
-	{
-		return (*this).m_elementPtr != it.m_elementPtr;
-	}
+	CMyArrayIterator& operator++(int);
+	CMyArrayIterator& operator--(int);
+	bool operator ==(const CMyArrayIterator& it);
+	bool operator !=(const CMyArrayIterator& it);
 private:
 	T* m_elementPtr;
 };
 
-
-
 template<typename T, bool isReverse>
 T & CMyArrayIterator<T, isReverse>::operator*() const
+{
+	return *m_elementPtr;
+}
+
+template<typename T, bool isReverse>
+T & CMyArrayIterator<T, isReverse>::operator->() const
 {
 	return *m_elementPtr;
 }
@@ -41,4 +46,36 @@ CMyArrayIterator<T, isReverse> & CMyArrayIterator<T, isReverse>::operator--()
 {
 	isReverse ? ++m_elementPtr : --m_elementPtr;
 	return *this;
+}
+
+template<typename T, bool isReverse>
+CMyArrayIterator<T, isReverse> & CMyArrayIterator<T, isReverse>::operator++(int)
+{
+	if (isReverse)
+	{
+		return{ m_elementPtr-- };
+	}
+	return{ m_elementPtr++ };
+}
+
+template<typename T, bool isReverse>
+CMyArrayIterator<T, isReverse> & CMyArrayIterator<T, isReverse>::operator--(int)
+{
+	if (isReverse)
+	{
+		return{ m_elementPtr++ };
+	}
+	return{ m_elementPtr-- };
+}
+
+template<typename T, bool isReverse>
+bool CMyArrayIterator<T, isReverse>::operator==(const CMyArrayIterator & it)
+{
+	return m_elementPtr == it.m_elementPtr;
+}
+
+template<typename T, bool isReverse>
+bool CMyArrayIterator<T, isReverse>::operator!=(const CMyArrayIterator & it)
+{
+	return !(*this == it);
 }
