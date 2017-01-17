@@ -259,14 +259,13 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 
 		struct throwable
 		{
-			class IamTheDanger
+			struct IamTheDanger
 			{
-			public:
 				IamTheDanger()
 					: data(""),
 					m_isThrowingEnabled(false)
 				{
-					throw exception("default constructor");
+					throw exception("in default constructor");
 				};
 				IamTheDanger(string data, bool isThrowingEnabled)
 					:data(data),
@@ -277,7 +276,7 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 					m_isThrowingEnabled(copy.m_isThrowingEnabled)
 				{
 					if (copy.m_isThrowingEnabled)
-						throw exception("from copy constructor");
+						throw exception("in copy constructor");
 				}
 				void EnableThrowing(bool enable)
 				{
@@ -312,21 +311,21 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 				forCopy[0].EnableThrowing(true);
 
 				VerifyException<exception>([&](){original = forCopy;},	
-					"from copy constructor");
+					"in copy constructor");
 				CheckArraysEquality(original, backup);
 				BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
 			}
 			BOOST_AUTO_TEST_CASE(in_Resize_method)
 			{
 				VerifyException<exception>([&]() {original.Resize(20); },
-					"default constructor");
+					"in default constructor");
 				CheckArraysEquality(original, backup);
 				BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
 			}
 			BOOST_AUTO_TEST_CASE(in_Append_method)
 			{
 				VerifyException<exception>([&]() {original.Append(IamTheDanger("boom", true)); },
-					"from copy constructor");
+					"in copy constructor");
 				CheckArraysEquality(original, backup);
 				BOOST_CHECK(original.GetCapacity() == backup.GetCapacity());
 			}
