@@ -252,6 +252,11 @@ BOOST_AUTO_TEST_SUITE(CMyArray_)
 						expectedArray.Append(i);
 
 					CheckArraysEquality(arr, expectedArray);
+
+					auto it = arr.begin();
+					auto rit = arr.rend();
+					rit--;
+					BOOST_CHECK_EQUAL((*it).data, (*rit).data);
 					
 				}
 			BOOST_AUTO_TEST_SUITE_END()

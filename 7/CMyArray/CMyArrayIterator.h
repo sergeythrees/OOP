@@ -7,19 +7,23 @@ class CMyArrayIterator: public std::iterator<std::bidirectional_iterator_tag, T>
 {
 	template<typename T>  friend class CMyArray;
 public:
-	CMyArrayIterator() = default;
-	CMyArrayIterator(T * elementPtr) :m_elementPtr(elementPtr) {}
+	CMyArrayIterator()
+		:m_isReverse(isReverse) {}
+	CMyArrayIterator(T * elementPtr) 
+		:m_elementPtr(elementPtr), 
+		m_isReverse(isReverse) {}
 
 	T& operator *()const;
 	T& operator ->()const;
 	CMyArrayIterator& operator++();
 	CMyArrayIterator& operator--();
-	CMyArrayIterator& operator++(int);
-	CMyArrayIterator& operator--(int);
+	const CMyArrayIterator operator++(int);
+	const CMyArrayIterator operator--(int);
 	bool operator ==(const CMyArrayIterator& it);
 	bool operator !=(const CMyArrayIterator& it);
 private:
 	T* m_elementPtr;
+	bool m_isReverse;
 };
 
 template<typename T, bool isReverse>
@@ -49,29 +53,27 @@ CMyArrayIterator<T, isReverse> & CMyArrayIterator<T, isReverse>::operator--()
 }
 
 template<typename T, bool isReverse>
-CMyArrayIterator<T, isReverse> & CMyArrayIterator<T, isReverse>::operator++(int)
+const CMyArrayIterator<T, isReverse> CMyArrayIterator<T, isReverse>::operator++(int)
 {
-	if (isReverse)
-	{
-		return{ m_elementPtr-- };
-	}
-	return{ m_elementPtr++ };
+	auto copy(*this);
+	isReverse ? --m_elementPtr : ++m_elementPtr;
+	return	copy;
 }
 
 template<typename T, bool isReverse>
-CMyArrayIterator<T, isReverse> & CMyArrayIterator<T, isReverse>::operator--(int)
+const CMyArrayIterator<T, isReverse> CMyArrayIterator<T, isReverse>::operator--(int)
 {
-	if (isReverse)
-	{
-		return{ m_elementPtr++ };
-	}
-	return{ m_elementPtr-- };
+	auto copy(*this);
+	isReverse ? ++m_elementPtr : --m_elementPtr;
+	return	copy;
 }
 
 template<typename T, bool isReverse>
 bool CMyArrayIterator<T, isReverse>::operator==(const CMyArrayIterator & it)
 {
-	return m_elementPtr == it.m_elementPtr;
+	return 
+		isReverse == it.m_isReverse && 
+		m_elementPtr == it.m_elementPtr;
 }
 
 template<typename T, bool isReverse>
