@@ -1,16 +1,17 @@
 #pragma once
 #include "stdafx.h"
-#include "CMyArrayIterator.h"
+#include "CMyIterator.h"
 #include <new>
 
 template <typename T>
 class CMyArray
 {
+	template<typename T, bool isReverse>  friend class CMyIterator;
 public:
-	typedef CMyArrayIterator<T, false> iterator;
-	typedef CMyArrayIterator<const T, false> const_iterator;
-	typedef CMyArrayIterator<T, true> reverse_iterator;
-	typedef CMyArrayIterator<const T, true> const_reverse_iterator;
+	typedef CMyIterator<T, false> iterator;
+	typedef CMyIterator<const T, false> const_iterator;
+	typedef CMyIterator<T, true> reverse_iterator;
+	typedef CMyIterator<const T, true> const_reverse_iterator;
 
 	CMyArray() = default;
 	CMyArray(const CMyArray& arr);
