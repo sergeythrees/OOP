@@ -9,7 +9,7 @@
 class CShapesController : boost::noncopyable
 {
 public:
-	CShapesController(std::vector<std::shared_ptr<IShape>>& shapes, std::istream & input);
+	CShapesController(std::vector<std::shared_ptr<CShape>>& shapes, std::istream & input);
 	void HandleCommand() const;
 	void PrintInfo(std::ostream & output) const;
 private:
@@ -19,7 +19,7 @@ private:
 	void CreateCircle(std::istream & args);
 	typedef std::map<std::string, std::function<void(std::istream & args)>> ActionMap;
 
-	std::vector<std::shared_ptr<IShape>>* m_shapes;
+	std::vector<std::shared_ptr<CShape>>* m_shapes;
 	std::istream & m_input;
 	const ActionMap m_actionMap;
 };

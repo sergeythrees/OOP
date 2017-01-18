@@ -8,7 +8,7 @@
 
 using namespace std;
 
-CShapesController::CShapesController(std::vector<std::shared_ptr<IShape>>& shapes, std::istream & input)
+CShapesController::CShapesController(std::vector<std::shared_ptr<CShape>>& shapes, std::istream & input)
 	:m_shapes(&shapes),
 	m_input(input),
 	m_actionMap({
@@ -51,10 +51,10 @@ void CShapesController::PrintInfo(std::ostream & output) const
 	}
 
 	auto maxArea = FindMaxEx(*m_shapes,
-				[&](const shared_ptr<IShape>& a, const shared_ptr<IShape>& b)
+				[&](const shared_ptr<CShape>& a, const shared_ptr<CShape>& b)
 			{return a->GetArea() < b->GetArea(); });
 	auto maxPerimeter = FindMaxEx(*m_shapes,
-				[&](const shared_ptr<IShape>& a, const shared_ptr<IShape>& b)
+				[&](const shared_ptr<CShape>& a, const shared_ptr<CShape>& b)
 			{return a->GetPerimeter() > b->GetPerimeter(); });
 
 	if (maxArea && maxPerimeter)

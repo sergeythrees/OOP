@@ -23,7 +23,7 @@ catch (const exception& ex)
 
 void WorkWithShapesFromStream(istream& input)
 {
-	std::vector<std::shared_ptr<IShape>>  shapes;
+	std::vector<std::shared_ptr<CShape>>  shapes;
 	CShapesController control(shapes, input);
 
 	cout << "Input shapes or Ctrl+Z for finish" << endl;

@@ -91,11 +91,11 @@ BOOST_AUTO_TEST_SUITE(CShapesController_)
 	struct ShapesControllerFixture
 	{
 		CShapesController controller;
-		vector<shared_ptr<IShape>> shapes;
+		vector<shared_ptr<CShape>> shapes;
 		stringstream input;
 
 		ShapesControllerFixture()
-			:shapes(vector<shared_ptr<IShape>>()),
+			:shapes(vector<shared_ptr<CShape>>()),
 			input(stringstream()),
 			controller(shapes, input)
 		{}
