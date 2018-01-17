@@ -73,11 +73,9 @@ CMyArray<T>::CMyArray(const CMyArray& arr)
 			CopyItems(arr.m_begin, arr.m_end, m_begin, m_end);
 			m_endOfCapacity = m_end;
 		}
-		catch (...)
-		{
+		catch (...) {
 			DeleteItems(m_begin, m_end);
-			throw;
-		}
+			throw; }
 	}
 }
 
@@ -108,11 +106,9 @@ void CMyArray<T>::Append(const T & value)
 			new (newEnd)T(value);
 			++newEnd;
 		}
-		catch (...)
-		{
+		catch (...) {
 			DeleteItems(newBegin, newEnd);
-			throw;
-		}
+			throw; }
 		DeleteItems(m_begin, m_end);
 
 		// Переключаемся на использование нового хранилища элементов
@@ -170,16 +166,14 @@ void CMyArray<T>::Resize(size_t newSize)
 		{
 			Append(T());
 		}
-		catch (...)
-		{
+		catch (...) {
 			if (currentSize > oldSize)
 			{
 				DeleteItems(endBackup, endBackup + (currentSize - oldSize));
 				m_end = endBackup;
 			}
 			
-			throw;
-		}
+			throw; }
 		currentSize++;
 	}
 }
@@ -285,10 +279,6 @@ T * CMyArray<T>::RawAlloc(size_t n)
 {
 	size_t memSize = n * sizeof(T);
 	T *p = static_cast<T*>(malloc(memSize));
-	if (!p)
-	{
-		throw std::bad_alloc();
-	}
 	return p;
 }
 
