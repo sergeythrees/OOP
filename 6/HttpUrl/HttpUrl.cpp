@@ -117,12 +117,10 @@ std::string CHttpUrl::VerifiedDocument(std::string const & document) const
 
 unsigned short CHttpUrl::VerifiedPort(int port) const
 {
-	if (port < MIN_PORT_VALUE || port > MAX_PORT_VALUE)
-	{
+	if (port < MIN_PORT_VALUE || port > MAX_PORT_VALUE) {
 		stringstream mess;
 		mess << "Port value is out of port allow range (" << MIN_PORT_VALUE << ".." << MAX_PORT_VALUE << ")";
-		throw CUrlParsingError(mess.str());
-	}
+		throw CUrlParsingError(mess.str()); }
 	return static_cast<unsigned short>(port);
 }
 
@@ -137,17 +135,12 @@ int CHttpUrl::GetPortFromStr(string const & portStr) const
 	{
 		if (portStr.find_first_not_of("0123456789") != portStr.npos)
 			throw invalid_argument("");
-		else
-			port = stoi(portStr);
+		else port = stoi(portStr);
 	}
-	catch (const out_of_range&)
-	{
-		throw CUrlParsingError("Port value is out of integer range");
-	}
-	catch (const invalid_argument&)
-	{
-		throw CUrlParsingError("Port value is not a number");
-	}
+	catch (const out_of_range&) {
+		throw CUrlParsingError("Port value is out of integer range"); }
+	catch (const invalid_argument&) {
+		throw CUrlParsingError("Port value is not a number"); }
 
 	return port;
 }
